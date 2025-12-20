@@ -1,0 +1,7 @@
+{
+  "name": "Wishprise",
+  "description": "A magical, emotional birthday surprise generator. Create unforgettable moments for your loved ones.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
