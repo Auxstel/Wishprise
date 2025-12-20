@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
     <meta name="theme-color" content="#020617" />
     <title>Wishprise - Magical Birthday Surprises</title>
+    <!-- Tailwind CDN is kept for simplicity to avoid extra local config files, though npm install is preferred for prod -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
     <script>
@@ -114,18 +115,21 @@
   <script type="importmap">
 {
   "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
     "react/": "https://esm.sh/react@^19.2.3/",
-    "react": "https://esm.sh/react@^19.2.3",
+    "idb-keyval": "https://esm.sh/idb-keyval@^6.2.2",
+    "three": "https://esm.sh/three@^0.182.0",
     "react-router-dom": "https://esm.sh/react-router-dom@^7.11.0",
-    "three": "https://esm.sh/three@0.160.0",
-    "idb-keyval": "https://esm.sh/idb-keyval@6.2.1",
-    "firebase/": "https://esm.sh/firebase@^12.7.0/"
+    "firebase/": "https://esm.sh/firebase@^12.7.0/",
+    "vite": "https://esm.sh/vite@^7.3.0",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2"
   }
 }
 </script>
 </head>
   <body class="h-full">
     <div id="root" class="h-full"></div>
+    <script type="module" src="/index.tsx"></script>
   </body>
 </html>
