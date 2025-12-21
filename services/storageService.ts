@@ -1,50 +1,117 @@
 import { SurpriseData } from '../types';
-import { set, get } from 'idb-keyval';
+import { supabase } from '../lib/supabase';
 
-const STORAGE_KEY_PREFIX = 'wishprise_';
+export const uploadFile = async (file: Blob | File, path: string): Promise<string> => {
+  const { data, error } = await supabase.storage
+    .from('media')
+    .upload(path, file);
+
+  if (error) {
+    console.error('Upload Error:', error);
+    throw error;
+  }
+
+  // Get Public URL
+  const { data: { publicUrl } } = supabase.storage
+    .from('media')
+    .getPublicUrl(path);
+
+  return publicUrl;
+};
 
 export const saveSurprise = async (data: SurpriseData): Promise<void> => {
   try {
-    // Simulate network delay for UX
-    await new Promise(resolve => setTimeout(resolve, 800));
-    
-    // Sanitize data 
-    const sanitizedData = JSON.parse(JSON.stringify(data));
-    
-    // Use IndexedDB via idb-keyval. 
-    // This supports Blobs/Files and large strings much better than localStorage.
-    await set(STORAGE_KEY_PREFIX + data.id, sanitizedData);
-    
+    const { error } = await supabase
+      .from('surprises')
+      .insert([
+        {
+          id: data.id,
+          sender_name: data.senderName,
+          recipient_name: data.receiverName,
+          intro_message: data.introMessage,
+          personal_note: data.personalNote,
+          final_message: data.finalMessage,
+          cake_flavor: data.cakeFlavor,
+          cake_style: data.cakeStyle,
+          candle_count: data.candleCount,
+          song_url: data.songUrl,
+          voice_message_url: data.voiceMessageUrl,
+          wheel_options: data.wheelOptions,
+          created_at: new Date(data.createdAt).toISOString()
+        }
+      ]);
+
+    if (error) throw error;
+
   } catch (e: any) {
-    console.error("Error saving to local storage: ", e);
-    throw new Error(e.message || "Failed to save surprise locally.");
+    console.error("Error saving to Supabase: ", e);
+    throw new Error(e.message || "Failed to save surprise.");
   }
 };
 
 export const getSurprise = async (id: string): Promise<SurpriseData | null> => {
   try {
-    // Simulate network delay for UX
-    await new Promise(resolve => setTimeout(resolve, 500));
+    const { data, error } = await supabase
+      .from('surprises')
+      .select('*')
+      .eq('id', id)
+      .single();
 
-    // Try IndexedDB first
-    const data = await get(STORAGE_KEY_PREFIX + id);
-    if (data) {
-      return data as SurpriseData;
-    }
-    
-    // Fallback: Check old LocalStorage (migration path for previous saves)
-    const lsData = localStorage.getItem(STORAGE_KEY_PREFIX + id);
-    if (lsData) {
-        return JSON.parse(lsData) as SurpriseData;
-    }
+    if (error || !data) return null;
 
-    return null;
+    // Map DB columns back to Frontend Types
+    return {
+      id: data.id,
+      senderName: data.sender_name,
+      receiverName: data.recipient_name,
+      introMessage: data.intro_message,
+      personalNote: data.personal_note,
+      finalMessage: data.final_message,
+      cakeFlavor: data.cake_flavor,
+      cakeStyle: data.cake_style,
+      candleCount: data.candle_count,
+      songUrl: data.song_url, // Now a remote URL
+      voiceMessageUrl: data.voice_message_url, // Now a remote URL
+      wheelOptions: data.wheel_options,
+      createdAt: new Date(data.created_at).getTime()
+    };
   } catch (e) {
-    console.error("Error getting from local storage: ", e);
+    console.error("Error getting from Supabase: ", e);
     return null;
   }
 };
 
 export const generateId = (): string => {
-  return Math.random().toString(36).substring(2, 9) + Date.now().toString(36);
+  return crypto.randomUUID(); // Use standard UUIDs for DB compatibility
+};
+
+export const markAsViewed = async (id: string, songUrl?: string, voiceUrl?: string) => {
+  // 1. Mark as viewed in DB
+  const { error } = await supabase
+    .from('surprises')
+    .update({ is_viewed: true })
+    .eq('id', id);
+
+  if (error) console.error("Error marking as viewed:", error);
+
+  // 2. Delete media files to save space/privacy
+  await deleteMedia(songUrl);
+  await deleteMedia(voiceUrl);
+};
+
+const deleteMedia = async (url?: string) => {
+  if (!url) return;
+  try {
+    // Extract filename from URL (e.g., .../media/songs/uuid-song.mp3 -> songs/uuid-song.mp3)
+    const path = url.split('/media/')[1];
+    if (!path) return;
+
+    const { error } = await supabase.storage
+      .from('media')
+      .remove([path]);
+
+    if (error) console.error("Error deleting file:", path, error);
+  } catch (e) {
+    console.error("Error in deleteMedia:", e);
+  }
 };

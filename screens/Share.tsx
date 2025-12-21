@@ -32,7 +32,7 @@ export const Share: React.FC = () => {
   if (loading) return <div className="min-h-screen bg-magical-50 flex items-center justify-center">Loading magic...</div>;
   if (!surprise) return <div className="min-h-screen bg-magical-50 flex items-center justify-center">Surprise not found.</div>;
 
-  const shareUrl = `${window.location.origin}/#/view/${id}`;
+  const shareUrl = `${window.location.origin}/view/${id}`;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(shareUrl);
@@ -47,9 +47,9 @@ export const Share: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-magical-50 flex flex-col items-center justify-center p-6 text-center space-y-8 relative overflow-hidden">
-      
+
       <div className="absolute top-6 left-1/2 -translate-x-1/2 z-10 cursor-pointer" onClick={() => navigate('/')}>
-          <Logo size="md" />
+        <Logo size="md" />
       </div>
 
       <div className="bg-white p-8 rounded-2xl shadow-xl max-w-md w-full border border-magical-100 relative z-20">
@@ -58,7 +58,7 @@ export const Share: React.FC = () => {
         </div>
         <h2 className="text-2xl font-serif text-gray-800 mb-2">It's Ready!</h2>
         <p className="text-gray-600 mb-6">Your surprise for <strong>{surprise.receiverName}</strong> is created.</p>
-        
+
         <div className="bg-gray-50 p-3 rounded-lg border border-gray-200 break-all text-xs text-gray-500 font-mono mb-4 select-all">
           {shareUrl}
         </div>
@@ -70,11 +70,11 @@ export const Share: React.FC = () => {
           <Button onClick={handleWhatsapp} fullWidth className="bg-green-500 hover:bg-green-600 text-white border-none">
             Share on WhatsApp
           </Button>
-          <button 
-            onClick={() => navigate(`/view/${id}`)}
+          <button
+            onClick={() => navigate(`/view/${id}?preview=true`)}
             className="text-sm text-magical-600 underline mt-4"
           >
-            Preview it yourself
+            Preview it yourself (Won't delete)
           </button>
         </div>
       </div>

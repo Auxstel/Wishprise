@@ -1,36 +1,45 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AdProps } from '../types';
+
+declare global {
+  interface Window {
+    adsbygoogle: any[];
+  }
+}
 
 export const AdComponent: React.FC<AdProps> = ({ type, className = '', onClose }) => {
   const [visible, setVisible] = useState(true);
 
+  useEffect(() => {
+    // Only try to load ads if visible and we are in a browser
+    if (visible && typeof window !== 'undefined') {
+      try {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      } catch (e) {
+        console.error("AdSense error", e);
+      }
+    }
+  }, [visible]);
+
   if (!visible) return null;
 
-  if (type === 'banner') {
+  // Interstitial Ad (Simulated for AdSense as auto-ads handle real interstitials usually)
+  // For standard units, we return the <ins> tag
+  if (type === 'banner' || type === 'interstitial') {
     return (
-      <div className={`w-full h-16 backdrop-blur-md bg-white/10 flex items-center justify-center border-t border-white/10 text-xs text-gray-400 select-none ${className}`}>
-        [Ad Banner Placeholder]
-      </div>
-    );
-  }
+      <div className={`text-center overflow-hidden ${className}`}>
+        {/* ADSENSE UNIT */}
+        {/* Replace 'data-ad-slot' with your actual Ad Unit ID from AdSense Dashboard */}
+        <ins className="adsbygoogle"
+          style={{ display: 'block' }}
+          data-ad-client="ca-pub-YOUR_ADSENSE_CLIENT_ID"
+          data-ad-slot="1234567890"
+          data-ad-format="auto"
+          data-full-width-responsive="true"></ins>
 
-  if (type === 'interstitial') {
-    return (
-      <div className="fixed inset-0 z-50 bg-black/95 flex flex-col items-center justify-center p-6 animate-fade-in">
-        <div className="bg-gray-900 border border-gray-800 p-8 rounded-xl max-w-sm w-full text-center space-y-4 shadow-2xl">
-          <p className="text-gray-500 text-sm tracking-widest uppercase">Sponsored</p>
-          <div className="h-32 bg-gray-800 rounded-lg flex items-center justify-center text-gray-500 border border-gray-700">
-             Video Ad Playing...
-          </div>
-          <button 
-            onClick={() => {
-              setVisible(false);
-              if (onClose) onClose();
-            }}
-            className="text-magical-400 font-bold hover:text-magical-300 hover:underline mt-4 block mx-auto transition-colors"
-          >
-            Skip to Surprise &rarr;
-          </button>
+        {/* Development Placeholder (AdSense doesn't show on localhost usually) */}
+        <div className="text-[10px] text-gray-500 mt-1 uppercase tracking-widest">
+          Ad Space (Visible in Prod)
         </div>
       </div>
     );
