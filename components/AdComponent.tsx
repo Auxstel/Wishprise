@@ -37,10 +37,7 @@ export const AdComponent: React.FC<AdProps> = ({ type, className = '', onClose }
           data-ad-format="auto"
           data-full-width-responsive="true"></ins>
 
-        {/* Development Placeholder (AdSense doesn't show on localhost usually) */}
-        <div className="text-[10px] text-gray-500 mt-1 uppercase tracking-widest">
-          Ad Space (Visible in Prod)
-        </div>
+        {/* Development Placeholder: Only visible when ad loads */}
       </div>
     );
   }
