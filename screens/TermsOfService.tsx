@@ -1,10 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Logo } from '../components/Logo';
+import { Seo } from '../components/Seo';
 
 export const TermsOfService: React.FC = () => {
     return (
         <div className="min-h-screen bg-slate-950 text-gray-300 font-sans">
+            <Seo title="Terms of Service" description="Read our terms of service." />
             {/* Header */}
             <header className="border-b border-white/10 p-6">
                 <div className="max-w-4xl mx-auto flex justify-between items-center">

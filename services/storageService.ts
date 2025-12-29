@@ -85,18 +85,24 @@ export const generateId = (): string => {
   return crypto.randomUUID(); // Use standard UUIDs for DB compatibility
 };
 
-export const markAsViewed = async (id: string, songUrl?: string, voiceUrl?: string) => {
-  // 1. Mark as viewed in DB
-  const { error } = await supabase
-    .from('surprises')
-    .update({ is_viewed: true })
-    .eq('id', id);
+export const deleteSurpriseAndFiles = async (id: string, songUrl?: string, voiceUrl?: string) => {
+  console.log(`[Privacy] Deleting surprise ${id} and associated files...`);
 
-  if (error) console.error("Error marking as viewed:", error);
-
-  // 2. Delete media files to save space/privacy
+  // 1. Delete media files FIRST (while we still have the URLs)
   await deleteMedia(songUrl);
   await deleteMedia(voiceUrl);
+
+  // 2. Delete the record from DB
+  const { error } = await supabase
+    .from('surprises')
+    .delete()
+    .eq('id', id);
+
+  if (error) {
+    console.error("Error deleting surprise record:", error);
+  } else {
+    console.log("Surprise record deleted successfully.");
+  }
 };
 
 const deleteMedia = async (url?: string) => {

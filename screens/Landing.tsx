@@ -4,12 +4,14 @@ import { Button } from '../components/Button';
 import { AdComponent } from '../components/AdComponent';
 import { Landing3D } from '../components/Landing3D';
 import { Logo } from '../components/Logo';
+import { Seo } from '../components/Seo';
 
 export const Landing: React.FC = () => {
     const navigate = useNavigate();
 
     return (
         <div className="min-h-screen bg-slate-950 flex flex-col font-sans overflow-x-hidden">
+            <Seo />
 
             {/* SECTION 1: HERO (Full Screen) */}
             <div className="relative h-screen w-full flex flex-col">

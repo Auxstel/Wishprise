@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
-import { getSurprise, markAsViewed } from '../services/storageService';
+import { getSurprise } from '../services/storageService';
 import { AudioHandler } from '../services/audioService';
 import { SurpriseData, ExperienceStep, CakeStyle } from '../types';
 import { WHEEL_MESSAGES, DEMO_MUSIC_URL } from '../constants';
@@ -91,14 +91,14 @@ export const Receiver: React.FC = () => {
 
   // -- ONE-TIME VIEW LOGIC --
   useEffect(() => {
-    // If the user reaches the REVEAL step (End of experience), mark as viewed and delete.
+    // If the user reaches the REVEAL step (End of experience), DELETE EVERYTHING.
     // BUT only if:
-    // 1. It is not a preview
+    // 1. It is not a preview (crucial!)
     // 2. We have an ID and data
-    // 3. We haven't already marked it (optional check, but function handles idempotency roughly)
+    // 3. We haven't already marked it (idempotency handled by delete function gracefully)
     if (step === ExperienceStep.REVEAL && !isPreview && data && id && id !== 'demo') {
-      markAsViewed(id, data.songUrl, data.voiceMessageUrl).then(() => {
-        console.log("Memory wiped! (Files deleted after view)");
+      import('../services/storageService').then(({ deleteSurpriseAndFiles }) => {
+        deleteSurpriseAndFiles(id, data.songUrl, data.voiceMessageUrl);
       });
     }
   }, [step, isPreview, data, id]);

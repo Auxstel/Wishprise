@@ -50,3 +50,7 @@ create policy "Public Media Select" on storage.objects
 
 create policy "Public Media Delete" on storage.objects 
   for delete using ( bucket_id = 'media' );
+
+-- 4. Allow Deletion of Surprises (For One-Time View)
+drop policy if exists "Public Delete" on surprises;
+create policy "Public Delete" on surprises for delete using (true);
