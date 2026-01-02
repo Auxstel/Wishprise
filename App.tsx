@@ -7,11 +7,14 @@ import { Share } from './screens/Share';
 import { Receiver } from './screens/Receiver';
 import { PrivacyPolicy } from './screens/PrivacyPolicy';
 import { TermsOfService } from './screens/TermsOfService';
+import { Contact } from './screens/Contact';
+import { CookieConsent } from './components/CookieConsent';
 
 const App: React.FC = () => {
   return (
     <HelmetProvider>
       <BrowserRouter>
+        <CookieConsent />
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/create" element={<Create />} />
@@ -19,6 +22,7 @@ const App: React.FC = () => {
           <Route path="/view/:id" element={<Receiver />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<TermsOfService />} />
+          <Route path="/contact" element={<Contact />} />
         </Routes>
       </BrowserRouter>
     </HelmetProvider>

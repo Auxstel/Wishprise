@@ -119,8 +119,8 @@ export const TermsOfService: React.FC = () => {
                         <h2 className="text-2xl font-semibold text-white mb-4">10. Contact Information</h2>
                         <p>
                             If you have any questions about these Terms of Service, please contact us at:{' '}
-                            <a href="mailto:support@wishprise.online" className="text-magical-400 hover:underline">
-                                support@wishprise.online
+                            <a href="mailto:octaacebusiness@gmail.com" className="text-magical-400 hover:underline">
+                                octaacebusiness@gmail.com
                             </a>
                         </p>
                     </div>

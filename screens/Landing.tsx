@@ -204,7 +204,7 @@ export const Landing: React.FC = () => {
                         <div className="flex flex-wrap justify-center gap-6 text-sm">
                             <Link to="/privacy" className="text-gray-400 hover:text-magical-400 transition-colors">Privacy Policy</Link>
                             <Link to="/terms" className="text-gray-400 hover:text-magical-400 transition-colors">Terms of Service</Link>
-                            <a href="mailto:support@wishprise.online" className="text-gray-400 hover:text-magical-400 transition-colors">Contact Us</a>
+                            <Link to="/contact" className="text-gray-400 hover:text-magical-400 transition-colors">Contact Us</Link>
                         </div>
                     </div>
                     <div className="mt-8 text-center border-t border-slate-900 pt-6">
