@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export const CookieConsent: React.FC = () => {
     const [visible, setVisible] = useState(false);
-
+ 
     useEffect(() => {
         const consent = localStorage.getItem('wishprise_cookie_consent');
         if (!consent) {
