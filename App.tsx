@@ -8,6 +8,12 @@ import { Receiver } from './screens/Receiver';
 import { PrivacyPolicy } from './screens/PrivacyPolicy';
 import { TermsOfService } from './screens/TermsOfService';
 import { Contact } from './screens/Contact';
+import { About } from './screens/About';
+import { ResourceIndex } from './screens/Resources/ResourceIndex';
+import { VirtualBirthdayIdeas } from './screens/Resources/VirtualBirthdayIdeas';
+import { LongDistanceGuide } from './screens/Resources/LongDistanceGuide';
+import { DigitalVsPhysical } from './screens/Resources/DigitalVsPhysical';
+import { MessageEtiquette } from './screens/Resources/MessageEtiquette';
 import { CookieConsent } from './components/CookieConsent';
 
 const App: React.FC = () => {
@@ -23,6 +29,14 @@ const App: React.FC = () => {
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<TermsOfService />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/about" element={<About />} />
+
+          {/* Resources / Blog */}
+          <Route path="/resources" element={<ResourceIndex />} />
+          <Route path="/resources/virtual-birthday-ideas-2026" element={<VirtualBirthdayIdeas />} />
+          <Route path="/resources/long-distance-birthday-guide" element={<LongDistanceGuide />} />
+          <Route path="/resources/digital-vs-physical-cards" element={<DigitalVsPhysical />} />
+          <Route path="/resources/birthday-message-etiquette" element={<MessageEtiquette />} />
         </Routes>
       </BrowserRouter>
     </HelmetProvider>

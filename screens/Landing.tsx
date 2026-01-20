@@ -193,7 +193,63 @@ export const Landing: React.FC = () => {
                 </div>
             </div>
 
-            {/* SECTION 5: FOOTER */}
+
+            {/* SECTION 5: THE ULTIMATE GUIDE */}
+            <div className="relative z-20 bg-slate-950 px-6 pb-24">
+                <div className="max-w-4xl mx-auto border-t border-white/5 pt-24 text-gray-400 leading-relaxed font-light">
+                    <h2 className="text-3xl font-serif text-white mb-8 text-center">The Ultimate Guide to Digital Birthday Surprises</h2>
+
+                    <div className="space-y-6">
+                        <section>
+                            <h3 className="text-xl font-semibold text-white mb-3">Why Choose a Digital Birthday Surprise?</h3>
+                            <p>
+                                In our increasingly connected world, physical distances often separate us from our loved ones on their special days.
+                                A digital birthday surprise bridges that gap instantly. Unlike traditional e-cards which can feel generic, Wishprise offers
+                                an immersive 3D experience that feels like a genuine gift. It shows you put thought and effort into making their day magical,
+                                regardless of how many miles lie between you.
+                            </p>
+                        </section>
+
+                        <section>
+                            <h3 className="text-xl font-semibold text-white mb-3">How to Create the Perfect Wish</h3>
+                            <p>
+                                Creating a memorable digital wish is an art. Start by choosing a cake flavor that you know they'd love in real life.
+                                In our <strong>Customize</strong> step, select from options like Rich Chocolate, Classic Vanilla, or Funfetti.
+                                Next, personalize the message. Don't just stick to "Happy Birthday" — mention a shared memory or an inside joke to make it truly personal.
+                            </p>
+                        </section>
+
+                        <section>
+                            <h3 className="text-xl font-semibold text-white mb-3">Adding Audio and Visuals</h3>
+                            <p>
+                                To elevate your surprise, take advantage of our multimedia features. You can upload a cherished photo to appear next to the cake.
+                                Even better, record a voice note! Hearing your voice singing "Happy Birthday" or sharing a heartfelt message adds a layer of emotional
+                                warmth that text alone cannot convey. Our platform supports easy audio recording directly from your browser.
+                            </p>
+                        </section>
+
+                        <section>
+                            <h3 className="text-xl font-semibold text-white mb-3">The "One-Time View" Feature Explained</h3>
+                            <p>
+                                Privacy is paramount. That's why we introduced the "One-Time View" option. If you're sharing personal photos or intimate audio messages,
+                                you might not want them lingering on the internet forever. By selecting this option, all uploaded media is permanently deleted from our servers
+                                immediately after your recipient views the surprise. It empowers you to share genuine, unscripted moments with total peace of mind.
+                            </p>
+                        </section>
+
+                        <section>
+                            <h3 className="text-xl font-semibold text-white mb-3">Tips for Sharing</h3>
+                            <p>
+                                Once your surprise is ready, you'll get a unique link. For the best impact, send this link when you know they have a quiet moment to enjoy it.
+                                Suggest they wear headphones for the full 3D audio experience. Whether you share it via WhatsApp, Messenger, or Email, the preview image will
+                                hint at the magic inside without spoiling the full 3D reveal.
+                            </p>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            {/* SECTION 6: FOOTER */}
             <footer className="relative z-20 bg-slate-950 py-12 px-6 border-t border-white/5">
                 <div className="max-w-6xl mx-auto">
                     <div className="flex flex-col md:flex-row justify-between items-center gap-6">
@@ -202,6 +258,8 @@ export const Landing: React.FC = () => {
                             <p className="text-gray-600 text-sm mt-2">Making birthdays magical, one surprise at a time.</p>
                         </div>
                         <div className="flex flex-wrap justify-center gap-6 text-sm">
+                            <Link to="/about" className="text-gray-400 hover:text-magical-400 transition-colors">About Us</Link>
+                            <Link to="/resources" className="text-gray-400 hover:text-magical-400 transition-colors">Resources</Link>
                             <Link to="/privacy" className="text-gray-400 hover:text-magical-400 transition-colors">Privacy Policy</Link>
                             <Link to="/terms" className="text-gray-400 hover:text-magical-400 transition-colors">Terms of Service</Link>
                             <Link to="/contact" className="text-gray-400 hover:text-magical-400 transition-colors">Contact Us</Link>
