@@ -33,7 +33,7 @@ export const AdComponent: React.FC<AdProps> = ({ type, className = '', onClose }
         <ins className="adsbygoogle"
           style={{ display: 'block' }}
           data-ad-client="ca-pub-4440385158046615"
-          data-ad-slot="1234567890"
+          data-ad-slot="5639398850"
           data-ad-format="auto"
           data-full-width-responsive="true"></ins>
 
