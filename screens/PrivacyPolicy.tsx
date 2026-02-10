@@ -81,6 +81,12 @@ export const PrivacyPolicy: React.FC = () => {
                                 https://policies.google.com/privacy
                             </a>
                         </p>
+                        <p className="mt-4">
+                            To understand how Google uses data when you use our site, please visit{' '}
+                            <a href="https://www.google.com/policies/privacy/partners/" target="_blank" rel="noopener noreferrer" className="text-magical-400 hover:underline">
+                                How Google uses data when you use our partners' sites or apps
+                            </a>.
+                        </p>
                     </div>
 
                     <div>
