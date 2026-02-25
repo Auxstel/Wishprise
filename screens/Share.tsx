@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getSurprise } from '../services/storageService';
 import { Button } from '../components/Button';
-import { AdComponent } from '../components/AdComponent';
+
 import { Logo } from '../components/Logo';
 import { SurpriseData } from '../types';
 
@@ -78,7 +78,6 @@ export const Share: React.FC = () => {
           </button>
         </div>
       </div>
-      <AdComponent type="banner" />
     </div>
   );
 };

@@ -4,7 +4,7 @@ import { Button } from '../components/Button';
 import { Cake } from '../components/Cake';
 import { SurpriseData, CakeFlavor, CakeStyle } from '../types';
 import { saveSurprise, generateId, uploadFile } from '../services/storageService';
-import { AdComponent } from '../components/AdComponent';
+
 import { Logo } from '../components/Logo';
 import { Landing3D } from '../components/Landing3D';
 
@@ -259,8 +259,8 @@ export const Create: React.FC = () => {
                       key={style}
                       onClick={() => handleChange('cakeStyle', style)}
                       className={`p-3 rounded-lg border text-[10px] md:text-xs font-medium capitalize transition-all ${formData.cakeStyle === style
-                          ? 'border-magical-500 bg-magical-500/20 text-white shadow-lg shadow-magical-500/20'
-                          : 'border-white/5 bg-white/5 text-gray-400 hover:bg-white/10'
+                        ? 'border-magical-500 bg-magical-500/20 text-white shadow-lg shadow-magical-500/20'
+                        : 'border-white/5 bg-white/5 text-gray-400 hover:bg-white/10'
                         }`}
                     >
                       {style.replace('_', ' ')}
@@ -277,8 +277,8 @@ export const Create: React.FC = () => {
                       key={flavor}
                       onClick={() => handleChange('cakeFlavor', flavor)}
                       className={`p-2 rounded-lg border text-[10px] md:text-xs font-medium capitalize transition-all ${formData.cakeFlavor === flavor
-                          ? 'border-magical-500 bg-magical-500/20 text-white shadow-lg shadow-magical-500/20'
-                          : 'border-white/5 bg-white/5 text-gray-400 hover:bg-white/10'
+                        ? 'border-magical-500 bg-magical-500/20 text-white shadow-lg shadow-magical-500/20'
+                        : 'border-white/5 bg-white/5 text-gray-400 hover:bg-white/10'
                         }`}
                     >
                       {flavor.replace('_', ' ')}
@@ -376,8 +376,8 @@ export const Create: React.FC = () => {
                       <button
                         onClick={isRecording ? stopRecording : startRecording}
                         className={`flex-1 p-3 rounded-lg font-bold text-sm transition-all flex items-center justify-center gap-2 ${isRecording
-                            ? 'bg-red-500/20 text-red-400 border border-red-500/50 animate-pulse'
-                            : 'bg-white/10 text-white border border-white/20 hover:bg-white/20'
+                          ? 'bg-red-500/20 text-red-400 border border-red-500/50 animate-pulse'
+                          : 'bg-white/10 text-white border border-white/20 hover:bg-white/20'
                           }`}
                       >
                         {isRecording ? (
@@ -459,9 +459,6 @@ export const Create: React.FC = () => {
             </div>
           </div>
         )}
-      </div>
-      <div className="mt-auto relative z-10">
-        <AdComponent type="banner" className="bg-slate-950/80 border-t border-white/10 text-slate-500" />
       </div>
     </div>
   );

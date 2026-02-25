@@ -6,7 +6,7 @@ import { SurpriseData, ExperienceStep, CakeStyle } from '../types';
 import { WHEEL_MESSAGES, DEMO_MUSIC_URL } from '../constants';
 import { Cake } from '../components/Cake';
 import { Button } from '../components/Button';
-import { AdComponent } from '../components/AdComponent';
+
 import { ImmersiveScene } from '../components/ImmersiveScene';
 import { ScratchCard } from '../components/ScratchCard';
 import { Logo } from '../components/Logo';
@@ -34,7 +34,7 @@ export const Receiver: React.FC = () => {
   const [isCut, setIsCut] = useState(false);
   const [showGift, setShowGift] = useState(false);
   const [bgMusicPlaying, setBgMusicPlaying] = useState(false);
-  const [adDismissed, setAdDismissed] = useState(false);
+
 
   // Balloon Logic
   const [poppedBalloons, setPoppedBalloons] = useState<number[]>([]);
@@ -228,7 +228,7 @@ export const Receiver: React.FC = () => {
           {/* LANDING */}
           {step === ExperienceStep.LANDING && (
             <div className="text-center w-full h-full flex flex-col items-center justify-center">
-              {!adDismissed && <AdComponent type="interstitial" onClose={() => setAdDismissed(true)} />}
+
 
               {!allBalloonsPopped ? (
                 <div className="flex flex-col items-center justify-center h-full animate-fade-in z-30 w-full">
