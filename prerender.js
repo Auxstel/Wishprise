@@ -16,7 +16,6 @@ const PORT = 4173;
 
 // All static routes to pre-render
 const ROUTES = [
-    '/',
     '/about',
     '/privacy',
     '/terms',
