@@ -81,7 +81,7 @@ export const AdComponent: React.FC<AdProps> = ({ type, className = '' }) => {
   // For standard units, we return the <ins> tag
   if (type === 'banner' || type === 'interstitial') {
     return (
-      <div className={`text-center overflow-hidden ${className}`}>
+      <div className={`text-center overflow-hidden ${className}`}> 
         {/* ADSENSE UNIT */}
         {/* Replace 'data-ad-slot' with your actual Ad Unit ID from AdSense Dashboard */}
         <ins className="adsbygoogle"
