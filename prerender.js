@@ -43,7 +43,7 @@ const PAGES = {
         description: 'Read our privacy policy to understand how Wishprise handles your data.',
         content: `
       <h1>Privacy Policy</h1>
-      <p>Last updated: December 24, 2025</p>
+      <p>Last updated: March 12, 2026</p>
       <h2>1. Introduction</h2>
       <p>Welcome to Wishprise. Your privacy is important to us. This policy explains how we collect, use, and protect your information when you use our birthday surprise creation service.</p>
       <h2>2. Information We Collect</h2>
@@ -61,7 +61,13 @@ const PAGES = {
         <li>Prevent fraud and ensure the security of our platform.</li>
       </ul>
       <h2>4. Data Storage & Retention</h2>
-      <p>Your birthday surprises are stored on secure servers powered by Supabase. Surprise content may be automatically deleted after being viewed by the recipient.</p>
+      <p>Your birthday surprises are stored on our secure, private servers powered by Supabase. All uploaded media (audio, voice messages) are stored in a private storage bucket and can only be accessed through temporary, time-limited signed URLs generated when the surprise is viewed.</p>
+      <p>Our data retention policy:</p>
+      <ul>
+        <li><strong>After viewing:</strong> Surprise content (audio, voice messages, and the database record) is automatically deleted once the recipient views the surprise.</li>
+        <li><strong>Unviewed surprises:</strong> Any surprise that has not been viewed is automatically deleted after 30 days from creation.</li>
+        <li><strong>No long-term storage:</strong> We do not retain personal data longer than necessary to deliver your surprise.</li>
+      </ul>
       <h2>5. Third-Party Services</h2>
       <ul>
         <li><strong>Supabase:</strong> For secure database and file storage.</li>

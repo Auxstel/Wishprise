@@ -128,7 +128,7 @@ export const PrivacyPolicy: React.FC = () => {
 
             {/* Footer */}
             <footer className="border-t border-white/10 p-6 text-center text-gray-600 text-sm">
-                <p>Wishprise © 2025. All rights reserved.</p>
+                <p>Wishprise © 2026. All rights reserved.</p>
                 <div className="mt-2 space-x-4">
                     <Link to="/terms" className="text-magical-400 hover:underline">Terms of Service</Link>
                     <Link to="/privacy" className="text-magical-400 hover:underline">Privacy Policy</Link>

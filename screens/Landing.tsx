@@ -187,7 +187,7 @@ export const Landing: React.FC = () => {
                         </div>
                         <div className="bg-slate-800/50 p-6 rounded-xl border border-slate-700/50">
                             <h3 className="text-lg font-semibold text-white mb-2">How long is my surprise link valid?</h3>
-                            <p className="text-gray-400">Your surprise link remains active indefinitely unless you've enabled the one-time view feature. Share it whenever you're ready!</p>
+                            <p className="text-gray-400">Your surprise link is valid for 30 days. Once the recipient views the surprise, the content is automatically deleted for privacy. Unviewed surprises are cleaned up after 30 days.</p>
                         </div>
                     </div>
                 </div>
@@ -266,7 +266,7 @@ export const Landing: React.FC = () => {
                         </div>
                     </div>
                     <div className="mt-8 text-center border-t border-slate-900 pt-6">
-                        <p className="text-gray-600 text-sm">Wishprise © 2025. Crafted with love.</p>
+                        <p className="text-gray-600 text-sm">Wishprise © 2026. Crafted with love.</p>
                     </div>
                 </div>
             </footer>
