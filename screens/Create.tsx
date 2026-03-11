@@ -62,13 +62,22 @@ export const Create: React.FC = () => {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    // Strict audio-only validation
+    const allowedTypes = ['audio/mpeg', 'audio/mp3', 'audio/wav', 'audio/ogg', 'audio/m4a', 'audio/aac', 'audio/flac', 'audio/webm', 'audio/x-m4a', 'audio/mp4'];
+    const allowedExtensions = ['.mp3', '.wav', '.ogg', '.m4a', '.aac', '.flac', '.webm'];
+    const fileExtension = '.' + file.name.split('.').pop()?.toLowerCase();
+
+    if (!allowedTypes.includes(file.type) && !allowedExtensions.includes(fileExtension)) {
+      setUploadError('Please upload an audio file only (MP3, WAV, OGG, M4A, AAC, FLAC).');
+      return;
+    }
+
     if (file.size > 10 * 1024 * 1024) {
       setUploadError('File is too large. Please keep it under 10MB.');
       return;
     }
 
     setSongFile(file);
-    // Create a local URL for preview if needed, or just show the name
     setFormData(prev => ({ ...prev, songUrl: file.name }));
     setUploadError('');
   };

@@ -31,10 +31,12 @@ create policy "Public Create" on surprises for insert with check (true);
 create policy "Public Read" on surprises for select using (true);
 create policy "Public Update" on surprises for update using (true);
 
--- 3. Storage Setup (Safe to run multiple times)
+-- 3. Storage Setup — PRIVATE bucket (signed URLs used for access)
+-- To apply: In Supabase Dashboard → Storage → media bucket → Toggle "Public" OFF
+-- Or run this SQL (only works if bucket doesn't exist yet):
 insert into storage.buckets (id, name, public) 
-values ('media', 'media', true) 
-on conflict (id) do nothing;
+values ('media', 'media', false) 
+on conflict (id) do update set public = false;
 
 -- Drop old storage policies
 drop policy if exists "Public Media Upload" on storage.objects;

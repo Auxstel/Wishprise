@@ -1,6 +1,10 @@
 import { SurpriseData } from '../types';
 import { supabase } from '../lib/supabase';
 
+/**
+ * Uploads a file to Supabase Storage and returns the RELATIVE PATH (not a public URL).
+ * The path is stored in the DB; signed URLs are generated at read time for privacy.
+ */
 export const uploadFile = async (file: Blob | File, path: string): Promise<string> => {
   const { data, error } = await supabase.storage
     .from('media')
@@ -11,12 +15,36 @@ export const uploadFile = async (file: Blob | File, path: string): Promise<strin
     throw error;
   }
 
-  // Get Public URL
-  const { data: { publicUrl } } = supabase.storage
-    .from('media')
-    .getPublicUrl(path);
+  // Return the relative path — signed URLs will be generated when fetching the surprise
+  return path;
+};
 
-  return publicUrl;
+/**
+ * Generates a signed URL for a private file. Returns empty string on failure.
+ * @param path - relative path in the 'media' bucket (e.g., "songs/uuid-song.mp3")
+ * @param expiresIn - seconds until the URL expires (default: 1 hour)
+ */
+/**
+ * Checks if a value is an external URL (pasted link) vs a relative storage path.
+ */
+const isExternalUrl = (value: string): boolean => {
+  return value.startsWith('http://') || value.startsWith('https://');
+};
+
+const getSignedUrl = async (path: string, expiresIn: number = 3600): Promise<string> => {
+  // If it's an external URL (user pasted a link), return it as-is
+  if (isExternalUrl(path)) return path;
+
+  const { data, error } = await supabase.storage
+    .from('media')
+    .createSignedUrl(path, expiresIn);
+
+  if (error) {
+    console.error('Signed URL Error:', error);
+    return '';
+  }
+
+  return data.signedUrl;
 };
 
 export const saveSurprise = async (data: SurpriseData): Promise<void> => {
@@ -59,6 +87,15 @@ export const getSurprise = async (id: string): Promise<SurpriseData | null> => {
 
     if (error || !data) return null;
 
+    // Generate signed URLs for private media files (1 hour expiry)
+    const songUrl = data.song_url
+      ? await getSignedUrl(data.song_url)
+      : undefined;
+
+    const voiceMessageUrl = data.voice_message_url
+      ? await getSignedUrl(data.voice_message_url)
+      : undefined;
+
     // Map DB columns back to Frontend Types
     return {
       id: data.id,
@@ -70,8 +107,8 @@ export const getSurprise = async (id: string): Promise<SurpriseData | null> => {
       cakeFlavor: data.cake_flavor,
       cakeStyle: data.cake_style,
       candleCount: data.candle_count,
-      songUrl: data.song_url, // Now a remote URL
-      voiceMessageUrl: data.voice_message_url, // Now a remote URL
+      songUrl,             // Now a temporary signed URL
+      voiceMessageUrl,     // Now a temporary signed URL
       wheelOptions: data.wheel_options,
       createdAt: new Date(data.created_at).getTime()
     };
@@ -85,12 +122,28 @@ export const generateId = (): string => {
   return crypto.randomUUID(); // Use standard UUIDs for DB compatibility
 };
 
+/**
+ * Deletes surprise record and associated media files.
+ * songPath/voicePath are now RELATIVE PATHS stored in DB (e.g., "songs/uuid-song.mp3")
+ * not full URLs, so we need to fetch the raw paths from DB before deletion.
+ */
 export const deleteSurpriseAndFiles = async (id: string, songUrl?: string, voiceUrl?: string) => {
   console.log(`[Privacy] Deleting surprise ${id} and associated files...`);
 
-  // 1. Delete media files FIRST (while we still have the URLs)
-  await deleteMedia(songUrl);
-  await deleteMedia(voiceUrl);
+  // First, fetch the raw paths from DB (the URLs passed in are signed URLs, not paths)
+  const { data: record } = await supabase
+    .from('surprises')
+    .select('song_url, voice_message_url')
+    .eq('id', id)
+    .single();
+
+  // 1. Delete media files using the stored relative paths (skip external URLs)
+  if (record?.song_url && !isExternalUrl(record.song_url)) {
+    await deleteMediaByPath(record.song_url);
+  }
+  if (record?.voice_message_url && !isExternalUrl(record.voice_message_url)) {
+    await deleteMediaByPath(record.voice_message_url);
+  }
 
   // 2. Delete the record from DB
   const { error } = await supabase
@@ -105,19 +158,18 @@ export const deleteSurpriseAndFiles = async (id: string, songUrl?: string, voice
   }
 };
 
-const deleteMedia = async (url?: string) => {
-  if (!url) return;
+/**
+ * Deletes a file from Supabase Storage using its relative path.
+ */
+const deleteMediaByPath = async (path: string) => {
   try {
-    // Extract filename from URL (e.g., .../media/songs/uuid-song.mp3 -> songs/uuid-song.mp3)
-    const path = url.split('/media/')[1];
-    if (!path) return;
-
     const { error } = await supabase.storage
       .from('media')
       .remove([path]);
 
     if (error) console.error("Error deleting file:", path, error);
+    else console.log("Deleted file:", path);
   } catch (e) {
-    console.error("Error in deleteMedia:", e);
+    console.error("Error in deleteMediaByPath:", e);
   }
 };
