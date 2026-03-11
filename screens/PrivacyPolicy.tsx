@@ -22,7 +22,7 @@ export const PrivacyPolicy: React.FC = () => {
             {/* Content */}
             <main className="max-w-4xl mx-auto px-6 py-16">
                 <h1 className="text-4xl font-serif text-white mb-8">Privacy Policy</h1>
-                <p className="text-gray-400 mb-8">Last updated: December 24, 2025</p>
+                <p className="text-gray-400 mb-8">Last updated: March 12, 2026</p>
 
                 <section className="space-y-8 leading-relaxed">
                     <div>
@@ -58,12 +58,17 @@ export const PrivacyPolicy: React.FC = () => {
 
                     <div>
                         <h2 className="text-2xl font-semibold text-white mb-4">4. Data Storage & Retention</h2>
-                        <p>
-                            Your birthday surprises are stored on our secure servers powered by Supabase. Surprise content
-                            (images, audio, messages) may be automatically deleted after being viewed by the recipient,
-                            depending on the settings you choose during creation. We do not retain personal data longer than
-                            necessary to provide our services.
+                        <p className="mb-4">
+                            Your birthday surprises are stored on our secure, private servers powered by Supabase.
+                            All uploaded media (audio, voice messages) are stored in a <strong className="text-white">private storage bucket</strong> and
+                            can only be accessed through temporary, time-limited signed URLs generated when the surprise is viewed.
                         </p>
+                        <p className="mb-4">Our data retention policy:</p>
+                        <ul className="list-disc list-inside space-y-2 ml-4">
+                            <li><strong>After viewing:</strong> Surprise content (audio, voice messages, and the database record) is automatically deleted once the recipient views the surprise.</li>
+                            <li><strong>Unviewed surprises:</strong> Any surprise that has not been viewed is automatically deleted after <strong className="text-white">30 days</strong> from creation.</li>
+                            <li><strong>No long-term storage:</strong> We do not retain personal data longer than necessary to deliver your surprise.</li>
+                        </ul>
                     </div>
 
                     <div>

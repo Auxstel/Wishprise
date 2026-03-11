@@ -76,6 +76,10 @@ export const Share: React.FC = () => {
           >
             Preview it yourself (Won't delete)
           </button>
+
+          <p className="text-xs text-gray-400 mt-4">
+            🔒 Your surprise is stored securely. It will be automatically deleted after viewing or after 30 days.
+          </p>
         </div>
       </div>
     </div>

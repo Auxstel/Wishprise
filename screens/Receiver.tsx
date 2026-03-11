@@ -19,6 +19,7 @@ export const Receiver: React.FC = () => {
 
   const [data, setData] = useState<SurpriseData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [expired, setExpired] = useState(false);
   const [step, setStep] = useState<ExperienceStep>(ExperienceStep.LANDING);
 
   // Interactive States
@@ -57,13 +58,8 @@ export const Receiver: React.FC = () => {
           if (s) {
             setData(s);
           } else {
-            // Fallback for demo or not found
-            setData({
-              id: 'demo', senderName: 'A Friend', receiverName: 'You',
-              introMessage: "Someone wanted to make you smile.",
-              personalNote: "Happy Birthday!", finalMessage: "Big hug!",
-              cakeFlavor: 'vanilla' as any, cakeStyle: CakeStyle.CLASSIC, candleCount: 3, createdAt: Date.now()
-            });
+            // Surprise was already viewed or expired
+            setExpired(true);
           }
         } catch (e) {
           console.error(e);
@@ -204,7 +200,20 @@ export const Receiver: React.FC = () => {
   const openGift = () => setStep(ExperienceStep.REVEAL);
 
 
-  if (loading || !data) return <div className="min-h-screen flex items-center justify-center bg-black text-white">Loading magic...</div>;
+  if (loading) return <div className="min-h-screen flex items-center justify-center bg-black text-white">Loading magic...</div>;
+
+  if (expired || !data) return (
+    <div className="min-h-screen flex flex-col items-center justify-center bg-black text-white p-6 text-center">
+      <div className="bg-white/5 backdrop-blur-xl p-10 rounded-3xl border border-white/10 max-w-md w-full space-y-6">
+        <div className="text-6xl">✨</div>
+        <h1 className="text-3xl font-serif text-white">This surprise has already been opened</h1>
+        <p className="text-gray-400">Birthday surprises on Wishprise are one-time experiences. This one has already been viewed by its recipient, or it has expired.</p>
+        <Button onClick={() => navigate('/')} variant="primary" className="w-full">
+          Create Your Own Surprise 🎁
+        </Button>
+      </div>
+    </div>
+  );
 
   const allBalloonsPopped = poppedBalloons.length === balloons.length;
 
