@@ -29,7 +29,7 @@ drop policy if exists "Public Update" on surprises;
 
 create policy "Public Create" on surprises for insert with check (true);
 create policy "Public Read" on surprises for select using (true);
-create policy "Public Update" on surprises for update using (true);
+-- Update functionality is removed for security (surprises are read-only)
 
 -- 3. Storage Setup — PRIVATE bucket (signed URLs used for access)
 -- To apply: In Supabase Dashboard → Storage → media bucket → Toggle "Public" OFF
