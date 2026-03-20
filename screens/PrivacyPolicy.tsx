@@ -6,7 +6,11 @@ import { Seo } from '../components/Seo';
 export const PrivacyPolicy: React.FC = () => {
     return (
         <div className="min-h-screen bg-slate-950 text-gray-300 font-sans">
-            <Seo title="Privacy Policy" description="Read our privacy policy to understand how we handle your data." />
+            <Seo 
+                title="Privacy Policy - Wishprise" 
+                description="Read our privacy policy to understand how we protect your data and handle information for your birthday surprises." 
+                path="/privacy" 
+            />
             {/* Header */}
             <header className="border-b border-white/10 p-6">
                 <div className="max-w-4xl mx-auto flex justify-between items-center">

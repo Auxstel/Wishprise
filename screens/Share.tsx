@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getSurprise } from '../services/storageService';
-import { Button } from '../components/Button';
-
 import { Logo } from '../components/Logo';
+import { Seo } from '../components/Seo';
 import { SurpriseData } from '../types';
+import { Landing3D } from '../components/Landing3D';
+import ButtonWithIcon from '@/components/ui/button-witn-icon';
+import RateUs from '../components/RateUs';
+import ShareCarousel from '../components/ShareCarousel';
 
 export const Share: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -29,8 +32,20 @@ export const Share: React.FC = () => {
     fetchData();
   }, [id]);
 
-  if (loading) return <div className="min-h-screen bg-magical-50 flex items-center justify-center">Loading magic...</div>;
-  if (!surprise) return <div className="min-h-screen bg-magical-50 flex items-center justify-center">Surprise not found.</div>;
+  if (loading) return (
+    <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-6 space-y-4">
+      <div className="w-12 h-12 border-4 border-magical-500/20 border-t-magical-500 rounded-full animate-spin"></div>
+      <p className="font-serif italic text-magical-300">Awakening the magic...</p>
+    </div>
+  );
+  
+  if (!surprise) return (
+    <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-6">
+       <div className="text-6xl mb-6">🕯️</div>
+       <p className="font-serif italic text-white/40 text-xl tracking-tight">The magic seems to have faded...</p>
+       <button onClick={() => navigate('/')} className="mt-8 text-magical-400 underline uppercase text-[10px] font-black tracking-[0.3em]">Return Home</button>
+    </div>
+  );
 
   const shareUrl = `${window.location.origin}/view/${id}`;
 
@@ -46,42 +61,77 @@ export const Share: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-magical-50 flex flex-col items-center justify-center p-6 text-center space-y-8 relative overflow-hidden">
+    <div className="min-h-screen bg-slate-950 flex flex-col font-sans text-slate-300 relative">
+      <ShareCarousel />
+      <div className="flex-1 flex flex-col items-center justify-center p-6 md:p-12 relative z-10">
+        <Seo title="Your Surprise is Ready!" path={`/share/${id}`} />
 
-      <div className="absolute top-6 left-1/2 -translate-x-1/2 z-10 cursor-pointer" onClick={() => navigate('/')}>
-        <Logo size="md" />
+      {/* 3D Background Layer */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <div className="absolute inset-0 bg-slate-950"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-purple-900/10 via-slate-950/80 to-slate-950 z-10"></div>
+        <Landing3D />
       </div>
 
-      <div className="bg-white p-8 rounded-2xl shadow-xl max-w-md w-full border border-magical-100 relative z-20">
-        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <span className="text-2xl">🎉</span>
-        </div>
-        <h2 className="text-2xl font-serif text-gray-800 mb-2">It's Ready!</h2>
-        <p className="text-gray-600 mb-6">Your surprise for <strong>{surprise.receiverName}</strong> is created.</p>
-
-        <div className="bg-gray-50 p-3 rounded-lg border border-gray-200 break-all text-xs text-gray-500 font-mono mb-4 select-all">
-          {shareUrl}
+      <div className="max-w-xl w-full animate-fade-in relative z-20 text-center space-y-12">
+        <div 
+          onClick={() => navigate('/')} 
+          className="cursor-pointer hover:scale-105 transition-transform duration-300 inline-block mb-4"
+        >
+          <Logo size="md" />
         </div>
 
-        <div className="space-y-3">
-          <Button onClick={handleCopy} fullWidth variant={copied ? "secondary" : "primary"}>
-            {copied ? "Link Copied!" : "Copy Link"}
-          </Button>
-          <Button onClick={handleWhatsapp} fullWidth className="bg-green-500 hover:bg-green-600 text-white border-none">
-            Share on WhatsApp
-          </Button>
-          <button
-            onClick={() => navigate(`/view/${id}?preview=true`)}
-            className="text-sm text-magical-600 underline mt-4"
-          >
-            Preview it yourself (Won't delete)
-          </button>
+        <div className="space-y-4">
+            <h2 className="text-4xl md:text-6xl font-serif text-white tracking-tight">It's <span className="text-magical-300 font-hand text-6xl md:text-8xl">Ready!</span></h2>
+            <p className="text-slate-400 font-serif italic text-xl leading-relaxed">Your surprise for <span className="text-magical-300 font-hand text-3xl md:text-4xl mx-1">{surprise.receiverName}</span> is glowing with magic.</p>
+        </div>
 
-          <p className="text-xs text-gray-400 mt-4">
-            🔒 Your surprise is stored securely. It will be automatically deleted after viewing or after 30 days.
-          </p>
+        <div className="backdrop-blur-3xl bg-white/[0.02] p-8 md:p-12 rounded-[3.5rem] border border-white/5 shadow-2xl relative overflow-hidden space-y-12">
+            <div className="absolute -top-24 -right-24 w-64 h-64 bg-magical-600/[0.05] blur-[120px] rounded-full pointer-events-none"></div>
+
+            <div className="space-y-8">
+              <div className="bg-slate-950/40 p-5 rounded-2xl border border-white/5 break-all text-xs text-white/40 font-mono tracking-widest select-all shadow-inner">
+                  {shareUrl}
+              </div>
+
+              <div className="flex flex-col gap-4">
+                  <div className="flex justify-center">
+                      <ButtonWithIcon 
+                          text={copied ? "Link Copied!" : "Copy Magical Link ✨"} 
+                          onClick={handleCopy}
+                          className="w-full text-white shadow-magical-600/30 py-8"
+                      />
+                  </div>
+                  
+                  <button 
+                      onClick={handleWhatsapp}
+                      className="w-full py-4 rounded-full border border-white/5 bg-green-500/10 text-green-400 hover:bg-green-500/20 transition-all font-serif italic text-lg shadow-lg"
+                  >
+                      Share via WhatsApp
+                  </button>
+              </div>
+
+              <div className="pt-4 border-t border-white/5 flex flex-col gap-6">
+                  <button
+                      onClick={() => navigate(`/view/${id}?preview=true`)}
+                      className="text-[10px] font-black text-magical-400/50 hover:text-magical-300 uppercase tracking-[0.4em] transition-colors"
+                  >
+                      Preview the magic yourself
+                  </button>
+
+                  <p className="text-[10px] text-slate-500 font-serif italic leading-relaxed max-w-xs mx-auto">
+                      🔒 This surprise is private and will gracefully fade away after they've experienced it.
+                  </p>
+              </div>
+            </div>
+
+            {/* FEEDBACK SECTION */}
+            <div className="pt-12 border-t border-white/5">
+                <RateUs surpriseId={id || ''} />
+            </div>
         </div>
       </div>
     </div>
+  </div>
   );
 };

@@ -9,6 +9,7 @@ export const VirtualBirthdayIdeas: React.FC = () => {
             <Seo
                 title="10 Creative Virtual Birthday Ideas for 2026 - Wishprise"
                 description="Planning a virtual party? Here are the top 10 trends for 2026, from 3D interactive wishes to virtual escape rooms."
+                path="/resources/virtual-birthday-ideas-2026"
             />
 
             <nav className="p-6 flex justify-between items-center max-w-4xl mx-auto border-b border-white/5">

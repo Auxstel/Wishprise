@@ -139,6 +139,38 @@ const PAGES = {
       </nav>
     `
     },
+    '/whatsapp-birthday-surprise': {
+        title: 'Send a Birthday Surprise via WhatsApp Link | 3D Magic',
+        description: 'The best way to send a birthday surprise via WhatsApp. Create a stunning 3D interactive link for free. No login required. Perfect for long-distance friends.',
+        content: `
+      <h1>The Perfect WhatsApp Birthday Surprise</h1>
+      <p>Stop sending boring "Happy Birthday" texts. Send an interactive 3D experience they can open right in their chat.</p>
+      <h2>Why use Wishprise for WhatsApp?</h2>
+      <ul>
+        <li>It generates a beautiful link preview in the chat</li>
+        <li>No login required for you or the recipient</li>
+        <li>Features 3D cakes, interactive balloons, and music</li>
+        <li>Works perfectly on mobile devices</li>
+      </ul>
+      <p><a href="/create">Create Your WhatsApp Surprise Now →</a></p>
+    `
+    },
+    '/long-distance-birthdays': {
+        title: 'Best Virtual Birthday Surprise for Long Distance | Wishprise',
+        description: 'The ultimate long-distance birthday surprise tool. Create a 3D interactive magic gift for your partner or friend. No shipping, just pure 3D magic via link.',
+        content: `
+      <h1>Celebrate Together, Miles Apart</h1>
+      <p>Distance is just a number. With Wishprise, you can send a magical 3D surprise that feels like you're right there with them. No shipping required. No delays.</p>
+      <h2>Perfect for Long Distance</h2>
+      <ul>
+        <li>Instant delivery via a simple link</li>
+        <li>Personal voice notes and heartfelt messages</li>
+        <li>Interactive 3D elements create a sense of presence</li>
+        <li>100% free and private</li>
+      </ul>
+      <p><a href="/create">Start Your Long Distance Surprise →</a></p>
+    `
+    },
     '/resources': {
         title: 'Birthday Resources & Guides | Wishprise',
         description: 'Helpful guides on virtual birthday celebrations, digital cards, and birthday message etiquette.',
@@ -252,6 +284,21 @@ const PAGES = {
       <h2>Going Beyond Text</h2>
       <p>A personalized 3D surprise, voice message, or video greeting shows vastly more effort than a text. Consider using Wishprise for birthdays that really matter.</p>
       <p><a href="/create">Create a Free Surprise on Wishprise →</a></p>
+    `
+    },
+    '/resources/whatsapp-birthday-surprise-ideas': {
+        title: '5 Creative WhatsApp Birthday Surprise Ideas for 2026',
+        description: 'Looking for unique ways to surprise a friend on WhatsApp? From 3D interactive links to custom voice notes, here are the best virtual surprise ideas.',
+        content: `
+      <h1>5 Creative WhatsApp Birthday Surprise Ideas for 2026</h1>
+      <p>Sending a "Happy Birthday" text is standard. Sending a surprise that actually matters? That takes a little more thought.</p>
+      <h2>1. The 3D Interactive Surprise Link</h2>
+      <p>Using a birthday wish maker like Wishprise, you can create a unique 3D cake that they actually "unwrap" or "cut" on their screen.</p>
+      <h2>2. The "Time-Released" Voice Note</h2>
+      <p>Create a series of short voice notes to be opened at specific times throughout the day.</p>
+      <h2>3. The Mystery Status Update</h2>
+      <p>Post a blurry photo with a countdown on your WhatsApp Status.</p>
+      <p><a href="/resources/whatsapp-birthday-surprise-ideas">Read the full guide here →</a></p>
     `
     }
 };

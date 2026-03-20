@@ -9,6 +9,7 @@ export const LongDistanceGuide: React.FC = () => {
             <Seo
                 title="The Ultimate Guide to Long-Distance Birthdays - Wishprise"
                 description="Distance makes the heart grow fonder, but it makes birthdays harder. Here is how to bridge the gap and make them feel special."
+                path="/resources/long-distance-birthday-guide"
             />
 
             <nav className="p-6 flex justify-between items-center max-w-4xl mx-auto border-b border-white/5">

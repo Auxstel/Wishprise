@@ -27,6 +27,41 @@ export const ResourceIndex: React.FC = () => {
             readTime: "6 min read"
         },
         {
+            title: "Birthday Traditions Around the World",
+            excerpt: "From Canadian nose-grease to Italian ear-pulls, discover how different cultures celebrate life's big day.",
+            link: "/resources/birthday-traditions-around-the-world",
+            date: "Mar 20, 2026",
+            readTime: "7 min read"
+        },
+        {
+            title: "Modern Birthday Party Planning Checklist 2026",
+            excerpt: "Stay organized and stress-free with our comprehensive timeline for planning the perfect celebration.",
+            link: "/resources/modern-birthday-party-planning-checklist-2026",
+            date: "Mar 20, 2026",
+            readTime: "8 min read"
+        },
+        {
+            title: "The Science of Surprises: Why We Love Them",
+            excerpt: "Explore the neurochemistry of 'prediction error' and why birthday surprises trigger massive dopamine hits.",
+            link: "/resources/the-science-of-surprises",
+            date: "Mar 20, 2026",
+            readTime: "6 min read"
+        },
+        {
+            title: "How to Make a Small Birthday Feel Huge",
+            excerpt: "Limited guest list? Here is how to maximize emotional impact and magic on an intimate scale.",
+            link: "/resources/how-to-make-a-small-birthday-feel-huge",
+            date: "Mar 20, 2026",
+            readTime: "5 min read"
+        },
+        {
+            title: "Top 10 Birthday Gift Ideas for Minimalists",
+            excerpt: "Gifting 'clutter-free' joy. Discover the best experiential and digital gifts for those who want less 'stuff'.",
+            link: "/resources/birthday-gift-ideas-for-minimalists",
+            date: "Mar 20, 2026",
+            readTime: "6 min read"
+        },
+        {
             title: "Birthday Message Etiquette: What to Write",
             excerpt: "Stuck on what to say? We provide templates for funny, sentimental, and professional birthday wishes.",
             link: "/resources/birthday-message-etiquette",
@@ -40,6 +75,7 @@ export const ResourceIndex: React.FC = () => {
             <Seo
                 title="Wishprise Resources - Birthday Tips & Guides"
                 description="Expert advice on virtual celebrations, birthday etiquette, and making digital wishes magical."
+                path="/resources"
             />
 
             <nav className="p-6 flex justify-between items-center max-w-6xl mx-auto">
@@ -58,6 +94,11 @@ export const ResourceIndex: React.FC = () => {
                 </header>
 
                 <div className="grid md:grid-cols-2 gap-8">
+                    <Link to="/resources/whatsapp-birthday-surprise-ideas" className="bg-slate-900 border border-white/5 p-6 rounded-2xl hover:border-magical-500/50 transition-all group">
+                        <h2 className="text-xl font-serif text-white mb-2 group-hover:text-magical-400 transition-colors">5 Creative WhatsApp Surprise Ideas</h2>
+                        <p className="text-slate-400 text-sm mb-4 italic">Surprise your friends with 3D magic directly in your WhatsApp chats.</p>
+                        <span className="text-magical-400 text-xs font-bold uppercase tracking-widest">Read More →</span>
+                    </Link>
                     {articles.map((article, index) => (
                         <Link key={index} to={article.link} className="bg-slate-900 border border-slate-800 p-8 rounded-2xl hover:border-magical-500/50 transition-colors group">
                             <div className="flex justify-between items-center text-xs text-magical-400 font-bold tracking-wider uppercase mb-4">

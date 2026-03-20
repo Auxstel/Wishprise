@@ -9,6 +9,7 @@ export const DigitalVsPhysical: React.FC = () => {
             <Seo
                 title="Digital vs. Physical Birthday Cards: Which is Better? - Wishprise"
                 description="Comparing the environmental impact, cost, and emotional weight of digital greetings versus traditional paper cards."
+                path="/resources/digital-vs-physical-cards"
             />
 
             <nav className="p-6 flex justify-between items-center max-w-4xl mx-auto border-b border-white/5">

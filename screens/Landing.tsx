@@ -5,13 +5,149 @@ import { AdComponent } from '../components/AdComponent';
 import { Landing3D } from '../components/Landing3D';
 import { Logo } from '../components/Logo';
 import { Seo } from '../components/Seo';
+import { Schema } from '../components/Schema';
+import { ScratchCard } from '../components/ScratchCard';
+import ButtonWithIcon from '@/components/ui/button-witn-icon';
+import DynamicTestimonials from '../components/DynamicTestimonials';
+import HowItWorks from '../components/HowItWorks';
+import { getFeedbackStats } from '../services/feedbackService';
 
 export const Landing: React.FC = () => {
     const navigate = useNavigate();
+    const [senderName, setSenderName] = React.useState('');
+    const [phase, setPhase] = React.useState<'input' | 'scratch' | 'complete'>('input');
+    const [scratchRevealed, setScratchRevealed] = React.useState(false);
+    const [stats, setStats] = React.useState({ average: 4.9, count: 124 });
+
+    React.useEffect(() => {
+        const fetchStats = async () => {
+            const data = await getFeedbackStats();
+            setStats(data);
+        };
+        fetchStats();
+    }, []);
 
     return (
         <div className="min-h-screen bg-slate-950 flex flex-col font-sans overflow-x-hidden">
-            <Seo />
+            <Seo
+                title="Free Birthday Wish Maker - Create 3D Magic"
+                description="Wishprise is the #1 free birthday wish maker and birthday online wisher. Create stunning 3D virtual surprises with custom cakes and music delivered via a simple link."
+                path="/"
+            />
+
+            {/* Structured Data for SEO */}
+            <Schema data={{
+                "@context": "https://schema.org",
+                "@type": "Organization",
+                "name": "Wishprise",
+                "url": "https://wishprise.online",
+                "logo": "https://wishprise.online/logo.png",
+                "sameAs": [
+                    "https://twitter.com/wishprise",
+                    "https://facebook.com/wishprise"
+                ]
+            }} />
+
+            <Schema data={{
+                "@context": "https://schema.org",
+                "@type": "WebSite",
+                "name": "Wishprise",
+                "url": "https://wishprise.online",
+                "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": "https://wishprise.online/create?q={search_term_string}",
+                    "query-input": "required name=search_term_string"
+                }
+            }} />
+
+            <Schema data={{
+                "@context": "https://schema.org",
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "Is Wishprise really free?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Yes! Wishprise is completely free to use. We sustain the service through non-intrusive advertisements. No hidden fees, no premium tiers."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Do I need to create an account?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "No account required! Just create your surprise and share the link. It's that simple."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What is the 'one-time view' feature?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "This special feature deletes your uploaded photos and audio after the recipient views them once. It's perfect for private, personal surprises."
+                        }
+                    }
+                ]
+            }} />
+
+            <Schema data={{
+                "@context": "https://schema.org",
+                "@type": "HowTo",
+                "name": "How to Create a Virtual Birthday Surprise",
+                "step": [
+                    {
+                        "@type": "HowToStep",
+                        "name": "Personalize Your Surprise",
+                        "text": "Add your recipient's name, choose a cake style, write a heartfelt message, and optionally upload a photo or voice note."
+                    },
+                    {
+                        "@type": "HowToStep",
+                        "name": "Share the Link",
+                        "text": "Get a unique link to your surprise and send it via WhatsApp, text, or email."
+                    },
+                    {
+                        "@type": "HowToStep",
+                        "name": "Watch the Magic",
+                        "text": "Your recipient opens the link and experiences a stunning 3D birthday animation."
+                    }
+                ]
+            }} />
+
+            <Schema data={{
+                "@context": "https://schema.org",
+                "@type": "Product",
+                "name": "Wishprise 3D Birthday Wish Maker",
+                "description": "The world's first interactive 3D birthday wish maker. Create personalized virtual surprises for free.",
+                "brand": {
+                    "@type": "Brand",
+                    "name": "Wishprise"
+                },
+                "aggregateRating": {
+                    "@type": "AggregateRating",
+                    "ratingValue": stats.average.toString(),
+                    "reviewCount": stats.count.toString()
+                }
+            }} />
+
+            <Schema data={{
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Home",
+                        "item": "https://wishprise.online"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "Birthday Wish Maker",
+                        "item": "https://wishprise.online"
+                    }
+                ]
+            }} />
 
             {/* SECTION 1: HERO (Full Screen) */}
             <div className="relative h-screen w-full flex flex-col">
@@ -28,11 +164,11 @@ export const Landing: React.FC = () => {
                 </div>
 
                 {/* Content */}
-                <div className="relative z-20 flex-1 flex flex-col items-center justify-center p-6 text-center">
+                <div className="relative z-20 flex-1 flex flex-col items-center pt-16 md:pt-24 p-6 text-center overflow-y-auto no-scrollbar">
 
-                    <div className="backdrop-blur-sm bg-white/5 p-8 md:p-12 rounded-3xl border border-white/10 shadow-[0_0_50px_rgba(217,70,239,0.15)] animate-fade-in-up max-w-3xl mx-auto flex flex-col items-center">
+                    <div className="backdrop-blur-md bg-white/10 p-8 md:p-10 rounded-[2.5rem] border border-white/20 shadow-[0_0_80px_rgba(139,38,242,0.2)] animate-fade-in-up w-full max-w-3xl mx-auto flex flex-col items-center my-4 relative">
                         <span className="inline-block py-1 px-3 rounded-full bg-amber-400/20 border border-amber-400/30 text-amber-300 text-xs font-bold tracking-[0.2em] uppercase mb-8 shadow-glow">
-                            The #1 Birthday Experience
+                            The #1 Birthday Wish Maker
                         </span>
 
                         <div className="mb-4 transform hover:scale-105 transition-transform duration-500">
@@ -43,21 +179,87 @@ export const Landing: React.FC = () => {
                             Make it <span className="text-magical-300 font-hand text-4xl">Magical</span>
                         </h2>
 
-                        <p className="text-lg md:text-xl text-purple-100/80 font-light mt-6 max-w-xl mx-auto leading-relaxed">
-                            Create a stunning, interactive 3D birthday surprise for someone you love. <br />
-                            <span className="italic text-white opacity-60">No login required. Free forever.</span>
-                        </p>
+                        <div className="space-y-4 mt-6 max-w-2xl mx-auto">
+                            <p className="text-xl md:text-2xl text-white font-serif italic leading-relaxed tracking-wide opacity-90">
+                                Create a <span className="text-shimmer animate-shimmer font-bold">stunning, interactive 3D birthday surprise</span> for someone you love.
+                            </p>
+                            <p className="flex items-center justify-center gap-4 text-xs md:text-sm tracking-[0.2em] uppercase font-bold text-amber-200/40">
+                                <span className="flex items-center gap-1.5"><span className="text-magical-400">⚡</span> No login required</span>
+                                <span className="w-1.5 h-1.5 rounded-full bg-magical-500/50"></span>
+                                <span className="flex items-center gap-1.5"><span className="text-magical-400">🔒</span> Private & Secure</span>
+                            </p>
+                        </div>
 
-                        <div className="mt-12 relative group">
-                            <div className="absolute -inset-1 bg-gradient-to-r from-magical-500 to-amber-300 rounded-full blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
-                            <Button
-                                onClick={() => navigate('/create')}
-                                className="relative px-12 py-5 bg-black/20 hover:bg-black/30 backdrop-blur-xl border border-white/20 text-white text-lg rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.05)] flex items-center gap-3 font-serif tracking-widest uppercase hover:border-white/40 hover:scale-[1.02] active:scale-95"
-                            >
-                                <span className="text-magical-300 group-hover:text-white transition-colors text-xl">✨</span>
-                                <span className="text-sm md:text-base font-bold">Create a Surprise</span>
-                                <span className="text-magical-300 group-hover:text-white transition-colors text-xl">✨</span>
-                            </Button>
+                        <div className="mt-8 w-full max-w-md mx-auto flex flex-col justify-center">
+                            {phase === 'input' && (
+                                <div className="space-y-6 animate-fade-in-up">
+                                    <p className="text-lg md:text-xl font-serif italic text-white/70">
+                                        "Because behind every surprise is someone who truly cares."
+                                    </p>
+                                    <div className="space-y-4">
+                                        <input
+                                            type="text"
+                                            placeholder="What's your name?"
+                                            value={senderName}
+                                            onChange={(e) => setSenderName(e.target.value)}
+                                            onKeyPress={(e) => e.key === 'Enter' && senderName.trim() && setPhase('scratch')}
+                                            className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white placeholder-white/20 outline-none focus:border-magical-500/50 transition-all font-sans text-lg text-center"
+                                        />
+                                        <ButtonWithIcon 
+                                            text="Next Magic Step"
+                                            onClick={() => senderName.trim() && setPhase('scratch')}
+                                            disabled={!senderName.trim()}
+                                            className="w-full text-white"
+                                        />
+                                    </div>
+                                </div>
+                            )}
+
+                            {phase === 'scratch' && (
+                                <div className="flex flex-col items-center gap-6 animate-fade-in w-full">
+                                    <ScratchCard 
+                                        width={450} 
+                                        height={260} 
+                                        onReveal={() => setScratchRevealed(true)}
+                                    >
+                                        <div className="flex flex-col items-center gap-4 px-4">
+                                            <p className="text-xs font-bold uppercase tracking-[0.3em] text-magical-600 bg-magical-50 px-3 py-1 rounded-full">Your Impact</p>
+                                            <p className="text-lg md:text-xl text-slate-800 font-serif leading-relaxed italic">
+                                                <span className="font-bold text-slate-950 not-italic block mb-2 text-2xl">{senderName},</span>
+                                                A surprise like this is a reminder that they are <span className="text-magical-600 font-bold not-italic">seen, loved</span>, and truly matter. You're about to make their world a little brighter today. ❤️
+                                            </p>
+                                        </div>
+                                    </ScratchCard>
+                                    
+                                    {!scratchRevealed ? (
+                                        <p className="text-sm text-amber-200/60 animate-pulse font-medium tracking-[0.2em] uppercase">
+                                            Scratch the gold to see your impact...
+                                        </p>
+                                    ) : (
+                                        <ButtonWithIcon 
+                                            text="Got it! Let's build it"
+                                            onClick={() => setPhase('complete')}
+                                            className="animate-fade-in text-white"
+                                        />
+                                    )}
+                                </div>
+                            )}
+
+                            {phase === 'complete' && (
+                                <div className="animate-fade-in flex flex-col items-center py-6">
+                                    <div className="relative group">
+                                        <div className="absolute -inset-1 bg-gradient-to-r from-magical-500 to-amber-300 rounded-full blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+                                        <ButtonWithIcon
+                                            text="Create My 3D Surprise Now"
+                                            onClick={() => navigate('/create')}
+                                            className="shadow-[0_0_40px_rgba(139,38,242,0.4)] font-serif tracking-[0.2em] uppercase scale-110 text-white"
+                                        />
+                                    </div>
+                                    <p className="mt-10 text-magical-300 font-hand text-4xl animate-bounce-subtle">
+                                        The magic begins with you, {senderName}...
+                                    </p>
+                                </div>
+                            )}
                         </div>
                     </div>
 
@@ -71,96 +273,59 @@ export const Landing: React.FC = () => {
             </div>
 
             {/* SECTION 2: HOW IT WORKS */}
-            <div className="relative z-20 bg-gradient-to-b from-slate-950 to-slate-900 py-24 px-6">
-                <div className="max-w-6xl mx-auto">
-                    <div className="text-center mb-16 space-y-4">
-                        <h2 className="text-3xl md:text-5xl font-serif text-white">How It Works</h2>
-                        <p className="text-gray-400 max-w-2xl mx-auto">Create a personalized birthday experience in just 3 simple steps. No account needed, completely free.</p>
-                    </div>
-
-                    <div className="grid md:grid-cols-3 gap-8">
-                        {/* Step 1 */}
-                        <div className="text-center p-8 rounded-2xl bg-slate-800/50 border border-slate-700/50 hover:border-magical-500/30 transition-colors">
-                            <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br from-magical-500 to-purple-600 flex items-center justify-center text-2xl font-bold text-white">1</div>
-                            <h3 className="text-xl font-semibold text-white mb-4">Personalize</h3>
-                            <p className="text-gray-400 leading-relaxed">Add your recipient's name, choose a cake style, write a heartfelt message, and optionally upload a photo or voice note.</p>
-                        </div>
-
-                        {/* Step 2 */}
-                        <div className="text-center p-8 rounded-2xl bg-slate-800/50 border border-slate-700/50 hover:border-magical-500/30 transition-colors">
-                            <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-2xl font-bold text-white">2</div>
-                            <h3 className="text-xl font-semibold text-white mb-4">Share the Link</h3>
-                            <p className="text-gray-400 leading-relaxed">Get a unique link to your surprise. Send it via WhatsApp, text, email, or any messaging app. It works on any device.</p>
-                        </div>
-
-                        {/* Step 3 */}
-                        <div className="text-center p-8 rounded-2xl bg-slate-800/50 border border-slate-700/50 hover:border-magical-500/30 transition-colors">
-                            <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center text-2xl font-bold text-white">3</div>
-                            <h3 className="text-xl font-semibold text-white mb-4">Watch the Magic</h3>
-                            <p className="text-gray-400 leading-relaxed">Your recipient opens the link and experiences a stunning 3D birthday animation with your personal touch. Pure joy!</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <HowItWorks />
 
             {/* SECTION 3: TESTIMONIALS */}
             <div className="relative z-20 bg-slate-950 py-24 px-6 border-t border-white/5">
-                <div className="max-w-6xl mx-auto">
+                <div className="max-w-7xl mx-auto">
                     <div className="text-center mb-16 space-y-4">
-                        <h2 className="text-3xl md:text-5xl font-serif text-white">Moments of Joy</h2>
-                        <p className="text-gray-400">Join thousands who made their loved ones smile with Wishprise.</p>
+                        <h2 className="text-4xl md:text-5xl font-serif text-white tracking-tight">Moments of <span className="text-magical-300 font-hand text-5xl md:text-6xl text-shimmer animate-shimmer">Joy</span></h2>
+                        <p className="text-slate-400 max-w-2xl mx-auto font-serif italic text-lg opacity-80">Join thousands who made their loved ones smile with Wishprise.</p>
+                    </div>
+
+                    <DynamicTestimonials />
+                </div>
+            </div>
+
+            {/* SECTION 4: LATEST RESOURCES (For AdSense/SEO visibility) */}
+            <div className="relative z-20 bg-slate-900/30 py-24 px-6 border-t border-white/5">
+                <div className="max-w-6xl mx-auto">
+                    <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+                        <div>
+                            <h2 className="text-3xl md:text-5xl font-serif text-white mb-4">Celebration Guides</h2>
+                            <p className="text-gray-400">Expert tips for making every birthday unforgettable.</p>
+                        </div>
+                        <Link to="/resources" className="text-magical-400 font-bold flex items-center gap-2 hover:text-magical-300 transition-colors group">
+                            View All Resources <span className="group-hover:translate-x-1 transition-transform">→</span>
+                        </Link>
                     </div>
 
                     <div className="grid md:grid-cols-3 gap-8">
-                        {/* Review 1 */}
-                        <div className="bg-slate-900 p-8 rounded-2xl border border-slate-800 shadow-xl relative group hover:-translate-y-2 transition-transform duration-300">
-                            <div className="absolute -top-4 left-8 text-4xl">🎂</div>
-                            <p className="text-gray-300 italic mb-6 leading-relaxed pt-4">
-                                "I sent this to my boyfriend who is deployed. He said it was the best part of his day. The 3D cake blowing part is genius!"
-                            </p>
-                            <div className="flex items-center space-x-4 border-t border-slate-800 pt-4">
-                                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center text-white font-bold">J</div>
-                                <div>
-                                    <p className="text-white font-bold text-sm">Jessica M.</p>
-                                    <p className="text-gray-500 text-xs">Created a Chocolate Cake</p>
-                                </div>
-                            </div>
-                        </div>
+                        <Link to="/resources/birthday-traditions-around-the-world" className="bg-slate-900/50 p-6 rounded-2xl border border-slate-800 hover:border-magical-500/50 transition-all group">
+                            <div className="text-magical-400 text-xs font-bold uppercase tracking-widest mb-4">Culture</div>
+                            <h3 className="text-xl font-serif text-white mb-3 group-hover:text-magical-300 transition-colors">Birthday Traditions Around the World</h3>
+                            <p className="text-gray-400 text-sm leading-relaxed mb-4">From nose-greasing in Canada to ear-pulling in Italy, discover unique global customs.</p>
+                            <span className="text-magical-400 text-sm font-medium">Read More →</span>
+                        </Link>
 
-                        {/* Review 2 */}
-                        <div className="bg-slate-900 p-8 rounded-2xl border border-slate-800 shadow-xl relative group hover:-translate-y-2 transition-transform duration-300">
-                            <div className="absolute -top-4 left-8 text-4xl">✨</div>
-                            <p className="text-gray-300 italic mb-6 leading-relaxed pt-4">
-                                "My mom isn't tech-savvy but she absolutely loved scratching the card to see my message. Simple, elegant, and free."
-                            </p>
-                            <div className="flex items-center space-x-4 border-t border-slate-800 pt-4">
-                                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center text-white font-bold">D</div>
-                                <div>
-                                    <p className="text-white font-bold text-sm">David K.</p>
-                                    <p className="text-gray-500 text-xs">Created a Vanilla Cake</p>
-                                </div>
-                            </div>
-                        </div>
+                        <Link to="/resources/modern-birthday-party-planning-checklist-2026" className="bg-slate-900/50 p-6 rounded-2xl border border-slate-800 hover:border-magical-500/50 transition-all group">
+                            <div className="text-magical-400 text-xs font-bold uppercase tracking-widest mb-4">Planning</div>
+                            <h3 className="text-xl font-serif text-white mb-3 group-hover:text-magical-300 transition-colors">Modern Party Planning Checklist</h3>
+                            <p className="text-gray-400 text-sm leading-relaxed mb-4">The ultimate timeline for organizing a stress-free and legendary celebration in 2026.</p>
+                            <span className="text-magical-400 text-sm font-medium">Read More →</span>
+                        </Link>
 
-                        {/* Review 3 */}
-                        <div className="bg-slate-900 p-8 rounded-2xl border border-slate-800 shadow-xl relative group hover:-translate-y-2 transition-transform duration-300">
-                            <div className="absolute -top-4 left-8 text-4xl">💖</div>
-                            <p className="text-gray-300 italic mb-6 leading-relaxed pt-4">
-                                "The music sync and the reveal animation were beautiful. Much better than a boring e-card or a text message."
-                            </p>
-                            <div className="flex items-center space-x-4 border-t border-slate-800 pt-4">
-                                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white font-bold">S</div>
-                                <div>
-                                    <p className="text-white font-bold text-sm">Sarah L.</p>
-                                    <p className="text-gray-500 text-xs">Created a Grand Tiered Cake</p>
-                                </div>
-                            </div>
-                        </div>
+                        <Link to="/resources/the-science-of-surprises" className="bg-slate-900/50 p-6 rounded-2xl border border-slate-800 hover:border-magical-500/50 transition-all group">
+                            <div className="text-magical-400 text-xs font-bold uppercase tracking-widest mb-4">Psychology</div>
+                            <h3 className="text-xl font-serif text-white mb-3 group-hover:text-magical-300 transition-colors">The Science of Surprises</h3>
+                            <p className="text-gray-400 text-sm leading-relaxed mb-4">Explore the neurochemistry of dopamine and why unexpected joy is so powerful.</p>
+                            <span className="text-magical-400 text-sm font-medium">Read More →</span>
+                        </Link>
                     </div>
                 </div>
             </div>
 
-            {/* SECTION 4: FAQ */}
+            {/* SECTION 5: FAQ */}
             <div className="relative z-20 bg-gradient-to-b from-slate-950 to-slate-900 py-24 px-6 border-t border-white/5">
                 <div className="max-w-4xl mx-auto">
                     <div className="text-center mb-16 space-y-4">
@@ -238,7 +403,15 @@ export const Landing: React.FC = () => {
                         </section>
 
                         <section>
-                            <h3 className="text-xl font-semibold text-white mb-3">Tips for Sharing</h3>
+                            <h3 className="text-xl font-semibold text-white mb-3">Why Wishprise is the Best Birthday Online Wisher</h3>
+                            <p>
+                                When searching for a <strong>birthday wish maker</strong> or a <strong>birthday online wisher</strong>, you'll find many static e-cards. Wishprise is different. 
+                                We provide a fully immersive 3D environment that the recipient can interact with.
+                            </p>
+                        </section>
+
+                        <section>
+                            <h3 className="text-xl font-semibold text-white mb-3">Tips for Sharing Your Dream Wish</h3>
                             <p>
                                 Once your surprise is ready, you'll get a unique link. For the best impact, send this link when you know they have a quiet moment to enjoy it.
                                 Suggest they wear headphones for the full 3D audio experience. Whether you share it via WhatsApp, Messenger, or Email, the preview image will

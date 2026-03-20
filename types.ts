@@ -56,3 +56,11 @@ export interface AdProps {
   className?: string;
   onClose?: () => void;
 }
+
+export interface Feedback {
+  id?: string;
+  surpriseId: string;
+  rating: number; // 1-5
+  comment: string;
+  createdAt: number;
+}

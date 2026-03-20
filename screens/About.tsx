@@ -7,8 +7,9 @@ export const About: React.FC = () => {
     return (
         <div className="min-h-screen bg-slate-950 font-sans text-slate-300">
             <Seo
-                title="About Wishprise - Our Mission to Make Birthdays Magical"
-                description="Learn about Wishprise's mission to eliminate boring text wishes and replace them with magical, interactive 3D experiences. Free, fast, and fun."
+                title="About Wishprise - Our Mission"
+                description="Learn about Wishprise and our mission to make digital birthday surprises more magical, personal, and interactive."
+                path="/about"
             />
 
             {/* Navigation */}

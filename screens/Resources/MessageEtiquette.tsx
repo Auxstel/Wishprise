@@ -9,6 +9,7 @@ export const MessageEtiquette: React.FC = () => {
             <Seo
                 title="Birthday Message Etiquette: What to Write - Wishprise"
                 description="Stuck on what to say? Tips and templates for writing perfect birthday wishes for friends, family, and coworkers."
+                path="/resources/birthday-message-etiquette-guide"
             />
 
             <nav className="p-6 flex justify-between items-center max-w-4xl mx-auto border-b border-white/5">

@@ -9,7 +9,9 @@
   <meta name="description"
     content="Create stunning, interactive 3D birthday surprises for free. No login required. customized cakes, music, and magic delivered via a simple link." />
   <meta name="google-adsense-account" content="ca-pub-4440385158046615">
-  <!-- Tailwind CDN is kept for simplicity to avoid extra local config files, though npm install is preferred for prod -->
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="apple-touch-icon" href="/logo.png" />
+
   <script src="https://cdn.tailwindcss.com"></script>
   <link
     href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap"
@@ -25,18 +27,44 @@
           },
           colors: {
             magical: {
-              50: '#FDF4FF',
-              100: '#FAE8FF',
-              200: '#F5D0FE',
-              300: '#F0ABFC',
-              400: '#E879F9',
-              500: '#D946EF',
-              600: '#C026D3',
-              700: '#A21CAF',
-              800: '#86198F',
-              900: '#701A75',
+              50: '#FDF4FF', 100: '#FAE8FF', 200: '#F5D0FE', 300: '#F0ABFC',
+              400: '#E879F9', 500: '#D946EF', 600: '#C026D3', 700: '#A21CAF',
+              800: '#86198F', 900: '#701A75',
             },
             gold: '#FFD700',
+            border: "hsl(240 3.7% 15.9%)",
+            input: "hsl(240 3.7% 15.9%)",
+            ring: "hsl(263 70% 50%)",
+            background: "hsl(240 10% 3.9%)",
+            foreground: "hsl(0 0% 98%)",
+            primary: {
+              DEFAULT: "hsl(263 70% 50%)",
+              foreground: "hsl(0 0% 98%)",
+            },
+            secondary: {
+              DEFAULT: "hsl(240 3.7% 15.9%)",
+              foreground: "hsl(0 0% 98%)",
+            },
+            destructive: {
+              DEFAULT: "hsl(0 62.8% 30.6%)",
+              foreground: "hsl(0 0% 98%)",
+            },
+            muted: {
+              DEFAULT: "hsl(240 3.7% 15.9%)",
+              foreground: "hsl(240 5% 64.9%)",
+            },
+            accent: {
+              DEFAULT: "hsl(240 3.7% 15.9%)",
+              foreground: "hsl(0 0% 98%)",
+            },
+            popover: {
+              DEFAULT: "hsl(240 10% 3.9%)",
+              foreground: "hsl(0 0% 98%)",
+            },
+            card: {
+              DEFAULT: "hsl(240 10% 3.9%)",
+              foreground: "hsl(0 0% 98%)",
+            },
           },
           animation: {
             'float': 'float 8s ease-in-out infinite',
@@ -49,39 +77,18 @@
             'shimmer': 'shimmer 2.5s linear infinite',
           },
           keyframes: {
-            float: {
-              '0%, 100%': { transform: 'translateY(0) scale(1)' },
-              '50%': { transform: 'translateY(-20px) scale(1.05)' },
-            },
-            'bounce-subtle': {
-              '0%, 100%': { transform: 'translateY(-5%)', animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)' },
-              '50%': { transform: 'translateY(0)', animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)' },
-            },
-            twinkle: {
-              '0%, 100%': { opacity: 0.2, transform: 'scale(0.8)' },
-              '50%': { opacity: 1, transform: 'scale(1.2)' },
-            },
-            blob: {
-              '0%': { transform: 'translate(0px, 0px) scale(1)' },
-              '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
-              '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
-              '100%': { transform: 'translate(0px, 0px) scale(1)' },
-            },
-            fadeInUp: {
-              '0%': { opacity: '0', transform: 'translateY(20px)' },
-              '100%': { opacity: '1', transform: 'translateY(0)' },
-            },
-            shimmer: {
-              '0%': { backgroundPosition: '200% 0' },
-              '100%': { backgroundPosition: '-200% 0' }
-            }
+            float: { '0%, 100%': { transform: 'translateY(0) scale(1)' }, '50%': { transform: 'translateY(-20px) scale(1.05)' } },
+            'bounce-subtle': { '0%, 100%': { transform: 'translateY(-5%)' }, '50%': { transform: 'translateY(0)' } },
+            twinkle: { '0%, 100%': { opacity: 0.2, transform: 'scale(0.8)' }, '50%': { opacity: 1, transform: 'scale(1.2)' } },
+            blob: { '0%': { transform: 'translate(0px) scale(1)' }, '33%': { transform: 'translate(30px) scale(1.1)' }, '66%': { transform: 'translate(-20px) scale(0.9)' }, '100%': { transform: 'translate(0px) scale(1)' } },
+            fadeInUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+            shimmer: { '0%': { backgroundPosition: '200% 0' }, '100%': { backgroundPosition: '-200% 0' } }
           }
         },
       },
     }
   </script>
   <style>
-    /* Custom Scrollbar hide */
     .no-scrollbar::-webkit-scrollbar {
       display: none;
     }
@@ -92,17 +99,12 @@
     }
 
     body {
-      /* Default base, but overridden by screens */
       background-color: #020617;
     }
 
-    /* Starry background utility */
     .stars-container {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      inset: 0;
       overflow: hidden;
       pointer-events: none;
     }
@@ -113,7 +115,6 @@
       border-radius: 50%;
     }
 
-    /* Shimmer text effect utility */
     .text-shimmer {
       background: linear-gradient(to right, #fcd34d 20%, #f9a8d4 40%, #fcd34d 60%, #f9a8d4 80%);
       background-size: 200% auto;
@@ -122,16 +123,15 @@
       background-clip: text;
     }
   </style>
+
   <!-- GOOGLE ANALYTICS -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-4N47L9BTFK"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
-
     gtag('config', 'G-4N47L9BTFK');
   </script>
-
 
   <script type="importmap">
 {
@@ -152,171 +152,24 @@
 
 <body class="h-full">
   <div id="root" class="h-full">
-    <!-- Static content for crawlers / SEO — React replaces this on load -->
+    <!-- Static content for SEO -->
     <div style="background:#020617;color:#e2e8f0;font-family:Inter,sans-serif;padding:2rem;min-height:100vh;">
       <header style="text-align:center;padding:2rem 0;">
         <h1 style="font-size:2.5rem;color:#ffffff;">Wishprise — Magical Birthday Surprises</h1>
         <p style="font-size:1.2rem;color:#94a3b8;max-width:600px;margin:1rem auto;">
-          Create stunning, interactive 3D birthday surprises for free. No login required.
-          Customized cakes, music, and heartfelt messages delivered via a simple link.
+          Create stunning, interactive 3D birthday surprises for free.
         </p>
       </header>
-
-      <main style="max-width:800px;margin:0 auto;">
-        <section style="margin:2rem 0;">
-          <h2 style="font-size:1.5rem;color:#ffffff;">How It Works</h2>
-          <ol style="line-height:2;">
-            <li><strong>Personalize Your Surprise</strong> — Choose a cake, write a heartfelt message, add photos and
-              music.</li>
-            <li><strong>Preview the Magic</strong> — See a stunning 3D birthday experience come to life.</li>
-            <li><strong>Share the Joy</strong> — Send a unique link to your loved one. No app download needed.</li>
-          </ol>
-        </section>
-
-        <section style="margin:2rem 0;">
-          <h2 style="font-size:1.5rem;color:#ffffff;">Why Choose Wishprise?</h2>
-          <ul style="line-height:2;">
-            <li>100% Free — No hidden fees, no login required.</li>
-            <li>Beautiful 3D animations with interactive candle blowing.</li>
-            <li>Upload personal photos and choose from curated birthday songs.</li>
-            <li>Works on all devices — desktop, tablet, and mobile.</li>
-            <li>Surprise links are private and secure. All media is stored in private encrypted storage.</li>
-          </ul>
-        </section>
-
-        <section style="margin:2rem 0;">
-          <h2 style="font-size:1.5rem;color:#ffffff;">Resources &amp; Guides</h2>
-          <ul style="line-height:2;">
-            <li><a href="/resources/virtual-birthday-ideas-2026" style="color:#e879f9;">Top Virtual Birthday Ideas for
-                2026</a></li>
-            <li><a href="/resources/long-distance-birthday-guide" style="color:#e879f9;">Long Distance Birthday
-                Celebration Guide</a></li>
-            <li><a href="/resources/digital-vs-physical-cards" style="color:#e879f9;">Digital vs Physical Birthday
-                Cards</a></li>
-            <li><a href="/resources/birthday-message-etiquette" style="color:#e879f9;">Birthday Message Etiquette
-                Guide</a></li>
-          </ul>
-        </section>
-
-        <section style="margin:2rem 0;">
-          <h2 style="font-size:1.5rem;color:#ffffff;">Frequently Asked Questions</h2>
-          <dl style="line-height:2;">
-            <dt><strong>Is Wishprise really free?</strong></dt>
-            <dd>Yes! Creating and sharing birthday surprises is completely free. No account needed.</dd>
-            <dt><strong>How does the recipient view their surprise?</strong></dt>
-            <dd>They simply open the unique link you share. It works in any modern browser.</dd>
-            <dt><strong>Can I add my own photos and music?</strong></dt>
-            <dd>Absolutely! Upload personal photos and choose from our curated music library.</dd>
-            <dt><strong>Is my data safe?</strong></dt>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'G-4N47L9BTFK');
-  </script>
-
-
-  <script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@^19.2.3",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "idb-keyval": "https://esm.sh/idb-keyval@^6.2.2",
-    "three": "https://esm.sh/three@^0.182.0",
-    "react-router-dom": "https://esm.sh/react-router-dom@^7.11.0",
-    "firebase/": "https://esm.sh/firebase@^12.7.0/",
-    "vite": "https://esm.sh/vite@^7.3.0",
-    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2"
-  }
-}
-</script>
-</head>
-
-<body class="h-full">
-  <div id="root" class="h-full">
-    <!-- Static content for crawlers / SEO — React replaces this on load -->
-    <div style="background:#020617;color:#e2e8f0;font-family:Inter,sans-serif;padding:2rem;min-height:100vh;">
-      <header style="text-align:center;padding:2rem 0;">
-        <h1 style="font-size:2.5rem;color:#ffffff;">Wishprise — Magical Birthday Surprises</h1>
-        <p style="font-size:1.2rem;color:#94a3b8;max-width:600px;margin:1rem auto;">
-          Create stunning, interactive 3D birthday surprises for free. No login required.
-          Customized cakes, music, and heartfelt messages delivered via a simple link.
-        </p>
-      </header>
-
-      <main style="max-width:800px;margin:0 auto;">
-        <section style="margin:2rem 0;">
-          <h2 style="font-size:1.5rem;color:#ffffff;">How It Works</h2>
-          <ol style="line-height:2;">
-            <li><strong>Personalize Your Surprise</strong> — Choose a cake, write a heartfelt message, add photos and
-              music.</li>
-            <li><strong>Preview the Magic</strong> — See a stunning 3D birthday experience come to life.</li>
-            <li><strong>Share the Joy</strong> — Send a unique link to your loved one. No app download needed.</li>
-          </ol>
-        </section>
-
-        <section style="margin:2rem 0;">
-          <h2 style="font-size:1.5rem;color:#ffffff;">Why Choose Wishprise?</h2>
-          <ul style="line-height:2;">
-            <li>100% Free — No hidden fees, no login required.</li>
-            <li>Beautiful 3D animations with interactive candle blowing.</li>
-            <li>Upload personal photos and choose from curated birthday songs.</li>
-            <li>Works on all devices — desktop, tablet, and mobile.</li>
-            <li>Surprise links are private and secure. All media is stored in private encrypted storage.</li>
-          </ul>
-        </section>
-
-        <section style="margin:2rem 0;">
-          <h2 style="font-size:1.5rem;color:#ffffff;">Resources &amp; Guides</h2>
-          <ul style="line-height:2;">
-            <li><a href="/resources/virtual-birthday-ideas-2026" style="color:#e879f9;">Top Virtual Birthday Ideas for
-                2026</a></li>
-            <li><a href="/resources/long-distance-birthday-guide" style="color:#e879f9;">Long Distance Birthday
-                Celebration Guide</a></li>
-            <li><a href="/resources/digital-vs-physical-cards" style="color:#e879f9;">Digital vs Physical Birthday
-                Cards</a></li>
-            <li><a href="/resources/birthday-message-etiquette" style="color:#e879f9;">Birthday Message Etiquette
-                Guide</a></li>
-          </ul>
-        </section>
-
-        <section style="margin:2rem 0;">
-          <h2 style="font-size:1.5rem;color:#ffffff;">Frequently Asked Questions</h2>
-          <dl style="line-height:2;">
-            <dt><strong>Is Wishprise really free?</strong></dt>
-            <dd>Yes! Creating and sharing birthday surprises is completely free. No account needed.</dd>
-            <dt><strong>How does the recipient view their surprise?</strong></dt>
-            <dd>They simply open the unique link you share. It works in any modern browser.</dd>
-            <dt><strong>Can I add my own photos and music?</strong></dt>
-            <dd>Absolutely! Upload personal photos and choose from our curated music library.</dd>
-            <dt><strong>Is my data safe?</strong></dt>
-            <dd>Yes. We use private, secure cloud storage with time-limited access URLs. Your surprise data is automatically deleted after the recipient views it. Unviewed surprises are automatically removed after 30 days.</dd>
-          </dl>
-        </section>
+      <main style="max-width:800px;margin:0 auto;text-align:center;">
+        <p>Loading the magic...</p>
       </main>
-
-      <footer style="text-align:center;padding:2rem 0;border-top:1px solid #1e293b;margin-top:2rem;">
-        <nav style="margin-bottom:1rem;">
-          <a href="/about" style="color:#e879f9;margin:0 1rem;">About</a>
-          <a href="/privacy" style="color:#e879f9;margin:0 1rem;">Privacy Policy</a>
-          <a href="/terms" style="color:#e879f9;margin:0 1rem;">Terms of Service</a>
-          <a href="/contact" style="color:#e879f9;margin:0 1rem;">Contact</a>
-          <a href="/resources" style="color:#e879f9;margin:0 1rem;">Resources</a>
-        </nav>
-        <p style="color:#64748b;">&copy; 2026 Wishprise. All rights reserved.</p>
-      </footer>
     </div>
   </div>
 
   <noscript>
     <div style="background:#020617;color:#e2e8f0;font-family:sans-serif;padding:2rem;text-align:center;">
       <h1>Wishprise — Magical Birthday Surprises</h1>
-      <p>Create stunning, interactive 3D birthday surprises for free. Please enable JavaScript to use this application.
-      </p>
-      <p><a href="/privacy" style="color:#e879f9;">Privacy Policy</a> | <a href="/terms"
-          style="color:#e879f9;">Terms</a> | <a href="/contact" style="color:#e879f9;">Contact</a></p>
+      <p>Please enable JavaScript to use this application.</p>
     </div>
   </noscript>
 

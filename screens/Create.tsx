@@ -6,7 +6,9 @@ import { SurpriseData, CakeFlavor, CakeStyle } from '../types';
 import { saveSurprise, generateId, uploadFile } from '../services/storageService';
 
 import { Logo } from '../components/Logo';
+import { Seo } from '../components/Seo';
 import { Landing3D } from '../components/Landing3D';
+import ButtonWithIcon from '@/components/ui/button-witn-icon';
 
 export const Create: React.FC = () => {
   const navigate = useNavigate();
@@ -182,7 +184,12 @@ export const Create: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white flex flex-col font-sans overflow-hidden">
+    <div className="min-h-screen bg-slate-950 font-sans text-slate-300 flex flex-col overflow-hidden">
+      <Seo 
+          title="Create Your Magical Birthday Surprise" 
+          description="Use our free birthday surprise giver tool to create a custom 3D birthday experience. Choose a cake, add music, and share the link."
+          path="/create"
+      />
 
       {/* 3D Background Layer */}
       <div className="fixed inset-0 z-0 pointer-events-none">
@@ -191,61 +198,86 @@ export const Create: React.FC = () => {
         <Landing3D />
       </div>
 
-      <div className="flex-1 max-w-2xl w-full mx-auto p-6 flex flex-col justify-center relative z-10">
+      <div className="flex-1 max-w-2xl w-full mx-auto p-6 flex flex-col justify-start md:justify-center relative z-10 pt-12 md:pt-6">
 
-        <div className="flex items-center justify-between mb-8 backdrop-blur-sm bg-black/20 p-4 rounded-full border border-white/10">
-          <div onClick={() => navigate('/')} className="cursor-pointer hover:scale-105 transition-transform">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-8 backdrop-blur-xl bg-white/5 p-4 rounded-3xl border border-white/10 shadow-[0_0_30px_rgba(139,38,242,0.15)] animate-fade-in">
+          <div onClick={() => navigate('/')} className="cursor-pointer hover:scale-105 transition-transform duration-300">
             <Logo size="sm" />
           </div>
-          <div className="text-xs text-gray-400 uppercase tracking-widest font-semibold">Step {step} of 4</div>
+          <div className="flex flex-col items-end">
+            <div className="text-[10px] text-magical-300 uppercase tracking-[0.3em] font-bold mb-1">Creation Progress</div>
+            <div className="text-xs text-white/50 font-serif italic">Step {step} of 4</div>
+          </div>
         </div>
 
-        <div className="w-full h-1 bg-gray-800/50 mb-10 rounded-full overflow-hidden backdrop-blur-sm">
-          <div className="h-full bg-gradient-to-r from-magical-600 to-magical-400 transition-all duration-500 ease-out shadow-[0_0_10px_rgba(217,70,239,0.5)]" style={{ width: `${(step / 4) * 100}%` }}></div>
+        {/* Magical Progress Bar */}
+        <div className="w-full h-1.5 bg-white/5 mb-12 rounded-full overflow-hidden backdrop-blur-sm border border-white/5 relative">
+          <div 
+            className="h-full bg-gradient-to-r from-magical-600 via-magical-400 to-amber-300 transition-all duration-700 ease-out shadow-[0_0_15px_rgba(139,38,242,0.6)] relative" 
+            style={{ width: `${(step / 4) * 100}%` }}
+          >
+            <div className="absolute top-0 right-0 w-8 h-full bg-white/40 blur-sm animate-pulse"></div>
+          </div>
         </div>
 
         {/* STEP 1: WHO */}
         {step === 1 && (
-          <div className="animate-fade-in backdrop-blur-xl bg-white/5 p-8 md:p-10 rounded-3xl border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.3)]">
-            <h2 className="text-4xl font-serif text-white mb-2 text-center drop-shadow-lg">Who is this surprise for?</h2>
-            <p className="text-center text-gray-400 mb-8">Let's start with the basics.</p>
+          <div className="animate-fade-in backdrop-blur-2xl bg-white/5 p-8 md:p-12 rounded-[2.5rem] border border-white/10 shadow-[0_0_80px_rgba(0,0,0,0.4)] relative overflow-hidden">
+            <div className="absolute -top-24 -right-24 w-48 h-48 bg-magical-600/10 blur-[80px] rounded-full pointer-events-none transition-colors duration-700"></div>
+            
+            <div className="relative z-10">
+              <h2 className="text-3xl md:text-5xl font-serif text-white mb-3 text-center drop-shadow-2xl">Whose day are we <span className="text-magical-300 font-hand text-5xl md:text-6xl block md:inline-block mt-2 md:mt-0">celebrating?</span></h2>
+              <p className="text-center text-gray-400/80 mb-10 font-serif italic text-lg leading-relaxed max-w-md mx-auto">"Every great surprise begins with a thought for someone special."</p>
 
-            <div className="space-y-6">
-              <div className="group">
-                <label className="block text-sm font-bold text-magical-200 mb-2 group-focus-within:text-magical-400 transition-colors uppercase tracking-wider">Their Name</label>
-                <input
-                  type="text"
-                  value={formData.receiverName}
-                  onChange={(e) => handleChange('receiverName', e.target.value)}
-                  className="w-full bg-slate-900/60 p-4 rounded-xl border border-white/10 text-white placeholder-gray-600 focus:ring-2 focus:ring-magical-500 focus:border-transparent outline-none text-xl transition-all shadow-inner focus:bg-slate-900/80"
-                  placeholder="e.g. Sarah"
-                />
+              <div className="space-y-8">
+                <div className="group relative">
+                  <label className="block text-[10px] font-black text-magical-300 mb-2 group-focus-within:text-magical-400 transition-colors uppercase tracking-[0.4em] ml-1">Their Name</label>
+                  <input
+                    type="text"
+                    value={formData.receiverName}
+                    onChange={(e) => handleChange('receiverName', e.target.value)}
+                    className="w-full bg-slate-900/40 p-5 rounded-2xl border border-white/10 text-white placeholder-white/10 focus:ring-2 focus:ring-magical-500/50 focus:border-magical-500/50 outline-none text-2xl transition-all shadow-2xl focus:bg-slate-950/80 font-serif"
+                    placeholder="e.g. Sarah"
+                  />
+                  <div className="absolute right-4 bottom-4 text-white/5 font-hand text-3xl pointer-events-none group-focus-within:opacity-0 transition-opacity uppercase">Receiver</div>
+                </div>
+
+                <div className="group relative">
+                  <label className="block text-[10px] font-black text-magical-300 mb-2 group-focus-within:text-magical-400 transition-colors uppercase tracking-[0.4em] ml-1">Your Name</label>
+                  <input
+                    type="text"
+                    value={formData.senderName}
+                    onChange={(e) => handleChange('senderName', e.target.value)}
+                    className="w-full bg-slate-900/40 p-5 rounded-2xl border border-white/10 text-white placeholder-white/10 focus:ring-2 focus:ring-magical-500/50 focus:border-magical-500/50 outline-none text-2xl transition-all shadow-2xl focus:bg-slate-950/80 font-serif"
+                    placeholder="e.g. Alex"
+                  />
+                  <div className="absolute right-4 bottom-4 text-white/5 font-hand text-3xl pointer-events-none group-focus-within:opacity-0 transition-opacity uppercase">Sender</div>
+                </div>
               </div>
-              <div className="group">
-                <label className="block text-sm font-bold text-magical-200 mb-2 group-focus-within:text-magical-400 transition-colors uppercase tracking-wider">Your Name</label>
-                <input
-                  type="text"
-                  value={formData.senderName}
-                  onChange={(e) => handleChange('senderName', e.target.value)}
-                  className="w-full bg-slate-900/60 p-4 rounded-xl border border-white/10 text-white placeholder-gray-600 focus:ring-2 focus:ring-magical-500 focus:border-transparent outline-none text-xl transition-all shadow-inner focus:bg-slate-900/80"
-                  placeholder="e.g. Alex"
+
+              <div className="flex justify-center mt-12 mb-2">
+                <ButtonWithIcon 
+                  text="Begin the Magic ✨" 
+                  onClick={handleNext} 
+                  disabled={!formData.receiverName || !formData.senderName}
+                  className="w-full md:w-auto scale-110 shadow-magical-600/40 text-white"
                 />
               </div>
             </div>
-
-            <Button onClick={handleNext} disabled={!formData.receiverName || !formData.senderName} fullWidth className="mt-8 py-4 text-lg shadow-magical-500/20">
-              Next Step
-            </Button>
           </div>
         )}
-
         {/* STEP 2: CAKE */}
         {step === 2 && (
-          <div className="space-y-6 animate-fade-in flex flex-col">
-            <h2 className="text-3xl font-serif text-white text-center drop-shadow-md">Design the Cake</h2>
+          <div className="space-y-8 animate-fade-in flex flex-col">
+            <div className="text-center">
+              <h2 className="text-3xl md:text-5xl font-serif text-white mb-2 drop-shadow-lg">Craft their <span className="text-magical-300 font-hand text-5xl md:text-6xl">perfect cake</span></h2>
+              <p className="text-gray-400/80 font-serif italic text-lg">"A sweet gesture for a sweet soul."</p>
+            </div>
 
-            <div className="relative bg-gradient-to-b from-slate-900/80 to-slate-950/80 backdrop-blur-sm rounded-3xl border border-slate-800 shadow-2xl h-80 w-full overflow-hidden shrink-0">
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-white/5 blur-3xl rounded-full pointer-events-none"></div>
+            <div className="relative bg-gradient-to-b from-slate-900/40 to-slate-950/60 backdrop-blur-2xl rounded-[2.5rem] border border-white/10 shadow-2xl h-80 w-full overflow-hidden shrink-0">
+              <div className="absolute inset-0 bg-magical-600/5 opacity-0 transition-opacity duration-1000"></div>
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-magical-400/10 blur-3xl rounded-full pointer-events-none"></div>
 
               <Cake
                 flavor={formData.cakeFlavor || CakeFlavor.VANILLA}
@@ -258,18 +290,18 @@ export const Create: React.FC = () => {
               />
             </div>
 
-            <div className="bg-slate-900/80 backdrop-blur-xl p-6 rounded-2xl border border-white/10 space-y-6 shadow-xl overflow-y-auto max-h-[40vh] no-scrollbar">
+            <div className="backdrop-blur-2xl bg-white/5 p-8 rounded-3xl border border-white/10 space-y-8 shadow-2xl overflow-y-auto max-h-[45vh] no-scrollbar">
 
               <div>
-                <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Shape (10 Styles)</label>
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
+                <label className="block text-[10px] font-black text-magical-300 uppercase tracking-[0.4em] mb-4 ml-1">The Style</label>
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
                   {Object.values(CakeStyle).map(style => (
                     <button
                       key={style}
                       onClick={() => handleChange('cakeStyle', style)}
-                      className={`p-3 rounded-lg border text-[10px] md:text-xs font-medium capitalize transition-all ${formData.cakeStyle === style
-                        ? 'border-magical-500 bg-magical-500/20 text-white shadow-lg shadow-magical-500/20'
-                        : 'border-white/5 bg-white/5 text-gray-400 hover:bg-white/10'
+                      className={`p-3 rounded-xl border text-[10px] md:text-xs font-bold capitalize transition-all duration-300 ${formData.cakeStyle === style
+                        ? 'border-magical-400 bg-magical-400/20 text-white shadow-[0_0_15px_rgba(139,38,242,0.3)]'
+                        : 'border-white/5 bg-white/5 text-white/30 hover:bg-white/10 hover:text-white/60'
                         }`}
                     >
                       {style.replace('_', ' ')}
@@ -279,15 +311,15 @@ export const Create: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Flavor (10 Varieties)</label>
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
+                <label className="block text-[10px] font-black text-magical-300 uppercase tracking-[0.4em] mb-4 ml-1">The Flavor</label>
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
                   {Object.values(CakeFlavor).map(flavor => (
                     <button
                       key={flavor}
                       onClick={() => handleChange('cakeFlavor', flavor)}
-                      className={`p-2 rounded-lg border text-[10px] md:text-xs font-medium capitalize transition-all ${formData.cakeFlavor === flavor
-                        ? 'border-magical-500 bg-magical-500/20 text-white shadow-lg shadow-magical-500/20'
-                        : 'border-white/5 bg-white/5 text-gray-400 hover:bg-white/10'
+                      className={`p-3 rounded-xl border text-[10px] md:text-xs font-bold capitalize transition-all duration-300 ${formData.cakeFlavor === flavor
+                        ? 'border-magical-400 bg-magical-400/20 text-white shadow-[0_0_15px_rgba(139,38,242,0.3)]'
+                        : 'border-white/5 bg-white/5 text-white/30 hover:bg-white/10 hover:text-white/60'
                         }`}
                     >
                       {flavor.replace('_', ' ')}
@@ -296,10 +328,10 @@ export const Create: React.FC = () => {
                 </div>
               </div>
 
-              <div>
-                <div className="flex justify-between items-center mb-3">
-                  <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider">Candles</label>
-                  <span className="font-mono text-magical-400 text-lg">{formData.candleCount}</span>
+              <div className="bg-slate-950/40 p-6 rounded-2xl border border-white/5">
+                <div className="flex justify-between items-center mb-4">
+                  <label className="block text-[10px] font-black text-magical-300 uppercase tracking-[0.4em]">Candles of Light</label>
+                  <span className="font-serif text-white text-2xl drop-shadow-glow">{formData.candleCount}</span>
                 </div>
                 <input
                   type="range"
@@ -307,164 +339,218 @@ export const Create: React.FC = () => {
                   max="9"
                   value={formData.candleCount}
                   onChange={(e) => handleChange('candleCount', parseInt(e.target.value))}
-                  className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-magical-500"
+                  className="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-magical-400"
                 />
               </div>
 
-              <div className="flex space-x-3 pt-2">
-                <Button variant="secondary" onClick={handleBack} className="flex-1 bg-white/5 text-white border-white/10 hover:bg-white/10">Back</Button>
-                <Button onClick={handleNext} className="flex-1">Looks Delicious</Button>
+              <div className="flex flex-col md:flex-row gap-4 pt-2">
+                <button 
+                  onClick={handleBack} 
+                  className="flex-1 py-4 px-8 rounded-full border border-white/10 text-white/50 hover:text-white hover:bg-white/5 transition-all font-serif italic text-lg"
+                >
+                  Go Back
+                </button>
+                <div className="flex-1 flex justify-center">
+                  <ButtonWithIcon 
+                    text="Looks Delicious! Next Step" 
+                    onClick={handleNext}
+                    className="w-full text-white"
+                  />
+                </div>
               </div>
             </div>
           </div>
         )}
-
         {/* STEP 3: WHEEL OPTIONS */}
         {step === 3 && (
-          <div className="space-y-6 animate-fade-in backdrop-blur-xl bg-white/5 p-8 rounded-3xl border border-white/10">
-            <div className="text-center">
-              <h2 className="text-3xl font-serif text-white">The Wheel of Wishes</h2>
-              <p className="text-gray-400 text-sm mt-2">Enter 5 prizes or promises. They will spin the wheel and win one!</p>
+          <div className="space-y-10 animate-fade-in backdrop-blur-3xl bg-white/[0.02] p-8 md:p-12 rounded-[3rem] border border-white/5 shadow-2xl relative overflow-hidden">
+            {/* Subtle atmospheric glow */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-magical-600/[0.03] blur-[120px] rounded-full pointer-events-none"></div>
+
+            <div className="text-center relative z-10 space-y-2">
+              <h2 className="text-3xl md:text-5xl font-serif text-white tracking-tight">The <span className="text-magical-300 font-hand text-5xl md:text-7xl">Wheel of Wishes</span></h2>
+              <p className="text-slate-400/80 font-serif italic text-lg leading-relaxed max-w-sm mx-auto">"Five promises. Five gifts of time. What magic will you grant?"</p>
             </div>
 
-            <div className="space-y-4">
+            <div className="grid grid-cols-1 gap-6 relative z-10 overflow-y-auto max-h-[55vh] pr-2 no-scrollbar px-1">
               {formData.wheelOptions?.map((option, index) => (
-                <div key={index} className="flex items-center space-x-3 group">
-                  <div className="w-8 h-8 rounded-full bg-magical-900/50 border border-magical-500/30 flex items-center justify-center text-xs font-bold text-magical-300 group-hover:bg-magical-500 group-hover:text-white transition-colors">
-                    {index + 1}
+                <div key={index} className="flex flex-col space-y-2 group/item">
+                  <div className="flex items-center gap-4 relative">
+                    {/* Minimalist, elegant numbering */}
+                    <div className="text-[10px] font-black text-magical-400/20 group-hover/item:text-magical-400 transition-colors duration-500 uppercase tracking-[0.6em] w-12 text-center">
+                      Grant {index + 1}
+                    </div>
+                    
+                    <div className="flex-1 relative">
+                      <input
+                        type="text"
+                        value={option}
+                        onChange={(e) => handleWheelOptionChange(index, e.target.value)}
+                        className="w-full bg-slate-900/40 border-b border-white/10 p-4 text-white focus:border-magical-500/50 outline-none text-xl transition-all placeholder-white/5 focus:bg-slate-950/40 font-serif italic"
+                        placeholder={`Start typing your promise...`}
+                      />
+                      {/* Interactive focus indicator */}
+                      <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-magical-500 group-focus-within/item:w-full transition-all duration-700 ease-out shadow-[0_0_10px_rgba(139,38,242,0.8)]"></div>
+                    </div>
                   </div>
-                  <input
-                    type="text"
-                    value={option}
-                    onChange={(e) => handleWheelOptionChange(index, e.target.value)}
-                    className="flex-1 bg-slate-900/60 border border-white/10 rounded-lg p-3 text-white focus:ring-2 focus:ring-magical-500 outline-none text-sm transition-all placeholder-gray-600 focus:bg-slate-900/80"
-                    placeholder={`Option ${index + 1}`}
-                  />
                 </div>
               ))}
             </div>
 
-            <div className="flex space-x-3 mt-4">
-              <Button variant="secondary" onClick={handleBack} className="flex-1 bg-white/5 text-white border-white/10 hover:bg-white/10">Back</Button>
-              <Button onClick={handleNext} className="flex-1">Next Step</Button>
+            {/* Subtler Inspiration Spark */}
+            <div className="mt-4 pt-4 border-t border-white/5 relative z-10 text-center">
+              <p className="text-[10px] text-slate-500 font-serif italic leading-relaxed max-w-xs mx-auto">
+                Need a spark? Try <span className="text-magical-400">"a sunset walk,"</span> <span className="text-magical-400">"your favorite home-cooked meal,"</span> or <span className="text-magical-400">"a night under the stars."</span>
+              </p>
+            </div>
+
+            <div className="flex flex-col md:flex-row gap-4 pt-4 relative z-10">
+              <button 
+                onClick={handleBack} 
+                className="flex-1 py-4 px-8 rounded-full text-white/40 hover:text-white hover:bg-white/5 transition-all font-serif italic text-lg border border-transparent hover:border-white/5"
+              >
+                Go Back
+              </button>
+              <div className="flex-1 flex justify-center">
+                <ButtonWithIcon 
+                  text="Lock in the Magic" 
+                  onClick={handleNext}
+                  className="w-full text-white shadow-magical-600/30"
+                />
+              </div>
             </div>
           </div>
         )}
 
-        {/* STEP 4: MESSAGES & SONG & VOICE */}
         {step === 4 && (
-          <div className="space-y-6 animate-fade-in backdrop-blur-xl bg-white/5 p-8 rounded-3xl border border-white/10">
-            <h2 className="text-3xl font-serif text-white text-center">Heartfelt Words</h2>
-            <p className="text-gray-400 text-sm text-center">Write the messages they will see during the experience.</p>
+          <div className="space-y-10 animate-fade-in backdrop-blur-3xl bg-white/[0.02] p-8 md:p-12 rounded-[3.5rem] border border-white/5 shadow-2xl relative overflow-hidden group/step4">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-magical-600/[0.05] blur-[120px] rounded-full pointer-events-none"></div>
 
-            <div className="space-y-5">
-              <div>
-                <label className="block text-sm font-bold text-magical-200 mb-2 uppercase tracking-wider">Intro Message</label>
-                <textarea
-                  value={formData.introMessage}
-                  onChange={(e) => handleChange('introMessage', e.target.value)}
-                  className="w-full bg-slate-900/60 p-4 rounded-xl border border-white/10 text-white placeholder-gray-600 focus:ring-2 focus:ring-magical-500 outline-none min-h-[80px] focus:bg-slate-900/80"
-                />
+            <div className="text-center relative z-10 space-y-3">
+              <h2 className="text-3xl md:text-5xl font-serif text-white tracking-tight">Pour your <span className="text-magical-300 font-hand text-5xl md:text-7xl">heart into words</span></h2>
+              <p className="text-slate-400 font-serif italic text-lg leading-relaxed max-w-lg mx-auto">"Your voice and your words are the true gift. This is the moment they'll hear as they celebrate."</p>
+            </div>
+
+            <div className="space-y-10 relative z-10 overflow-y-auto max-h-[55vh] pr-2 no-scrollbar px-1">
+              {/* Written Messages */}
+              <div className="space-y-8">
+                <div className="group/field relative">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="text-[10px] font-black text-magical-400/40 uppercase tracking-[0.4em]">The Opening Chapter</span>
+                    <div className="h-px flex-1 bg-white/5"></div>
+                  </div>
+                  <textarea
+                    value={formData.introMessage}
+                    onChange={(e) => handleChange('introMessage', e.target.value)}
+                    className="w-full bg-slate-900/40 p-6 rounded-3xl border border-white/5 text-white placeholder-white/5 focus:border-magical-500/30 outline-none min-h-[120px] focus:bg-slate-950/60 font-serif text-xl leading-relaxed transition-all italic shadow-inner"
+                    placeholder="Type a beautiful intro..."
+                  />
+                </div>
+
+                <div className="group/field relative">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="text-[10px] font-black text-magical-400/40 uppercase tracking-[0.4em]">A Secret Note</span>
+                    <div className="h-px flex-1 bg-white/5"></div>
+                  </div>
+                  <textarea
+                    value={formData.personalNote}
+                    onChange={(e) => handleChange('personalNote', e.target.value)}
+                    className="w-full bg-slate-900/40 p-6 rounded-3xl border border-white/5 text-white placeholder-white/5 focus:border-magical-500/30 outline-none min-h-[120px] focus:bg-slate-950/60 font-serif text-xl leading-relaxed transition-all italic shadow-inner"
+                    placeholder="Something just for them..."
+                  />
+                  <p className="mt-2 text-[10px] text-slate-500 italic font-serif text-right px-2">This note stays hidden until they find it.</p>
+                </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-bold text-magical-200 mb-2 uppercase tracking-wider">Short Personal Note</label>
-                <textarea
-                  value={formData.personalNote}
-                  onChange={(e) => handleChange('personalNote', e.target.value)}
-                  className="w-full bg-slate-900/60 p-4 rounded-xl border border-white/10 text-white placeholder-gray-600 focus:ring-2 focus:ring-magical-500 outline-none min-h-[80px] focus:bg-slate-900/80"
-                />
-              </div>
-
-              {/* VOICE MESSAGE SECTION */}
-              <div className="space-y-2">
-                <label className="block text-sm font-bold text-magical-200 uppercase tracking-wider">Voice Message</label>
-                <div className="bg-slate-900/60 p-4 rounded-xl border border-white/10 flex flex-col space-y-3">
-                  {!formData.voiceMessageUrl ? (
-                    <div className="flex gap-2">
+              {/* Media Section */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* Voice Message */}
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3">
+                    <span className="text-[10px] font-black text-magical-400/40 uppercase tracking-[0.4em]">The Gift of Your Voice</span>
+                  </div>
+                  <div className="bg-slate-900/40 p-6 rounded-[2rem] border border-white/5 space-y-4 shadow-xl">
+                    <p className="text-[10px] text-slate-500 italic font-serif leading-tight">"They'll hear your voice as a toast to their special day."</p>
+                    {!formData.voiceMessageUrl ? (
                       <button
                         onClick={isRecording ? stopRecording : startRecording}
-                        className={`flex-1 p-3 rounded-lg font-bold text-sm transition-all flex items-center justify-center gap-2 ${isRecording
-                          ? 'bg-red-500/20 text-red-400 border border-red-500/50 animate-pulse'
-                          : 'bg-white/10 text-white border border-white/20 hover:bg-white/20'
+                        className={`w-full py-6 rounded-2xl font-bold text-xs transition-all flex flex-col items-center justify-center gap-3 border ${isRecording
+                          ? 'bg-red-500/10 text-red-400 border-red-500/30 animate-pulse shadow-[0_0_20px_rgba(239,68,68,0.2)]'
+                          : 'bg-white/[0.02] text-white/50 border-white/5 hover:border-magical-500/30 hover:text-white hover:bg-white/5'
                           }`}
                       >
-                        {isRecording ? (
-                          <>
-                            <span className="w-2 h-2 rounded-full bg-red-500"></span>
-                            Stop ({recordingTime}s)
-                          </>
-                        ) : (
-                          <>🎙️ Record (Max 60s)</>
-                        )}
+                        <span className="text-3xl">{isRecording ? "🔴" : "🎙️"}</span>
+                        <span>{isRecording ? `Recording... (${recordingTime}s)` : "Record a Heartfelt Message"}</span>
                       </button>
-                    </div>
-                  ) : (
-                    <div className="flex items-center justify-between bg-magical-500/20 p-3 rounded-lg border border-magical-500/30">
-                      <div className="flex items-center gap-2">
-                        <span className="text-xl">🔊</span>
-                        <div className="text-sm text-magical-200">Voice Message Recorded</div>
+                    ) : (
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-between px-2">
+                          <span className="text-[10px] text-magical-300 uppercase tracking-widest font-black">Message Saved</span>
+                          <button onClick={deleteVoiceMessage} className="text-[10px] text-red-400/50 hover:text-red-400 flex items-center gap-1 transition-colors uppercase font-bold tracking-tighter italic">Delete</button>
+                        </div>
+                        <audio src={formData.voiceMessageUrl} controls className="w-full h-8 opacity-40 hover:opacity-100 transition-opacity" />
                       </div>
-                      <div className="flex gap-2">
-                        <audio src={formData.voiceMessageUrl} controls className="h-8 w-24 hidden md:block" />
-                        <button onClick={deleteVoiceMessage} className="text-xs text-red-400 hover:text-red-300 underline">Delete</button>
+                    )}
+                  </div>
+                </div>
+
+                {/* Soundtrack */}
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3">
+                    <span className="text-[10px] font-black text-magical-400/40 uppercase tracking-[0.4em]">Soundtrack of Memory</span>
+                  </div>
+                  <div className="bg-slate-900/40 p-6 rounded-[2rem] border border-white/5 space-y-4 shadow-xl">
+                    <p className="text-[10px] text-slate-500 italic font-serif leading-tight">"This melody will play as they cut their cake, making it truly magical."</p>
+                    <div className="space-y-3">
+                      <input
+                        type="text"
+                        value={formData.songUrl}
+                        onChange={(e) => handleChange('songUrl', e.target.value)}
+                        className="w-full bg-slate-950/40 p-4 rounded-xl border border-white/5 text-white placeholder-white/5 focus:border-magical-500/30 outline-none text-sm transition-all italic font-serif"
+                        placeholder="Paste MP3 Link..."
+                      />
+                      <div className="relative">
+                        <input type="file" accept="audio/*" onChange={handleFileUpload} className="hidden" id="song-upload" />
+                        <label htmlFor="song-upload" className="flex items-center justify-center w-full p-4 rounded-xl border border-dashed border-white/10 text-white/20 hover:border-magical-500/30 hover:text-magical-300 hover:bg-white/5 cursor-pointer transition-all duration-300 text-xs font-serif italic">
+                          {songFile ? `📁 ${songFile.name}` : "Or Upload Your Own MP3"}
+                        </label>
                       </div>
                     </div>
-                  )}
+                  </div>
                 </div>
               </div>
 
-              <div className="space-y-3">
-                <label className="block text-sm font-bold text-magical-200 uppercase tracking-wider">Favorite Song</label>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <input
-                      type="text"
-                      value={formData.songUrl}
-                      onChange={(e) => handleChange('songUrl', e.target.value)}
-                      className="w-full bg-slate-900/60 p-4 rounded-xl border border-white/10 text-white placeholder-gray-600 focus:ring-2 focus:ring-magical-500 outline-none text-sm focus:bg-slate-900/80"
-                      placeholder="Paste MP3 Link or Upload ->"
-                    />
-                  </div>
-                  <div className="relative">
-                    <input
-                      type="file"
-                      accept="audio/*"
-                      onChange={handleFileUpload}
-                      className="hidden"
-                      id="song-upload"
-                    />
-                    <label htmlFor="song-upload" className="flex items-center justify-center w-full p-4 rounded-xl border border-dashed border-white/20 text-gray-400 hover:border-magical-500 hover:text-magical-400 cursor-pointer transition-colors bg-white/5 hover:bg-white/10">
-                      <span className="text-sm">
-                        {songFile ? `📁 ${songFile.name}` : "📁 Upload MP3"}
-                      </span>
-                    </label>
-                  </div>
+              {/* Final Surprise */}
+              <div className="space-y-4 pt-4">
+                <div className="flex items-center gap-3 mb-2">
+                  <span className="text-[10px] font-black text-magical-400/40 uppercase tracking-[0.4em]">One Final secret</span>
+                  <div className="h-px flex-1 bg-white/5"></div>
                 </div>
-                {uploadError ? (
-                  <p className="text-red-400 text-xs">{uploadError}</p>
-                ) : (
-                  <p className="text-gray-500 text-xs">Max file size: 10MB.</p>
-                )}
-              </div>
-
-              <div>
-                <label className="block text-sm font-bold text-magical-200 mb-2 uppercase tracking-wider">Final Hidden Surprise</label>
                 <input
                   type="text"
                   value={formData.finalMessage}
                   onChange={(e) => handleChange('finalMessage', e.target.value)}
-                  className="w-full bg-slate-900/60 p-4 rounded-xl border border-white/10 text-white placeholder-gray-600 focus:ring-2 focus:ring-magical-500 outline-none focus:bg-slate-900/80"
+                  className="w-full bg-slate-900/20 border-b border-white/10 p-4 text-white placeholder-white/10 focus:border-amber-400/50 outline-none text-2xl transition-all font-serif italic focus:bg-white/[0.02]"
+                  placeholder="The very last thing they'll see..."
                 />
               </div>
             </div>
 
-            <div className="flex space-x-3 mt-4">
-              <Button variant="secondary" onClick={handleBack} className="flex-1 bg-white/5 text-white border-white/10 hover:bg-white/10">Back</Button>
-              <Button onClick={handleSubmit} disabled={isSaving} className="flex-1 shadow-magical-500/50 shadow-lg">
-                {isSaving ? "Uploading & Saving..." : "Create Magic ✨"}
-              </Button>
+            <div className="flex flex-col md:flex-row gap-4 pt-6 relative z-10">
+              <button 
+                onClick={handleBack} 
+                className="flex-1 py-4 px-8 rounded-full text-white/30 hover:text-white hover:bg-white/5 transition-all font-serif italic text-lg border border-transparent hover:border-white/5"
+              >
+                Go Back
+              </button>
+              <div className="flex-1 flex justify-center">
+                <ButtonWithIcon 
+                  text={isSaving ? "Creating..." : "Create the Surprise ✨"} 
+                  onClick={handleSubmit}
+                  disabled={isSaving}
+                  className="w-full text-white shadow-magical-600/50"
+                />
+              </div>
             </div>
           </div>
         )}

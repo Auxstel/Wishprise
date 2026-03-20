@@ -6,7 +6,11 @@ import { Seo } from '../components/Seo';
 export const Contact: React.FC = () => {
     return (
         <div className="min-h-screen bg-slate-950 text-gray-300 font-sans">
-            <Seo title="Contact Us" description="Get in touch with the Wishprise team." />
+            <Seo 
+                title="Contact Us - Wishprise Support" 
+                description="Get in touch with the Wishprise team for support, feedback, or business inquiries. We're here to help you make birthdays magical." 
+                path="/contact" 
+            />
 
             {/* Header */}
             <header className="border-b border-white/10 p-6">
