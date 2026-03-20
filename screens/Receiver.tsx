@@ -255,7 +255,7 @@ export const Receiver: React.FC = () => {
         }
       `}</style>
 
-      <div className="absolute inset-0 pointer-events-none flex flex-col items-center justify-start z-10 overflow-y-auto pt-32 pb-24 custom-scrollbar">
+      <div className="absolute inset-0 pointer-events-none flex flex-col items-center justify-start z-10 overflow-y-auto pt-32 pb-48 custom-scrollbar">
         <div className="pointer-events-auto w-full max-w-lg p-6 flex flex-col items-center">
 
           {/* LANDING */}

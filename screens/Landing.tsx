@@ -164,10 +164,10 @@ export const Landing: React.FC = () => {
                 </div>
 
                 {/* Content */}
-                <div className="relative z-20 flex-1 flex flex-col items-center pt-16 md:pt-24 p-6 text-center overflow-y-auto no-scrollbar">
+                <div className="relative z-20 flex-1 flex flex-col items-center pt-12 md:pt-24 p-6 text-center overflow-y-auto no-scrollbar pb-32 md:pb-6">
 
-                    <div className="backdrop-blur-md bg-white/10 p-8 md:p-10 rounded-[2.5rem] border border-white/20 shadow-[0_0_80px_rgba(139,38,242,0.2)] animate-fade-in-up w-full max-w-3xl mx-auto flex flex-col items-center my-4 relative">
-                        <span className="inline-block py-1 px-3 rounded-full bg-amber-400/20 border border-amber-400/30 text-amber-300 text-xs font-bold tracking-[0.2em] uppercase mb-8 shadow-glow">
+                    <div className="backdrop-blur-md bg-white/10 p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] border border-white/20 shadow-[0_0_80px_rgba(139,38,242,0.2)] animate-fade-in-up w-full max-w-3xl mx-auto flex flex-col items-center my-4 relative">
+                        <span className="inline-block py-1 px-3 rounded-full bg-amber-400/20 border border-amber-400/30 text-amber-300 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase mb-4 md:mb-8 shadow-glow">
                             The #1 Birthday Wish Maker
                         </span>
 
@@ -175,8 +175,8 @@ export const Landing: React.FC = () => {
                             <Logo size="xl" />
                         </div>
 
-                        <h2 className="text-2xl md:text-3xl font-light text-white mt-4 drop-shadow-lg">
-                            Make it <span className="text-magical-300 font-hand text-4xl">Magical</span>
+                        <h2 className="text-xl md:text-3xl font-light text-white mt-4 drop-shadow-lg">
+                            Make it <span className="text-magical-300 font-hand text-3xl md:text-4xl">Magical</span>
                         </h2>
 
                         <div className="space-y-4 mt-6 max-w-2xl mx-auto">
@@ -190,7 +190,7 @@ export const Landing: React.FC = () => {
                             </p>
                         </div>
 
-                        <div className="mt-8 w-full max-w-md mx-auto flex flex-col justify-center">
+                        <div className="mt-6 md:mt-8 w-full max-w-md mx-auto flex flex-col justify-center">
                             {phase === 'input' && (
                                 <div className="space-y-6 animate-fade-in-up">
                                     <p className="text-lg md:text-xl font-serif italic text-white/70">
@@ -209,7 +209,7 @@ export const Landing: React.FC = () => {
                                             text="Next Magic Step"
                                             onClick={() => senderName.trim() && setPhase('scratch')}
                                             disabled={!senderName.trim()}
-                                            className="w-full text-white"
+                                            className="w-full text-white text-xs md:text-sm"
                                         />
                                     </div>
                                 </div>
@@ -224,8 +224,8 @@ export const Landing: React.FC = () => {
                                     >
                                         <div className="flex flex-col items-center gap-4 px-4">
                                             <p className="text-xs font-bold uppercase tracking-[0.3em] text-magical-600 bg-magical-50 px-3 py-1 rounded-full">Your Impact</p>
-                                            <p className="text-lg md:text-xl text-slate-800 font-serif leading-relaxed italic">
-                                                <span className="font-bold text-slate-950 not-italic block mb-2 text-2xl">{senderName},</span>
+                                            <p className="text-base md:text-xl text-slate-800 font-serif leading-relaxed italic">
+                                                <span className="font-bold text-slate-950 not-italic block mb-2 text-xl md:text-2xl">{senderName},</span>
                                                 A surprise like this is a reminder that they are <span className="text-magical-600 font-bold not-italic">seen, loved</span>, and truly matter. You're about to make their world a little brighter today. ❤️
                                             </p>
                                         </div>
@@ -239,7 +239,7 @@ export const Landing: React.FC = () => {
                                         <ButtonWithIcon 
                                             text="Got it! Let's build it"
                                             onClick={() => setPhase('complete')}
-                                            className="animate-fade-in text-white"
+                                            className="animate-fade-in text-white text-xs md:text-sm"
                                         />
                                     )}
                                 </div>
@@ -252,10 +252,10 @@ export const Landing: React.FC = () => {
                                         <ButtonWithIcon
                                             text="Create My 3D Surprise Now"
                                             onClick={() => navigate('/create')}
-                                            className="shadow-[0_0_40px_rgba(139,38,242,0.4)] font-serif tracking-[0.2em] uppercase scale-110 text-white"
+                                            className="shadow-[0_0_40px_rgba(139,38,242,0.4)] font-serif tracking-[0.1em] md:tracking-[0.2em] uppercase md:scale-110 text-white text-xs md:text-sm"
                                         />
                                     </div>
-                                    <p className="mt-10 text-magical-300 font-hand text-4xl animate-bounce-subtle">
+                                    <p className="mt-6 md:mt-10 text-magical-300 font-hand text-2xl md:text-4xl animate-bounce-subtle">
                                         The magic begins with you, {senderName}...
                                     </p>
                                 </div>

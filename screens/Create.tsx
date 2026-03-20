@@ -9,6 +9,7 @@ import { Logo } from '../components/Logo';
 import { Seo } from '../components/Seo';
 import { Landing3D } from '../components/Landing3D';
 import ButtonWithIcon from '@/components/ui/button-witn-icon';
+import { Edit2, Sparkles, Wand2 } from 'lucide-react';
 
 export const Create: React.FC = () => {
   const navigate = useNavigate();
@@ -231,27 +232,37 @@ export const Create: React.FC = () => {
               <p className="text-center text-gray-400/80 mb-10 font-serif italic text-lg leading-relaxed max-w-md mx-auto">"Every great surprise begins with a thought for someone special."</p>
 
               <div className="space-y-8">
-                <div className="group relative">
+                <div className="group relative group/input">
                   <label className="block text-[10px] font-black text-magical-300 mb-2 group-focus-within:text-magical-400 transition-colors uppercase tracking-[0.4em] ml-1">Their Name</label>
-                  <input
-                    type="text"
-                    value={formData.receiverName}
-                    onChange={(e) => handleChange('receiverName', e.target.value)}
-                    className="w-full bg-slate-900/40 p-5 rounded-2xl border border-white/10 text-white placeholder-white/10 focus:ring-2 focus:ring-magical-500/50 focus:border-magical-500/50 outline-none text-2xl transition-all shadow-2xl focus:bg-slate-950/80 font-serif"
-                    placeholder="e.g. Sarah"
-                  />
+                  <div className="relative">
+                    <input
+                      type="text"
+                      value={formData.receiverName}
+                      onChange={(e) => handleChange('receiverName', e.target.value)}
+                      className="w-full bg-slate-900/40 p-5 pe-14 rounded-2xl border border-white/10 text-white placeholder-white/10 focus:ring-2 focus:ring-magical-500/50 focus:border-magical-500/50 outline-none text-2xl transition-all shadow-2xl focus:bg-slate-950/80 font-serif"
+                      placeholder="e.g. Sarah"
+                    />
+                    <div className="absolute right-5 top-1/2 -translate-y-1/2 text-magical-400/30 group-hover/input:text-magical-400/60 transition-colors pointer-events-none">
+                      <Edit2 size={24} />
+                    </div>
+                  </div>
                   <div className="absolute right-4 bottom-4 text-white/5 font-hand text-3xl pointer-events-none group-focus-within:opacity-0 transition-opacity uppercase">Receiver</div>
                 </div>
 
-                <div className="group relative">
+                <div className="group relative group/input">
                   <label className="block text-[10px] font-black text-magical-300 mb-2 group-focus-within:text-magical-400 transition-colors uppercase tracking-[0.4em] ml-1">Your Name</label>
-                  <input
-                    type="text"
-                    value={formData.senderName}
-                    onChange={(e) => handleChange('senderName', e.target.value)}
-                    className="w-full bg-slate-900/40 p-5 rounded-2xl border border-white/10 text-white placeholder-white/10 focus:ring-2 focus:ring-magical-500/50 focus:border-magical-500/50 outline-none text-2xl transition-all shadow-2xl focus:bg-slate-950/80 font-serif"
-                    placeholder="e.g. Alex"
-                  />
+                  <div className="relative">
+                    <input
+                      type="text"
+                      value={formData.senderName}
+                      onChange={(e) => handleChange('senderName', e.target.value)}
+                      className="w-full bg-slate-900/40 p-5 pe-14 rounded-2xl border border-white/10 text-white placeholder-white/10 focus:ring-2 focus:ring-magical-500/50 focus:border-magical-500/50 outline-none text-2xl transition-all shadow-2xl focus:bg-slate-950/80 font-serif"
+                      placeholder="e.g. Alex"
+                    />
+                    <div className="absolute right-5 top-1/2 -translate-y-1/2 text-magical-400/30 group-hover/input:text-magical-400/60 transition-colors pointer-events-none">
+                      <Edit2 size={24} />
+                    </div>
+                  </div>
                   <div className="absolute right-4 bottom-4 text-white/5 font-hand text-3xl pointer-events-none group-focus-within:opacity-0 transition-opacity uppercase">Sender</div>
                 </div>
               </div>
@@ -290,8 +301,7 @@ export const Create: React.FC = () => {
               />
             </div>
 
-            <div className="backdrop-blur-2xl bg-white/5 p-8 rounded-3xl border border-white/10 space-y-8 shadow-2xl overflow-y-auto max-h-[45vh] no-scrollbar">
-
+            <div className="backdrop-blur-2xl bg-white/5 p-8 rounded-3xl border border-white/10 space-y-8 shadow-2xl overflow-y-auto max-h-[45vh] magical-scrollbar px-4">
               <div>
                 <label className="block text-[10px] font-black text-magical-300 uppercase tracking-[0.4em] mb-4 ml-1">The Style</label>
                 <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
@@ -372,10 +382,10 @@ export const Create: React.FC = () => {
               <p className="text-slate-400/80 font-serif italic text-lg leading-relaxed max-w-sm mx-auto">"Five promises. Five gifts of time. What magic will you grant?"</p>
             </div>
 
-            <div className="grid grid-cols-1 gap-6 relative z-10 overflow-y-auto max-h-[55vh] pr-2 no-scrollbar px-1">
+            <div className="grid grid-cols-1 gap-6 relative z-10 overflow-y-auto max-h-[55vh] pr-2 magical-scrollbar px-1">
               {formData.wheelOptions?.map((option, index) => (
                 <div key={index} className="flex flex-col space-y-2 group/item">
-                  <div className="flex items-center gap-4 relative">
+                  <div className="flex items-center gap-4 relative group/input">
                     {/* Minimalist, elegant numbering */}
                     <div className="text-[10px] font-black text-magical-400/20 group-hover/item:text-magical-400 transition-colors duration-500 uppercase tracking-[0.6em] w-12 text-center">
                       Grant {index + 1}
@@ -386,9 +396,12 @@ export const Create: React.FC = () => {
                         type="text"
                         value={option}
                         onChange={(e) => handleWheelOptionChange(index, e.target.value)}
-                        className="w-full bg-slate-900/40 border-b border-white/10 p-4 text-white focus:border-magical-500/50 outline-none text-xl transition-all placeholder-white/5 focus:bg-slate-950/40 font-serif italic"
-                        placeholder={`Start typing your promise...`}
+                        className="w-full bg-slate-900/40 border-b border-white/10 p-4 pe-14 text-white focus:border-magical-500/50 outline-none text-xl transition-all placeholder-white/10 focus:bg-slate-950/60 font-serif italic rounded-t-xl hover:bg-slate-900/60"
+                        placeholder="Type a magical promise..."
                       />
+                      <div className="absolute right-4 top-1/2 -translate-y-1/2 text-magical-400/30 group-hover/input:text-magical-400/60 transition-colors pointer-events-none">
+                        <Edit2 size={16} />
+                      </div>
                       {/* Interactive focus indicator */}
                       <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-magical-500 group-focus-within/item:w-full transition-all duration-700 ease-out shadow-[0_0_10px_rgba(139,38,242,0.8)]"></div>
                     </div>
@@ -431,33 +444,43 @@ export const Create: React.FC = () => {
               <p className="text-slate-400 font-serif italic text-lg leading-relaxed max-w-lg mx-auto">"Your voice and your words are the true gift. This is the moment they'll hear as they celebrate."</p>
             </div>
 
-            <div className="space-y-10 relative z-10 overflow-y-auto max-h-[55vh] pr-2 no-scrollbar px-1">
+            <div className="space-y-10 relative z-10 overflow-y-auto max-h-[55vh] pr-2 magical-scrollbar px-1">
               {/* Written Messages */}
               <div className="space-y-8">
-                <div className="group/field relative">
+                <div className="group/field relative group/input">
                   <div className="flex items-center gap-3 mb-4">
                     <span className="text-[10px] font-black text-magical-400/40 uppercase tracking-[0.4em]">The Opening Chapter</span>
                     <div className="h-px flex-1 bg-white/5"></div>
                   </div>
-                  <textarea
-                    value={formData.introMessage}
-                    onChange={(e) => handleChange('introMessage', e.target.value)}
-                    className="w-full bg-slate-900/40 p-6 rounded-3xl border border-white/5 text-white placeholder-white/5 focus:border-magical-500/30 outline-none min-h-[120px] focus:bg-slate-950/60 font-serif text-xl leading-relaxed transition-all italic shadow-inner"
-                    placeholder="Type a beautiful intro..."
-                  />
+                  <div className="relative">
+                    <textarea
+                      value={formData.introMessage}
+                      onChange={(e) => handleChange('introMessage', e.target.value)}
+                      className="w-full bg-slate-900/40 p-6 pe-14 rounded-3xl border border-white/5 text-white placeholder-white/5 focus:border-magical-500/30 outline-none min-h-[120px] focus:bg-slate-950/60 font-serif text-xl leading-relaxed transition-all italic shadow-inner"
+                      placeholder="Type a beautiful intro..."
+                    />
+                    <div className="absolute right-5 top-6 text-magical-400/30 group-hover/input:text-magical-400/60 transition-colors pointer-events-none">
+                      <Edit2 size={24} />
+                    </div>
+                  </div>
                 </div>
 
-                <div className="group/field relative">
+                <div className="group/field relative group/input">
                   <div className="flex items-center gap-3 mb-4">
                     <span className="text-[10px] font-black text-magical-400/40 uppercase tracking-[0.4em]">A Secret Note</span>
                     <div className="h-px flex-1 bg-white/5"></div>
                   </div>
-                  <textarea
-                    value={formData.personalNote}
-                    onChange={(e) => handleChange('personalNote', e.target.value)}
-                    className="w-full bg-slate-900/40 p-6 rounded-3xl border border-white/5 text-white placeholder-white/5 focus:border-magical-500/30 outline-none min-h-[120px] focus:bg-slate-950/60 font-serif text-xl leading-relaxed transition-all italic shadow-inner"
-                    placeholder="Something just for them..."
-                  />
+                  <div className="relative">
+                    <textarea
+                      value={formData.personalNote}
+                      onChange={(e) => handleChange('personalNote', e.target.value)}
+                      className="w-full bg-slate-900/40 p-6 pe-14 rounded-3xl border border-white/5 text-white placeholder-white/5 focus:border-magical-500/30 outline-none min-h-[120px] focus:bg-slate-950/60 font-serif text-xl leading-relaxed transition-all italic shadow-inner"
+                      placeholder="Something just for them..."
+                    />
+                    <div className="absolute right-5 top-6 text-magical-400/30 group-hover/input:text-magical-400/60 transition-colors pointer-events-none">
+                      <Edit2 size={24} />
+                    </div>
+                  </div>
                   <p className="mt-2 text-[10px] text-slate-500 italic font-serif text-right px-2">This note stays hidden until they find it.</p>
                 </div>
               </div>
@@ -526,13 +549,18 @@ export const Create: React.FC = () => {
                   <span className="text-[10px] font-black text-magical-400/40 uppercase tracking-[0.4em]">One Final secret</span>
                   <div className="h-px flex-1 bg-white/5"></div>
                 </div>
-                <input
-                  type="text"
-                  value={formData.finalMessage}
-                  onChange={(e) => handleChange('finalMessage', e.target.value)}
-                  className="w-full bg-slate-900/20 border-b border-white/10 p-4 text-white placeholder-white/10 focus:border-amber-400/50 outline-none text-2xl transition-all font-serif italic focus:bg-white/[0.02]"
-                  placeholder="The very last thing they'll see..."
-                />
+                <div className="group relative group/input">
+                  <input
+                    type="text"
+                    value={formData.finalMessage}
+                    onChange={(e) => handleChange('finalMessage', e.target.value)}
+                    className="w-full bg-slate-900/20 border-b border-white/10 p-4 pe-14 text-white placeholder-white/10 focus:border-amber-400/50 outline-none text-2xl transition-all font-serif italic focus:bg-white/[0.02]"
+                    placeholder="The very last thing they'll see..."
+                  />
+                  <div className="absolute right-5 top-1/2 -translate-y-1/2 text-magical-400/30 group-hover/input:text-magical-400/60 transition-colors pointer-events-none">
+                    <Edit2 size={24} />
+                  </div>
+                </div>
               </div>
             </div>
 
