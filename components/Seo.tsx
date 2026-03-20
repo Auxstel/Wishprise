@@ -8,6 +8,7 @@ interface SeoProps {
     name?: string;
     image?: string;
     path?: string;
+    noindex?: boolean;
 }
 
 export const Seo: React.FC<SeoProps> = ({
@@ -16,7 +17,8 @@ export const Seo: React.FC<SeoProps> = ({
     type = 'website',
     name = 'Wishprise',
     image = '/og-image.jpg', // Assuming we might have one or will add one later, fallback
-    path = ''
+    path = '',
+    noindex = false
 }) => {
     const siteTitle = title ? `${title} | Wishprise` : 'Wishprise - Free 3D Birthday Wish Maker';
     const siteDescription = description || "Create stunning, interactive 3D birthday surprises for free. No login required. The #1 birthday wish maker for custom cakes, music, and virtual magic delivered via link.";
@@ -27,6 +29,7 @@ export const Seo: React.FC<SeoProps> = ({
             {/* Standard metadata tags */}
             <title>{siteTitle}</title>
             <meta name='description' content={siteDescription} />
+            {noindex && <meta name="robots" content="noindex, nofollow" />}
             <link rel="canonical" href={canonicalUrl} />
             <link rel="icon" type="image/png" href="/favicon.png" />
             <link rel="apple-touch-icon" href="/logo.png" />

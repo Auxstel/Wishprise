@@ -226,6 +226,7 @@ export const Receiver: React.FC = () => {
         title={`A Birthday Surprise!`} 
         description={`Open your magical 3D birthday surprise from someone special.`}
         path={`/view/${id}`}
+        noindex={true}
       />
 
       <div className="fixed inset-0 z-0 pointer-events-none">
@@ -257,12 +258,12 @@ export const Receiver: React.FC = () => {
         }
       `}</style>
 
-      <div className="relative z-10 w-full min-h-screen flex flex-col items-center pt-32 pb-[600px]">
+      <div className="relative z-10 w-full min-h-screen flex flex-col items-center pt-32 pb-24 md:pb-32">
         <div className="w-full max-w-lg p-6 flex flex-col items-center">
 
           {/* LANDING */}
           {step === ExperienceStep.LANDING && (
-            <div className="text-center w-full min-h-[60vh] flex flex-col items-center justify-center">
+            <div className="text-center w-full min-h-[70vh] md:min-h-0 flex flex-col items-center justify-center">
 
 
               {!allBalloonsPopped ? (
@@ -667,8 +668,8 @@ export const Receiver: React.FC = () => {
             </div>
           )}
 
-          {/* Final physical spacer to ensure scroll clearance on all mobile devices */}
-          <div className="h-[600px] w-full pointer-events-none"></div>
+          {/* Final physical spacer to ensure scroll clearance ONLY on mobile for ads */}
+          <div className="h-[60vh] md:hidden w-full pointer-events-none"></div>
         </div>
       </div>
     </div>
