@@ -665,6 +665,8 @@ export const Receiver: React.FC = () => {
             </div>
           )}
 
+          {/* Final physical spacer to ensure scroll clearance on all mobile devices */}
+          <div className="h-[400px] w-full pointer-events-none"></div>
         </div>
       </div>
     </div>
