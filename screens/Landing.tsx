@@ -155,8 +155,8 @@ export const Landing: React.FC = () => {
                 <Landing3D />
             </div>
 
-            {/* SECTION 1: HERO (Full Screen) */}
-            <div className="relative h-screen w-full flex flex-col">
+            {/* SECTION 1: HERO (Full Screen Height, but natural flow) */}
+            <div className="relative min-h-screen w-full flex flex-col">
 
                 {/* Logo Header (Absolute) */}
                 <div className="absolute top-0 left-0 w-full p-6 z-30 flex justify-between items-center">
@@ -164,7 +164,7 @@ export const Landing: React.FC = () => {
                 </div>
 
                 {/* Content */}
-                <div className="relative z-20 flex-1 flex flex-col items-center pt-12 md:pt-24 p-6 text-center overflow-y-auto no-scrollbar pb-[250px] md:pb-6">
+                <div className="relative z-20 flex-1 flex flex-col items-center pt-24 md:pt-32 p-6 text-center pb-[200px] md:pb-6">
 
                     <div className="backdrop-blur-md bg-white/10 p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] border border-white/20 shadow-[0_0_80px_rgba(139,38,242,0.2)] animate-fade-in-up w-full max-w-3xl mx-auto flex flex-col items-center my-4 relative">
                         <span className="inline-block py-1 px-3 rounded-full bg-amber-400/20 border border-amber-400/30 text-amber-300 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase mb-4 md:mb-8 shadow-glow">

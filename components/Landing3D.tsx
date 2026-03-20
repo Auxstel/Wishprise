@@ -13,89 +13,80 @@ export const Landing3D: React.FC = () => {
         const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.position.set(0, 0, 15);
 
-        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false, powerPreference: 'high-performance' });
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.toneMappingExposure = 1.2;
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5)); // Capped at 1.5 for performance
         mountRef.current.appendChild(renderer.domElement);
 
         // --- Lighting ---
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
         scene.add(ambientLight);
 
-        const dirLight = new THREE.DirectionalLight(0xffd700, 1.5);
+        const dirLight = new THREE.DirectionalLight(0xffd700, 1.2);
         dirLight.position.set(5, 10, 7);
-        dirLight.castShadow = true;
         scene.add(dirLight);
 
-        const purpleLight = new THREE.PointLight(0xd946ef, 1, 10);
-        purpleLight.position.set(-5, 0, 5);
+        const purpleLight = new THREE.PointLight(0xd946ef, 1.5, 20);
+        purpleLight.position.set(-5, 5, 5);
         scene.add(purpleLight);
 
-        // --- 1. Floating Balloons ---
+        // --- 1. Floating Balloons (Optimized) ---
         const balloonGroup = new THREE.Group();
         scene.add(balloonGroup);
 
-        const balloonGeo = new THREE.SphereGeometry(1, 20, 20); // Slightly lower poly for performance
-        const balloonMat = new THREE.MeshPhysicalMaterial({
-            roughness: 0.15,
-            metalness: 0.2,
-            clearcoat: 1.0,
-            clearcoatRoughness: 0.1,
-            reflectivity: 1
+        // Shared Geometry and base material for performance
+        const balloonGeo = new THREE.SphereGeometry(1, 16, 16); 
+        const baseBalloonMat = new THREE.MeshStandardMaterial({
+            roughness: 0.1,
+            metalness: 0.3,
         });
 
         const balloonColors = [0xFFD700, 0xD946EF, 0xFF69B4, 0x8A2BE2, 0x00BFFF, 0xFF4500, 0x32CD32];
         const balloons: { mesh: THREE.Group, speed: number, offset: number }[] = [];
 
-        // Create 120 balloons for a full-background effect
-        for (let i = 0; i < 120; i++) {
+        // Balanced count (70) for visual density without lagging
+        for (let i = 0; i < 70; i++) {
             const group = new THREE.Group();
 
             // Balloon Body
-            const mat = balloonMat.clone();
+            const mat = baseBalloonMat.clone();
             mat.color.setHex(balloonColors[i % balloonColors.length]);
             const mesh = new THREE.Mesh(balloonGeo, mat);
-            // Squash slightly
             mesh.scale.set(1, 1.15, 1);
             group.add(mesh);
 
-            // String (Random lengths)
-            const stringLen = 3 + Math.random() * 3;
+            // String
+            const stringLen = 4 + Math.random() * 4;
             const lineGeo = new THREE.BufferGeometry().setFromPoints([
                 new THREE.Vector3(0, -1, 0),
-                new THREE.Vector3(Math.sin(i) * 0.3, -stringLen * 0.6, Math.cos(i) * 0.3),
+                new THREE.Vector3(Math.sin(i) * 0.2, -stringLen * 0.5, 0),
                 new THREE.Vector3(0, -stringLen, 0)
             ]);
-            const line = new THREE.Line(lineGeo, new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.4 }));
+            const line = new THREE.Line(lineGeo, new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.3 }));
             group.add(line);
 
-            // Initial Position (Deep and wide spread)
+            // Spatially distributed
             const x = (Math.random() - 0.5) * 60;
-            const y = (Math.random() - 0.5) * 50;
-            const z = (Math.random() - 0.5) * 30 - 10;
+            const y = (Math.random() - 0.5) * 60;
+            const z = (Math.random() - 0.5) * 40 - 15;
             group.position.set(x, y, z);
 
-            // Random scale
-            const s = 0.5 + Math.random() * 0.8;
+            const s = 0.5 + Math.random() * 1.2;
             group.scale.setScalar(s);
 
             balloonGroup.add(group);
             balloons.push({
                 mesh: group,
-                speed: 0.01 + Math.random() * 0.04, // Varied speeds
+                speed: 0.01 + Math.random() * 0.03,
                 offset: Math.random() * 100
             });
         }
 
-        // --- 2. Confetti System ---
-        const confettiCount = 300;
-        const confettiGeo = new THREE.PlaneGeometry(0.12, 0.25);
+        // --- 2. Confetti System (Simplified) ---
+        const confettiCount = 150; // Halved
+        const confettiGeo = new THREE.PlaneGeometry(0.12, 0.2);
         const confettiMat = new THREE.MeshStandardMaterial({
             side: THREE.DoubleSide,
-            roughness: 0.2,
-            metalness: 0.7,
             vertexColors: true
         });
         const confettiMesh = new THREE.InstancedMesh(confettiGeo, confettiMat, confettiCount);
@@ -103,14 +94,12 @@ export const Landing3D: React.FC = () => {
 
         const dummy = new THREE.Object3D();
         const colors = new Float32Array(confettiCount * 3);
-        const cPalette = [new THREE.Color(0xFFD700), new THREE.Color(0xC0C0C0), new THREE.Color(0xFF69B4), new THREE.Color(0x00FFFF)];
+        const cPalette = [new THREE.Color(0xFFD700), new THREE.Color(0xFF69B4), new THREE.Color(0x00FFFF)];
 
-        // Physics data for confetti
         const confettiData: { velocity: THREE.Vector3, rotSpeed: THREE.Vector3 }[] = [];
 
         for (let i = 0; i < confettiCount; i++) {
-            dummy.position.set((Math.random() - 0.5) * 35, Math.random() * 40 - 20, (Math.random() - 0.5) * 20);
-            dummy.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI);
+            dummy.position.set((Math.random() - 0.5) * 40, (Math.random() - 0.5) * 40, (Math.random() - 0.5) * 20);
             dummy.updateMatrix();
             confettiMesh.setMatrixAt(i, dummy.matrix);
 
@@ -120,8 +109,8 @@ export const Landing3D: React.FC = () => {
             colors[i * 3 + 2] = col.b;
 
             confettiData.push({
-                velocity: new THREE.Vector3((Math.random() - 0.5) * 0.05, -0.02 - Math.random() * 0.05, (Math.random() - 0.5) * 0.02),
-                rotSpeed: new THREE.Vector3(Math.random() * 0.1, Math.random() * 0.1, Math.random() * 0.1)
+                velocity: new THREE.Vector3((Math.random() - 0.5) * 0.03, -0.04 - Math.random() * 0.04, 0),
+                rotSpeed: new THREE.Vector3(Math.random() * 0.1, Math.random() * 0.1, 0)
             });
         }
         confettiMesh.instanceMatrix.needsUpdate = true;
@@ -144,32 +133,26 @@ export const Landing3D: React.FC = () => {
             frameId = requestAnimationFrame(animate);
             time += 0.01;
 
-            // Animate Balloons (Float Up & Bob)
             balloons.forEach(b => {
                 b.mesh.position.y += b.speed;
-                b.mesh.rotation.z = Math.sin(time + b.offset) * 0.15; // Gentle sway
-                b.mesh.rotation.y += 0.003;
-
-                // Reset when out of view (Top boundary adjusted for deep scene)
-                if (b.mesh.position.y > 25) {
-                    b.mesh.position.y = -25;
+                b.mesh.rotation.z = Math.sin(time + b.offset) * 0.1;
+                
+                if (b.mesh.position.y > 35) {
+                    b.mesh.position.y = -35;
                     b.mesh.position.x = (Math.random() - 0.5) * 60;
                 }
             });
 
-            // Animate Confetti (Fall & Tumble)
             for (let i = 0; i < confettiCount; i++) {
                 confettiMesh.getMatrixAt(i, dummy.matrix);
                 dummy.matrix.decompose(dummy.position, dummy.quaternion, dummy.scale);
-
                 dummy.position.add(confettiData[i].velocity);
                 dummy.rotation.x += confettiData[i].rotSpeed.x;
                 dummy.rotation.y += confettiData[i].rotSpeed.y;
 
-                // Reset
-                if (dummy.position.y < -20) {
-                    dummy.position.y = 25;
-                    dummy.position.x = (Math.random() - 0.5) * 35;
+                if (dummy.position.y < -30) {
+                    dummy.position.y = 35;
+                    dummy.position.x = (Math.random() - 0.5) * 40;
                 }
 
                 dummy.updateMatrix();
@@ -177,9 +160,9 @@ export const Landing3D: React.FC = () => {
             }
             confettiMesh.instanceMatrix.needsUpdate = true;
 
-            // Slight Camera Parallax
-            camera.position.x += (mouseX * 0.5 - camera.position.x) * 0.05;
-            camera.position.y += (mouseY * 0.5 - camera.position.y) * 0.05;
+            // Simple parallax
+            camera.position.x += (mouseX * 1.5 - camera.position.x) * 0.02;
+            camera.position.y += (mouseY * 1.5 - camera.position.y) * 0.02;
             camera.lookAt(0, 0, 0);
 
             renderer.render(scene, camera);
