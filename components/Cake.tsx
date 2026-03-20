@@ -188,6 +188,7 @@ export const Cake: React.FC<CakeProps> = ({
     // --- Scene & Camera ---
     const width = mountRef.current.clientWidth || 300;
     const height = mountRef.current.clientHeight || 300;
+    const isMobile = width < 768;
     const scene = new THREE.Scene();
     sceneRef.current = scene;
 
@@ -195,11 +196,15 @@ export const Cake: React.FC<CakeProps> = ({
     camera.position.set(0, 8, 12);
     camera.lookAt(0, 0, 0);
 
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    const renderer = new THREE.WebGLRenderer({ 
+        alpha: true, 
+        antialias: !isMobile,
+        powerPreference: "high-performance"
+    });
     renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.SoftShadowMap;
+    renderer.setPixelRatio(isMobile ? Math.min(window.devicePixelRatio, 1.5) : Math.min(window.devicePixelRatio, 2));
+    renderer.shadowMap.enabled = !isMobile;
+    renderer.shadowMap.type = THREE.BasicShadowMap;
     mountRef.current.appendChild(renderer.domElement);
 
     // --- Lights ---
@@ -231,7 +236,8 @@ export const Cake: React.FC<CakeProps> = ({
 
     // Plate
     const isSquareStyle = style === CakeStyle.MODERN || style === CakeStyle.TIERED_SQUARE;
-    const plateGeo = isSquareStyle ? new THREE.BoxGeometry(6, 0.2, 6) : new THREE.CylinderGeometry(3.5, 3.5, 0.2, 64);
+    const segments = isMobile ? 32 : 64;
+    const plateGeo = isSquareStyle ? new THREE.BoxGeometry(6, 0.2, 6) : new THREE.CylinderGeometry(3.5, 3.5, 0.2, segments);
     const plateMesh = new THREE.Mesh(plateGeo, plateMaterial);
     plateMesh.position.y = -0.6;
     plateMesh.receiveShadow = true;
@@ -406,14 +412,15 @@ export const Cake: React.FC<CakeProps> = ({
          }
     } else {
         // CLASSIC
-        const geo = new THREE.CylinderGeometry(cakeR, cakeR, cakeH, 40);
+        const cSegments = isMobile ? 24 : 40;
+        const geo = new THREE.CylinderGeometry(cakeR, cakeR, cakeH, cSegments);
         if (!isCut) {
             mainMesh = new THREE.Mesh(geo, icingMaterial);
             mainGroup.add(mainMesh);
         } else {
-            mainMesh = new THREE.Mesh(new THREE.CylinderGeometry(cakeR, cakeR, cakeH, 40, 1, false, sliceAngle, Math.PI * 2 - sliceAngle), icingMaterial);
+            mainMesh = new THREE.Mesh(new THREE.CylinderGeometry(cakeR, cakeR, cakeH, cSegments, 1, false, sliceAngle, Math.PI * 2 - sliceAngle), icingMaterial);
             mainGroup.add(mainMesh);
-            sliceMesh = new THREE.Mesh(new THREE.CylinderGeometry(cakeR, cakeR, cakeH, 40, 1, false, 0, sliceAngle), icingMaterial);
+            sliceMesh = new THREE.Mesh(new THREE.CylinderGeometry(cakeR, cakeR, cakeH, cSegments, 1, false, 0, sliceAngle), icingMaterial);
         }
     }
 
@@ -600,7 +607,8 @@ export const Cake: React.FC<CakeProps> = ({
                  }
 
                  // Spawn Particles (Rectangular confetti)
-                 for(let i=0; i<150; i++) {
+                 const count = isMobile ? 50 : 150;
+                 for(let i=0; i<count; i++) {
                      // Rectangular geometry for confetti
                      const confGeo = new THREE.PlaneGeometry(0.08, 0.15);
                      const confMat = new THREE.MeshBasicMaterial({ 
@@ -711,7 +719,7 @@ export const Cake: React.FC<CakeProps> = ({
 
   return (
     <div className="relative w-full h-full min-h-[300px]">
-        <div ref={mountRef} className="w-full h-full cursor-grab active:cursor-grabbing outline-none" />
+        <div ref={mountRef} className="w-full h-full cursor-grab active:cursor-grabbing outline-none touch-action-pan-y" style={{ touchAction: 'pan-y' }} />
         {!candlesLit && !isCut && (
              <div className="absolute bottom-4 w-full text-center pointer-events-none animate-pulse">
                 <span className="bg-black/60 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg border border-white/20">
