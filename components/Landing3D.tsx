@@ -10,7 +10,7 @@ export const Landing3D: React.FC = () => {
         // --- Scene Setup ---
         const scene = new THREE.Scene();
 
-        const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
+        const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.position.set(0, 0, 15);
 
         const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
@@ -37,7 +37,7 @@ export const Landing3D: React.FC = () => {
         const balloonGroup = new THREE.Group();
         scene.add(balloonGroup);
 
-        const balloonGeo = new THREE.SphereGeometry(1, 32, 32);
+        const balloonGeo = new THREE.SphereGeometry(1, 20, 20); // Slightly lower poly for performance
         const balloonMat = new THREE.MeshPhysicalMaterial({
             roughness: 0.15,
             metalness: 0.2,
@@ -46,11 +46,11 @@ export const Landing3D: React.FC = () => {
             reflectivity: 1
         });
 
-        const balloonColors = [0xFFD700, 0xD946EF, 0xFF69B4, 0x8A2BE2, 0x00BFFF];
+        const balloonColors = [0xFFD700, 0xD946EF, 0xFF69B4, 0x8A2BE2, 0x00BFFF, 0xFF4500, 0x32CD32];
         const balloons: { mesh: THREE.Group, speed: number, offset: number }[] = [];
 
-        // Create 15 balloons
-        for (let i = 0; i < 15; i++) {
+        // Create 120 balloons for a full-background effect
+        for (let i = 0; i < 120; i++) {
             const group = new THREE.Group();
 
             // Balloon Body
@@ -58,32 +58,33 @@ export const Landing3D: React.FC = () => {
             mat.color.setHex(balloonColors[i % balloonColors.length]);
             const mesh = new THREE.Mesh(balloonGeo, mat);
             // Squash slightly
-            mesh.scale.set(1, 1.1, 1);
+            mesh.scale.set(1, 1.15, 1);
             group.add(mesh);
 
-            // String
+            // String (Random lengths)
+            const stringLen = 3 + Math.random() * 3;
             const lineGeo = new THREE.BufferGeometry().setFromPoints([
                 new THREE.Vector3(0, -1, 0),
-                new THREE.Vector3(Math.sin(i) * 0.2, -3, Math.cos(i) * 0.2),
-                new THREE.Vector3(0, -4.5, 0)
+                new THREE.Vector3(Math.sin(i) * 0.3, -stringLen * 0.6, Math.cos(i) * 0.3),
+                new THREE.Vector3(0, -stringLen, 0)
             ]);
-            const line = new THREE.Line(lineGeo, new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.6 }));
+            const line = new THREE.Line(lineGeo, new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.4 }));
             group.add(line);
 
-            // Initial Position (spread out)
-            const x = (Math.random() - 0.5) * 18;
-            const y = (Math.random() - 0.5) * 10 - 5;
-            const z = (Math.random() - 0.5) * 10 - 2;
+            // Initial Position (Deep and wide spread)
+            const x = (Math.random() - 0.5) * 60;
+            const y = (Math.random() - 0.5) * 50;
+            const z = (Math.random() - 0.5) * 30 - 10;
             group.position.set(x, y, z);
 
             // Random scale
-            const s = 0.8 + Math.random() * 0.5;
+            const s = 0.5 + Math.random() * 0.8;
             group.scale.setScalar(s);
 
             balloonGroup.add(group);
             balloons.push({
                 mesh: group,
-                speed: 0.05 + Math.random() * 0.05, // INCREASED SPEED
+                speed: 0.01 + Math.random() * 0.04, // Varied speeds
                 offset: Math.random() * 100
             });
         }
@@ -108,7 +109,7 @@ export const Landing3D: React.FC = () => {
         const confettiData: { velocity: THREE.Vector3, rotSpeed: THREE.Vector3 }[] = [];
 
         for (let i = 0; i < confettiCount; i++) {
-            dummy.position.set((Math.random() - 0.5) * 25, Math.random() * 20 - 5, (Math.random() - 0.5) * 10);
+            dummy.position.set((Math.random() - 0.5) * 35, Math.random() * 40 - 20, (Math.random() - 0.5) * 20);
             dummy.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI);
             dummy.updateMatrix();
             confettiMesh.setMatrixAt(i, dummy.matrix);
@@ -143,19 +144,16 @@ export const Landing3D: React.FC = () => {
             frameId = requestAnimationFrame(animate);
             time += 0.01;
 
-            // DEBUG: Log to confirm loop is running
-            if (Math.floor(time * 100) % 100 === 0) console.log("🎈 LOOP RUNNING: Time =", time.toFixed(2));
-
             // Animate Balloons (Float Up & Bob)
             balloons.forEach(b => {
                 b.mesh.position.y += b.speed;
-                b.mesh.rotation.z = Math.sin(time + b.offset) * 0.1; // Gentle sway
-                b.mesh.rotation.y += 0.005;
+                b.mesh.rotation.z = Math.sin(time + b.offset) * 0.15; // Gentle sway
+                b.mesh.rotation.y += 0.003;
 
-                // Reset when out of view
-                if (b.mesh.position.y > 10) {
-                    b.mesh.position.y = -10;
-                    b.mesh.position.x = (Math.random() - 0.5) * 18;
+                // Reset when out of view (Top boundary adjusted for deep scene)
+                if (b.mesh.position.y > 25) {
+                    b.mesh.position.y = -25;
+                    b.mesh.position.x = (Math.random() - 0.5) * 60;
                 }
             });
 
@@ -169,9 +167,9 @@ export const Landing3D: React.FC = () => {
                 dummy.rotation.y += confettiData[i].rotSpeed.y;
 
                 // Reset
-                if (dummy.position.y < -10) {
-                    dummy.position.y = 12;
-                    dummy.position.x = (Math.random() - 0.5) * 25;
+                if (dummy.position.y < -20) {
+                    dummy.position.y = 25;
+                    dummy.position.x = (Math.random() - 0.5) * 35;
                 }
 
                 dummy.updateMatrix();
@@ -206,5 +204,5 @@ export const Landing3D: React.FC = () => {
         };
     }, []);
 
-    return <div ref={mountRef} className="absolute inset-0 z-0 pointer-events-none" />;
+    return <div ref={mountRef} className="fixed inset-0 z-0 pointer-events-none" />;
 };

@@ -149,14 +149,14 @@ export const Landing: React.FC = () => {
                 ]
             }} />
 
+            {/* 3D Background (Global & Fixed) */}
+            <div className="fixed inset-0 z-0">
+                <div className="absolute inset-0 bg-gradient-to-b from-purple-900/30 via-slate-950/40 to-slate-950 z-10 pointer-events-none"></div>
+                <Landing3D />
+            </div>
+
             {/* SECTION 1: HERO (Full Screen) */}
             <div className="relative h-screen w-full flex flex-col">
-
-                {/* 3D Background */}
-                <div className="absolute inset-0 z-0">
-                    <div className="absolute inset-0 bg-gradient-to-b from-purple-900/30 via-slate-900/10 to-slate-950 z-10 pointer-events-none"></div>
-                    <Landing3D />
-                </div>
 
                 {/* Logo Header (Absolute) */}
                 <div className="absolute top-0 left-0 w-full p-6 z-30 flex justify-between items-center">
@@ -164,7 +164,7 @@ export const Landing: React.FC = () => {
                 </div>
 
                 {/* Content */}
-                <div className="relative z-20 flex-1 flex flex-col items-center pt-12 md:pt-24 p-6 text-center overflow-y-auto no-scrollbar pb-32 md:pb-6">
+                <div className="relative z-20 flex-1 flex flex-col items-center pt-12 md:pt-24 p-6 text-center overflow-y-auto no-scrollbar pb-[250px] md:pb-6">
 
                     <div className="backdrop-blur-md bg-white/10 p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] border border-white/20 shadow-[0_0_80px_rgba(139,38,242,0.2)] animate-fade-in-up w-full max-w-3xl mx-auto flex flex-col items-center my-4 relative">
                         <span className="inline-block py-1 px-3 rounded-full bg-amber-400/20 border border-amber-400/30 text-amber-300 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase mb-4 md:mb-8 shadow-glow">
@@ -263,12 +263,6 @@ export const Landing: React.FC = () => {
                         </div>
                     </div>
 
-                    {/* Scroll Hint */}
-                    <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce text-white/40">
-                        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                        </svg>
-                    </div>
                 </div>
             </div>
 
@@ -276,7 +270,7 @@ export const Landing: React.FC = () => {
             <HowItWorks />
 
             {/* SECTION 3: TESTIMONIALS */}
-            <div className="relative z-20 bg-slate-950 py-24 px-6 border-t border-white/5">
+            <div className="relative z-20 bg-slate-950/20 backdrop-blur-sm py-24 px-6 border-t border-white/5">
                 <div className="max-w-7xl mx-auto">
                     <div className="text-center mb-16 space-y-4">
                         <h2 className="text-4xl md:text-5xl font-serif text-white tracking-tight">Moments of <span className="text-magical-300 font-hand text-5xl md:text-6xl text-shimmer animate-shimmer">Joy</span></h2>
@@ -288,7 +282,7 @@ export const Landing: React.FC = () => {
             </div>
 
             {/* SECTION 4: LATEST RESOURCES (For AdSense/SEO visibility) */}
-            <div className="relative z-20 bg-slate-900/30 py-24 px-6 border-t border-white/5">
+            <div className="relative z-20 bg-slate-900/10 backdrop-blur-sm py-24 px-6 border-t border-white/5">
                 <div className="max-w-6xl mx-auto">
                     <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
                         <div>
@@ -326,7 +320,7 @@ export const Landing: React.FC = () => {
             </div>
 
             {/* SECTION 5: FAQ */}
-            <div className="relative z-20 bg-gradient-to-b from-slate-950 to-slate-900 py-24 px-6 border-t border-white/5">
+            <div className="relative z-20 bg-gradient-to-b from-slate-950/20 to-slate-900/40 py-24 px-6 border-t border-white/5">
                 <div className="max-w-4xl mx-auto">
                     <div className="text-center mb-16 space-y-4">
                         <h2 className="text-3xl md:text-5xl font-serif text-white">Frequently Asked Questions</h2>
@@ -360,7 +354,7 @@ export const Landing: React.FC = () => {
 
 
             {/* SECTION 5: THE ULTIMATE GUIDE */}
-            <div className="relative z-20 bg-slate-950 px-6 pb-24">
+            <div className="relative z-20 bg-slate-950/20 backdrop-blur-sm px-6 pb-24">
                 <div className="max-w-4xl mx-auto border-t border-white/5 pt-24 text-gray-400 leading-relaxed font-light">
                     <h2 className="text-3xl font-serif text-white mb-8 text-center">The Ultimate Guide to Digital Birthday Surprises</h2>
 
@@ -423,7 +417,7 @@ export const Landing: React.FC = () => {
             </div>
 
             {/* SECTION 6: FOOTER */}
-            <footer className="relative z-20 bg-slate-950 py-12 px-6 border-t border-white/5">
+            <footer className="relative z-20 bg-slate-950/40 backdrop-blur-sm py-12 px-6 border-t border-white/5">
                 <div className="max-w-6xl mx-auto">
                     <div className="flex flex-col md:flex-row justify-between items-center gap-6">
                         <div className="text-center md:text-left">
