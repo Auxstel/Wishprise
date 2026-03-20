@@ -228,11 +228,13 @@ export const Receiver: React.FC = () => {
         path={`/view/${id}`}
       />
 
-      <ImmersiveScene
-        step={step}
-        onInteract={step === ExperienceStep.LANDING && allBalloonsPopped ? startJourney : undefined}
-        explosionTrigger={burstCount}
-      />
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <ImmersiveScene
+          step={step}
+          onInteract={step === ExperienceStep.LANDING && allBalloonsPopped ? startJourney : undefined}
+          explosionTrigger={burstCount}
+        />
+      </div>
 
       {/* Branding Overlay */}
       <div className="absolute top-6 left-6 z-20 opacity-80 pointer-events-none">
@@ -255,12 +257,12 @@ export const Receiver: React.FC = () => {
         }
       `}</style>
 
-      <div className="absolute inset-0 pointer-events-none flex flex-col items-center justify-start z-10 overflow-y-auto pt-32 pb-[350px] custom-scrollbar">
-        <div className="pointer-events-auto w-full max-w-lg p-6 flex flex-col items-center">
+      <div className="relative z-10 w-full min-h-screen flex flex-col items-center pt-32 pb-[600px]">
+        <div className="w-full max-w-lg p-6 flex flex-col items-center">
 
           {/* LANDING */}
           {step === ExperienceStep.LANDING && (
-            <div className="text-center w-full h-full flex flex-col items-center justify-center">
+            <div className="text-center w-full min-h-[60vh] flex flex-col items-center justify-center">
 
 
               {!allBalloonsPopped ? (
@@ -427,7 +429,7 @@ export const Receiver: React.FC = () => {
                     />
                 </div>
               ) : (
-                <div className="space-y-4 animate-fade-in-up w-full max-w-sm px-4">
+                <div className="space-y-4 animate-fade-in-up w-full max-w-sm px-4 pb-20">
                   <div className="bg-white/5 backdrop-blur-3xl p-6 md:p-8 rounded-2xl md:rounded-3xl shadow-xl border border-white/10 transform scale-105 transition-all relative overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/5 to-magical-500/5 pointer-events-none"></div>
                     <p className="text-[9px] text-magical-200 uppercase tracking-[0.3em] font-black mb-2 opacity-60">The stars have chosen</p>
@@ -451,7 +453,7 @@ export const Receiver: React.FC = () => {
           {/* CAKE & CANDLES */}
           {step === ExperienceStep.CANDLES && (
             <div className="text-center w-full">
-              <div className="h-[400px] w-full relative mb-6">
+              <div className="h-[300px] md:h-[400px] w-full relative mb-6">
                 <Cake
                   flavor={data.cakeFlavor}
                   style={data.cakeStyle}
@@ -534,7 +536,7 @@ export const Receiver: React.FC = () => {
                 )}
               </div>
 
-              <div className="h-[380px] md:h-[450px] w-full relative mb-4">
+              <div className="h-[300px] md:h-[450px] w-full relative mb-4">
                 <Cake
                   flavor={data.cakeFlavor}
                   style={data.cakeStyle}
@@ -564,7 +566,7 @@ export const Receiver: React.FC = () => {
 
           {/* REVEAL */}
           {step === ExperienceStep.REVEAL && (
-            <div className="w-full text-center space-y-8 py-10 overflow-y-auto custom-scrollbar">
+            <div className="w-full text-center space-y-8 py-10">
               {/* Diamond-Glow Header */}
               <div className="space-y-3 animate-fade-in-down">
                 <p className="text-magical-200 text-[10px] tracking-[0.5em] uppercase font-black drop-shadow-sm opacity-60">A Celebration of You</p>
@@ -666,7 +668,7 @@ export const Receiver: React.FC = () => {
           )}
 
           {/* Final physical spacer to ensure scroll clearance on all mobile devices */}
-          <div className="h-[400px] w-full pointer-events-none"></div>
+          <div className="h-[600px] w-full pointer-events-none"></div>
         </div>
       </div>
     </div>
