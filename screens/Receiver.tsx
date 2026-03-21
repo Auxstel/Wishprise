@@ -653,16 +653,19 @@ export const Receiver: React.FC = () => {
                    <RateUs surpriseId={id || 'demo'} />
                 </div>
                 
-                <div className="pt-16 pb-4 space-y-6 border-t border-white/5 mt-10">
-                   <p className="text-[10px] text-white/30 uppercase tracking-[0.4em] font-black">Wishprise Studios Present</p>
-                   <button onClick={() => navigate('/')} className="inline-block group/cta">
-                      <div className="flex flex-col items-center space-y-3 opacity-60 group-hover/cta:opacity-100 transition-all duration-500">
-                        <p className="text-[11px] font-serif italic text-white/50 tracking-widest">Wanna make someone smile today?</p>
-                        <span className="px-6 py-2 rounded-full border border-white/10 text-[10px] font-black uppercase tracking-[0.2em] bg-white/5 group-hover/cta:bg-white/10 group-hover/cta:border-white/30 transition-all text-white active:scale-95">
-                            Create Your Surprise
-                        </span>
-                      </div>
-                   </button>
+                {/* Viral Loop CTA Section */}
+                <div className="pt-16 pb-8 border-t border-white/5 mt-12 animate-fade-in-up delay-700">
+                    <div className="bg-gradient-to-br from-magical-900/40 to-slate-900/40 p-8 rounded-[32px] border border-white/10 text-center space-y-6">
+                        <h3 className="text-2xl font-serif text-white">Wanna make someone else smile?</h3>
+                        <p className="text-slate-400 text-sm max-w-xs mx-auto">
+                            Join 1,000+ people who have sent a magical 3D surprise this week. It takes less than 2 minutes and it's 100% free.
+                        </p>
+                        <ButtonWithIcon 
+                            text="Create a Magical Surprise Now ✨" 
+                            onClick={() => navigate('/')}
+                            className="w-full bg-white text-slate-950 font-black py-6 shadow-glow"
+                        />
+                    </div>
                 </div>
               </div>
             </div>

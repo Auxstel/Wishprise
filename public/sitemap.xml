@@ -2,79 +2,80 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://wishprise.online/</loc>
-    <lastmod>2025-12-29</lastmod>
+    <lastmod>2026-03-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://wishprise.online/create</loc>
-    <lastmod>2025-12-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://wishprise.online/whatsapp-birthday-surprise</loc>
-    <lastmod>2026-03-20</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-03-21</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://wishprise.online/long-distance-birthdays</loc>
-    <lastmod>2026-03-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://wishprise.online/privacy</loc>
-    <lastmod>2025-12-24</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://wishprise.online/terms</loc>
-    <lastmod>2025-12-24</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
   </url>
   <url>
     <loc>https://wishprise.online/about</loc>
-    <lastmod>2026-01-20</lastmod>
+    <lastmod>2026-03-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://wishprise.online/resources</loc>
-    <lastmod>2026-01-20</lastmod>
+    <lastmod>2026-03-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://wishprise.online/whatsapp-birthday-surprise</loc>
+    <lastmod>2026-03-21</lastmod>
     <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://wishprise.online/long-distance-birthdays</loc>
+    <lastmod>2026-03-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Relationship-specific landing pages -->
+  <url>
+    <loc>https://wishprise.online/birthday-wishes-for/my/friend</loc>
+    <lastmod>2026-03-21</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://wishprise.online/resources/virtual-birthday-ideas-2026</loc>
-    <lastmod>2026-01-20</lastmod>
+    <loc>https://wishprise.online/birthday-wishes-for/my/sister</loc>
+    <lastmod>2026-03-21</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://wishprise.online/resources/long-distance-birthday-guide</loc>
-    <lastmod>2026-01-20</lastmod>
+    <loc>https://wishprise.online/birthday-wishes-for/my/boyfriend</loc>
+    <lastmod>2026-03-21</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://wishprise.online/resources/digital-vs-physical-cards</loc>
-    <lastmod>2026-01-20</lastmod>
+    <loc>https://wishprise.online/birthday-wishes-for/my/mom</loc>
+    <lastmod>2026-03-21</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://wishprise.online/resources/birthday-message-etiquette</loc>
-    <lastmod>2026-01-20</lastmod>
+    <loc>https://wishprise.online/birthday-wishes-for/my/brother</loc>
+    <lastmod>2026-03-21</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://wishprise.online/resources/whatsapp-birthday-surprise-ideas</loc>
-    <lastmod>2026-03-20</lastmod>
+    <loc>https://wishprise.online/birthday-wishes-for/my/crush</loc>
+    <lastmod>2026-03-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://wishprise.online/birthday-wishes-for/my/boss</loc>
+    <lastmod>2026-03-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

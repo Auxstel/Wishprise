@@ -11,6 +11,26 @@
         {
             "source": "/share/:id",
             "destination": "/index.html"
+        },
+        {
+            "source": "/birthday-wishes-for/my/:relationship",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/birthday-wishes-for/:name",
+            "destination": "/index.html"
+        }
+    ],
+    "redirects": [
+        {
+            "source": "/birthday-wishes-for-my-:relationship",
+            "destination": "/birthday-wishes-for/my/:relationship",
+            "permanent": true
+        },
+        {
+            "source": "/birthday-wishes-for-:name",
+            "destination": "/birthday-wishes-for/:name",
+            "permanent": true
         }
     ],
     "headers": [

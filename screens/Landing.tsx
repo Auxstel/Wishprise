@@ -30,8 +30,8 @@ export const Landing: React.FC = () => {
     return (
         <div className="min-h-screen bg-slate-950 flex flex-col font-sans overflow-x-hidden">
             <Seo
-                title="Free Birthday Wish Maker - Create 3D Magic"
-                description="Wishprise is the #1 free birthday wish maker and birthday online wisher. Create stunning 3D virtual surprises with custom cakes and music delivered via a simple link."
+                title="Create 3D Personalized Birthday Wishes Online | Free Wish Maker"
+                description="Make their birthday magical with Wishprise. Create stunning, interactive 3D birthday surprises with custom cakes, music, and personalized messages. Send via a simple WhatsApp link. No login required!"
                 path="/"
             />
 
@@ -167,16 +167,16 @@ export const Landing: React.FC = () => {
                 <div className="relative z-20 flex-1 flex flex-col items-center pt-24 md:pt-32 p-6 text-center pb-[200px] md:pb-6">
 
                     <div className="backdrop-blur-md bg-white/10 p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] border border-white/20 shadow-[0_0_80px_rgba(139,38,242,0.2)] animate-fade-in-up w-full max-w-3xl mx-auto flex flex-col items-center my-4 relative">
-                        <span className="inline-block py-1 px-3 rounded-full bg-amber-400/20 border border-amber-400/30 text-amber-300 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase mb-4 md:mb-8 shadow-glow">
-                            The #1 Birthday Wish Maker
-                        </span>
+                        <h1 className="inline-block py-1 px-3 rounded-full bg-amber-400/20 border border-amber-400/30 text-amber-300 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase mb-4 md:mb-8 shadow-glow">
+                            #1 Personalized 3D Birthday Wish Maker
+                        </h1>
 
                         <div className="mb-4 transform hover:scale-105 transition-transform duration-500">
                             <Logo size="xl" />
                         </div>
 
-                        <h2 className="text-xl md:text-3xl font-light text-white mt-4 drop-shadow-lg">
-                            Make it <span className="text-magical-300 font-hand text-3xl md:text-4xl">Magical</span>
+                        <h2 className="text-xl md:text-3xl font-light text-white mt-4 drop-shadow-lg leading-tight">
+                            Create a <span className="text-magical-300 font-hand text-3xl md:text-4xl">Magical</span> Birthday Surprise
                         </h2>
 
                         <div className="space-y-4 mt-6 max-w-2xl mx-auto">
@@ -412,6 +412,32 @@ export const Landing: React.FC = () => {
                                 hint at the magic inside without spoiling the full 3D reveal.
                             </p>
                         </section>
+                    </div>
+                </div>
+            </div>
+
+            {/* SECTION: Popular Categories (Internal Linking for SEO) */}
+            <div className="relative z-20 bg-slate-900/20 py-16 px-6 border-t border-white/5">
+                <div className="max-w-6xl mx-auto">
+                    <h2 className="text-xl font-serif text-white/80 mb-8 tracking-widest uppercase text-center">Popular Surprises</h2>
+                    <div className="flex flex-wrap justify-center gap-4">
+                        {[
+                            { name: 'Best Friend', slug: 'friend' },
+                            { name: 'Sister', slug: 'sister' },
+                            { name: 'Boyfriend', slug: 'boyfriend' },
+                            { name: 'Mom', slug: 'mom' },
+                            { name: 'Brother', slug: 'brother' },
+                            { name: 'Crush', slug: 'crush' },
+                            { name: 'Boss', slug: 'boss' }
+                        ].map(rel => (
+                            <Link 
+                                key={rel.slug}
+                                to={`/birthday-wishes-for/my/${rel.slug}`}
+                                className="px-5 py-2 rounded-full border border-white/5 bg-white/5 text-slate-400 hover:text-magical-300 hover:border-magical-500/30 transition-all text-sm"
+                            >
+                                Wishes for {rel.name}
+                            </Link>
+                        ))}
                     </div>
                 </div>
             </div>

@@ -9,6 +9,7 @@ interface SeoProps {
     image?: string;
     path?: string;
     noindex?: boolean;
+    schemaType?: 'SoftwareApplication' | 'WebSite' | 'Article';
 }
 
 export const Seo: React.FC<SeoProps> = ({
@@ -18,11 +19,27 @@ export const Seo: React.FC<SeoProps> = ({
     name = 'Wishprise',
     image = '/og-image.jpg', // Assuming we might have one or will add one later, fallback
     path = '',
-    noindex = false
+    noindex = false,
+    schemaType = 'WebSite'
 }) => {
     const siteTitle = title ? `${title} | Wishprise` : 'Wishprise - Free 3D Birthday Wish Maker';
     const siteDescription = description || "Create stunning, interactive 3D birthday surprises for free. No login required. The #1 birthday wish maker for custom cakes, music, and virtual magic delivered via link.";
     const canonicalUrl = `https://wishprise.online${path}`;
+
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": schemaType,
+        "name": name,
+        "url": canonicalUrl,
+        "description": siteDescription,
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    };
 
     return (
         <Helmet>
@@ -48,6 +65,11 @@ export const Seo: React.FC<SeoProps> = ({
             <meta name="twitter:title" content={siteTitle} />
             <meta name="twitter:description" content={siteDescription} />
             <meta name="twitter:image" content={image} />
+
+            {/* Schema.org JSON-LD */}
+            <script type="application/ld+json">
+                {JSON.stringify(jsonLd)}
+            </script>
         </Helmet>
     );
 };
