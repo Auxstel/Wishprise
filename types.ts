@@ -51,6 +51,17 @@ export enum ExperienceStep {
   ENDING = 'ENDING'
 }
 
+export enum UpdatedCakeFlavor {
+  Vanilla, 
+  Chocolate, 
+  Strawberry, 
+  Red_Velvet, 
+  Caramel, 
+  Coffee, 
+  Blueberry, 
+  Pistachio
+}
+
 export interface AdProps {
   type: 'banner' | 'interstitial' | 'rewarded';
   className?: string;

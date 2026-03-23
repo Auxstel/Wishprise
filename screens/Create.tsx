@@ -2,7 +2,8 @@ import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { Cake } from '../components/Cake';
-import { SurpriseData, CakeFlavor, CakeStyle } from '../types';
+import { UpdatedCake } from '../components/UpdatedCake';
+import { SurpriseData, CakeFlavor, CakeStyle, UpdatedCakeFlavor } from '../types';
 import { saveSurprise, generateId, uploadFile } from '../services/storageService';
 
 import { Logo } from '../components/Logo';
@@ -290,7 +291,7 @@ export const Create: React.FC = () => {
               <div className="absolute inset-0 bg-magical-600/5 opacity-0 transition-opacity duration-1000"></div>
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-magical-400/10 blur-3xl rounded-full pointer-events-none"></div>
 
-              <Cake
+              {/* <Cake
                 flavor={formData.cakeFlavor || CakeFlavor.VANILLA}
                 style={formData.cakeStyle || CakeStyle.CLASSIC}
                 candles={formData.candleCount || 1}
@@ -298,6 +299,11 @@ export const Create: React.FC = () => {
                 isCut={false}
                 onCut={() => { }}
                 receiverName={formData.receiverName}
+              /> */}
+
+              <UpdatedCake 
+                flavor={UpdatedCakeFlavor.Caramel}
+                modelUrl="/cake.glb" 
               />
             </div>
 
