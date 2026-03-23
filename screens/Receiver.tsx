@@ -13,6 +13,7 @@ import { Logo } from '../components/Logo';
 import { Seo } from '../components/Seo';
 import RateUs from '../components/RateUs';
 import ButtonWithIcon from '@/components/ui/button-witn-icon';
+import GiftThemBack from '../components/GiftThemBack';
 
 export const Receiver: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -652,6 +653,8 @@ export const Receiver: React.FC = () => {
                 <div className="pt-12 pb-8 border-t border-white/5 mt-12 animate-fade-in delay-700">
                    <RateUs surpriseId={id || 'demo'} />
                 </div>
+                
+                <GiftThemBack />
                 
                 {/* Viral Loop CTA Section */}
                 <div className="pt-16 pb-8 border-t border-white/5 mt-12 animate-fade-in-up delay-700">

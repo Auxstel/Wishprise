@@ -8,6 +8,7 @@ import { Landing3D } from '../components/Landing3D';
 import ButtonWithIcon from '@/components/ui/button-witn-icon';
 import RateUs from '../components/RateUs';
 import ShareCarousel from '../components/ShareCarousel';
+import GiftThemBack from '../components/GiftThemBack';
 
 export const Share: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -129,6 +130,8 @@ export const Share: React.FC = () => {
             <div className="pt-12 border-t border-white/5">
                 <RateUs surpriseId={id || ''} />
             </div>
+
+            <GiftThemBack />
         </div>
       </div>
     </div>

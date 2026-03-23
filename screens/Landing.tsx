@@ -10,6 +10,7 @@ import { ScratchCard } from '../components/ScratchCard';
 import ButtonWithIcon from '@/components/ui/button-witn-icon';
 import DynamicTestimonials from '../components/DynamicTestimonials';
 import HowItWorks from '../components/HowItWorks';
+import GiftThemBack from '../components/GiftThemBack';
 import { getFeedbackStats } from '../services/feedbackService';
 
 export const Landing: React.FC = () => {
@@ -441,6 +442,8 @@ export const Landing: React.FC = () => {
                     </div>
                 </div>
             </div>
+
+            <GiftThemBack defaultExpanded={true} />
 
             {/* SECTION 6: FOOTER */}
             <footer className="relative z-20 bg-slate-950/40 backdrop-blur-sm py-12 px-6 border-t border-white/5">
