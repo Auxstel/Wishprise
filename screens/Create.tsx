@@ -38,6 +38,7 @@ export const Create: React.FC = () => {
     updatedCakeFlavor: UpdatedCakeFlavor.VANILLA,
     cakeDecoration: false,
     cakeDrip: false,
+    cakeMessage: "Happy \nBirthday",
     cakeFlavor: CakeFlavor.VANILLA,
     cakeStyle: CakeStyle.CLASSIC,
     candleCount: 1,
@@ -294,20 +295,11 @@ export const Create: React.FC = () => {
               {/* <div className="absolute inset-0 bg-magical-600/5 opacity-0 transition-opacity duration-1000"></div> */}
               {/* <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-magical-400/10 blur-3xl rounded-full pointer-events-none"></div> */}
 
-              {/* <Cake
-                flavor={formData.cakeFlavor || CakeFlavor.VANILLA}
-                style={formData.cakeStyle || CakeStyle.CLASSIC}
-                candles={formData.candleCount || 1}
-                candlesLit={true}
-                isCut={false}
-                onCut={() => { }}
-                receiverName={formData.receiverName}
-              /> */}
-
               <UpdatedCake 
                 flavor={formData.updatedCakeFlavor || UpdatedCakeFlavor.VANILLA}
                 cakeDecoration={formData.cakeDecoration ?? false}
                 cakeDrip={formData.cakeDrip ?? false} 
+                text={formData.cakeMessage}
                 modelUrl="/cake.glb"
               />
             </div>

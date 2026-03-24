@@ -2,6 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import { CakeFlavor, CakeStyle, UpdatedCakeFlavor } from '../types';
 
 const FLAVOR_SUFFIX: Record<UpdatedCakeFlavor, string> = {
@@ -27,27 +29,27 @@ interface FlavorMeshGroup {
 interface UpdatedCakeProps {
   modelUrl?: string;
   flavor: UpdatedCakeFlavor;
-  cakeDecoration: boolean;
-  cakeDrip: boolean;
-}
-
-interface MeshToggleGroup {
-  decorations: THREE.Object3D[];
-  drips: THREE.Object3D[];
+  cakeDecoration?: boolean;
+  cakeDrip?: boolean;
+  text?: string; // 👈
 }
 
 export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
   modelUrl = '/models/cake.glb',
   flavor,
-  cakeDecoration,
-  cakeDrip,
+  cakeDecoration = false,
+  cakeDrip = false,
+  text = '',
 }) => {
   const mountRef = useRef<HTMLDivElement>(null);
   const modelRef = useRef<THREE.Group | null>(null);
   const flavorGroupsRef = useRef<FlavorMeshGroup[]>([]);
   const mixerRef = useRef<THREE.AnimationMixer | null>(null);
   const animationsRef = useRef<Map<string, THREE.AnimationAction>>(new Map());
-  const toggleGroupRef = useRef<MeshToggleGroup>({ decorations: [], drips: [] });
+  const textMeshRef = useRef<THREE.Mesh | null>(null);
+  const sceneRef = useRef<THREE.Scene | null>(null);
+  const candleRef = useRef<THREE.Object3D | null>(null);
+  const isModelLoadedRef = useRef(false);
 
   useEffect(() => {
     if (!mountRef.current) return;
@@ -68,6 +70,7 @@ export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
     // ─── Scene ────────────────────────────────────────────────────────────────
     const scene = new THREE.Scene();
     scene.background = null; // transparent so parent CSS shows through
+    sceneRef.current = scene;
 
     // ─── Camera ───────────────────────────────────────────────────────────────
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
@@ -150,18 +153,21 @@ export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
             }
           });
 
-          console.log(`[${flavor}] base: ${base.map(c => c.name)}`);
-          console.log(`[${flavor}] decorations: ${decorations.map(c => c.name)}`);
-          console.log(`[${flavor}] drips: ${drips.map(c => c.name)}`);
+          // console.log(`[${flavor}] base: ${base.map(c => c.name)}`);
+          // console.log(`[${flavor}] decorations: ${decorations.map(c => c.name)}`);
+          // console.log(`[${flavor}] drips: ${drips.map(c => c.name)}`);
 
           return { flavor, suffix, base, decorations, drips };
         });
 
         flavorGroupsRef.current = flavorGroups;
+        candleRef.current = findByName("candle") ?? null;
 
+        addTextToScene(scene, text);
         applyVisibility(flavor, cakeDecoration, cakeDrip);
         showcaseAnimation();
 
+        isModelLoadedRef.current = true;
         scene.add(model);
       },
 
@@ -213,7 +219,14 @@ export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
 
   useEffect(() => {
     applyVisibility(flavor, cakeDecoration, cakeDrip);
+    showcaseAnimation();
   }, [flavor, cakeDecoration, cakeDrip]);
+
+  useEffect(() => {
+    if (!isModelLoadedRef.current) return;
+    if (!sceneRef.current) return;
+    addTextToScene(sceneRef.current, text ?? '');
+  }, [text]);
 
   const findByName = (searchTerm: string): THREE.Object3D | undefined => {
     let found: THREE.Object3D | undefined;
@@ -223,6 +236,58 @@ export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
       }
     });
     return found;
+  };
+
+  // ─── Cake Text ──────────────────────────────────────────────────────────
+  const addTextToScene = (scene: THREE.Scene, content: string) => {
+    // Remove existing text mesh if any
+    if (textMeshRef.current) {
+      scene.remove(textMeshRef.current);
+      textMeshRef.current.geometry.dispose();
+      textMeshRef.current = null;
+    }
+
+    if (!content.trim()) return;
+    
+    const textHeight = 0.03;
+
+    const loader = new FontLoader();
+    loader.load('/fonts/optimer_bold.typeface.json', (font) => {
+      const geometry = new TextGeometry(content, {
+      font,
+      size: 0.125,
+      height: textHeight,
+      curveSegments: 12,
+      bevelEnabled: false,
+    });
+
+      // Center the text
+      geometry.computeBoundingBox();
+      const bbox = geometry.boundingBox!;
+      const textWidth = bbox.max.x - bbox.min.x;
+
+      const material = new THREE.MeshStandardMaterial({
+        color: 0xe67022,    // gold
+        metalness: 0.4,
+        roughness: 0.3,
+      });
+
+      const mesh = new THREE.Mesh(geometry, material);
+      
+      if (candleRef.current) {
+        mesh.position.x = candleRef.current.position.x - (textWidth / 2);
+        mesh.position.y = candleRef.current.position.y + (textHeight / 2);
+        mesh.position.z = candleRef.current.position.z - 0.3;
+      } else {
+        mesh.position.set(-textWidth / 2, 2, 0);
+      }
+      
+      mesh.rotation.set(Math.PI / 2, Math.PI, Math.PI);
+      mesh.castShadow = false;
+
+      textMeshRef.current = mesh;
+      scene.add(mesh);
+    });
   };
 
   // ─── Toggle Groups ──────────────────────────────────────────────────────────
