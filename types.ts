@@ -31,6 +31,7 @@ export interface SurpriseData {
   introMessage: string;
   personalNote: string;
   finalMessage: string;
+  updatedCakeFlavor: UpdatedCakeFlavor;
   cakeFlavor: CakeFlavor;
   cakeStyle: CakeStyle;
   candleCount: number;
@@ -52,14 +53,14 @@ export enum ExperienceStep {
 }
 
 export enum UpdatedCakeFlavor {
-  Vanilla, 
-  Chocolate, 
-  Strawberry, 
-  Red_Velvet, 
-  Caramel, 
-  Coffee, 
-  Blueberry, 
-  Pistachio
+  VANILLA = "vanilla", 
+  CHOCOLATE = "chocolate", 
+  STRAWBERRY = "strawberry", 
+  RED_VELVET = "red_velvet", 
+  CARAMEL = "caramel", 
+  COFFEE = "coffee", 
+  BLUEBERRY = "blueberry", 
+  PISTACHIO = "pistachio"
 }
 
 export interface AdProps {

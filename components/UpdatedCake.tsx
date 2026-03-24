@@ -5,14 +5,14 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { CakeFlavor, CakeStyle, UpdatedCakeFlavor } from '../types';
 
 const FLAVOR_SUFFIX: Record<UpdatedCakeFlavor, string> = {
-  [UpdatedCakeFlavor.Vanilla]:    '001',
-  [UpdatedCakeFlavor.Chocolate]:  '002',
-  [UpdatedCakeFlavor.Strawberry]: '003',
-  [UpdatedCakeFlavor.Red_Velvet]: '004',
-  [UpdatedCakeFlavor.Caramel]:    '005',
-  [UpdatedCakeFlavor.Coffee]:     '006',
-  [UpdatedCakeFlavor.Blueberry]:  '007',
-  [UpdatedCakeFlavor.Pistachio]:  '008',
+  [UpdatedCakeFlavor.VANILLA]:    '001',
+  [UpdatedCakeFlavor.CHOCOLATE]:  '002',
+  [UpdatedCakeFlavor.STRAWBERRY]: '003',
+  [UpdatedCakeFlavor.RED_VELVET]: '004',
+  [UpdatedCakeFlavor.CARAMEL]:    '005',
+  [UpdatedCakeFlavor.COFFEE]:     '006',
+  [UpdatedCakeFlavor.BLUEBERRY]:  '007',
+  [UpdatedCakeFlavor.PISTACHIO]:  '008',
 };
 
 // Each entry holds a flavor and all its matching children from the GLB
@@ -80,8 +80,10 @@ export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
     controls.enableDamping = true;
     controls.dampingFactor = 0.07;
     controls.enablePan     = false;
-    controls.minDistance   = 2;
-    controls.maxDistance   = 10;
+    controls.minPolarAngle = Math.PI / 6;  // 30° — how far UP you can look
+    controls.maxPolarAngle = Math.PI / 2;  // 90° — stops exactly at the equator (horizon level)
+    controls.minDistance   = 4;
+    controls.maxDistance   = 8;
     controls.target.set(0, 0, 0);
 
     // ─── Load GLB ─────────────────────────────────────────────────────────────
@@ -94,21 +96,6 @@ export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
         const model = gltf.scene;
         modelRef.current = model;
 
-        // Auto-center and scale to fit view
-        const box    = new THREE.Box3().setFromObject(model);
-        const size   = new THREE.Vector3();
-        const center = new THREE.Vector3();
-        box.getSize(size);
-        box.getCenter(center);
-
-        const maxDim      = Math.max(size.x, size.y, size.z);
-        const scaleFactor = 2.5 / maxDim;
-        model.scale.setScalar(scaleFactor);
-
-        // Sit on y = 0
-        model.position.sub(center.multiplyScalar(scaleFactor));
-        model.position.y += size.y * scaleFactor * 0.5;
-
         model.traverse((child) => {
           if ((child as THREE.Mesh).isMesh) {
             child.castShadow    = true;
@@ -117,31 +104,27 @@ export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
         });
 
         // Build one group per flavor
-        const flavorGroups: FlavorMeshGroup[] = Object.values(UpdatedCakeFlavor)
-          .filter((v) => typeof v === 'number') // enum gives both keys & values, keep numbers
-          .map((v) => {
-            const flavor = v as UpdatedCakeFlavor;
-            const suffix = FLAVOR_SUFFIX[flavor];
-            const children: THREE.Object3D[] = [];
+        const flavorGroups: FlavorMeshGroup[] = Object.values(UpdatedCakeFlavor).map((flavor) => {
+          const suffix = FLAVOR_SUFFIX[flavor];
+          const children: THREE.Object3D[] = [];
 
-            model.traverse((child) => {
-              if (child.name.includes(suffix)) {
-                children.push(child);
-              }
-            });
-
-            return { flavor, suffix, children };
+          model.traverse((child) => {
+            if (child.name.includes(suffix)) {
+              children.push(child);
+            }
           });
+
+          return { flavor, suffix, children };
+        });
 
         flavorGroupsRef.current = flavorGroups;
 
-        // Log to verify during development
-        // flavorGroups.forEach(({ flavor, suffix, children }) => {
-        //   console.log(`${UpdatedCakeFlavor[flavor]} (${suffix}):`, children.map(c => c.name));
-        // });
+        // Log to verify
+        flavorGroups.forEach(({ flavor, suffix, children }) => {
+          console.log(`${flavor} (${suffix}):`, children.map(c => c.name));
+        });
 
         showFlavor(flavor);
-
         scene.add(model);
       },
 
@@ -187,6 +170,10 @@ export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
       }
     };
   }, [modelUrl]);
+
+  useEffect(() => {
+    showFlavor(flavor);
+  }, [flavor]);
 
   const findByName = (searchTerm: string): THREE.Object3D | undefined => {
     let found: THREE.Object3D | undefined;

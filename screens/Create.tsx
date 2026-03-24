@@ -35,6 +35,7 @@ export const Create: React.FC = () => {
     introMessage: "Someone took a moment to make this just for you...",
     personalNote: "I'm so grateful for you.",
     finalMessage: "Your gift is my friendship! (And dinner soon!)",
+    updatedCakeFlavor: UpdatedCakeFlavor.VANILLA,
     cakeFlavor: CakeFlavor.VANILLA,
     cakeStyle: CakeStyle.CLASSIC,
     candleCount: 1,
@@ -288,8 +289,8 @@ export const Create: React.FC = () => {
             </div>
 
             <div className="relative bg-gradient-to-b from-slate-900/40 to-slate-950/60 backdrop-blur-2xl rounded-[2.5rem] border border-white/10 shadow-2xl h-80 w-full overflow-hidden shrink-0">
-              <div className="absolute inset-0 bg-magical-600/5 opacity-0 transition-opacity duration-1000"></div>
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-magical-400/10 blur-3xl rounded-full pointer-events-none"></div>
+              {/* <div className="absolute inset-0 bg-magical-600/5 opacity-0 transition-opacity duration-1000"></div> */}
+              {/* <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-magical-400/10 blur-3xl rounded-full pointer-events-none"></div> */}
 
               {/* <Cake
                 flavor={formData.cakeFlavor || CakeFlavor.VANILLA}
@@ -302,13 +303,13 @@ export const Create: React.FC = () => {
               /> */}
 
               <UpdatedCake 
-                flavor={UpdatedCakeFlavor.Caramel}
-                modelUrl="/cake.glb" 
+                flavor={formData.updatedCakeFlavor || UpdatedCakeFlavor.VANILLA}
+                modelUrl="/cake.glb"
               />
             </div>
 
             <div className="backdrop-blur-2xl bg-white/5 p-8 rounded-3xl border border-white/10 space-y-8 shadow-2xl overflow-y-auto max-h-[45vh] magical-scrollbar px-4">
-              <div>
+              {/* <div>
                 <label className="block text-[10px] font-black text-magical-300 uppercase tracking-[0.4em] mb-4 ml-1">The Style</label>
                 <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
                   {Object.values(CakeStyle).map(style => (
@@ -324,16 +325,16 @@ export const Create: React.FC = () => {
                     </button>
                   ))}
                 </div>
-              </div>
+              </div> */}
 
               <div>
                 <label className="block text-[10px] font-black text-magical-300 uppercase tracking-[0.4em] mb-4 ml-1">The Flavor</label>
                 <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-                  {Object.values(CakeFlavor).map(flavor => (
+                  {Object.values(UpdatedCakeFlavor).map(flavor => (
                     <button
                       key={flavor}
-                      onClick={() => handleChange('cakeFlavor', flavor)}
-                      className={`p-3 rounded-xl border text-[10px] md:text-xs font-bold capitalize transition-all duration-300 ${formData.cakeFlavor === flavor
+                      onClick={() => handleChange('updatedCakeFlavor', flavor)}
+                      className={`p-3 rounded-xl border text-[10px] md:text-xs font-bold capitalize transition-all duration-300 ${formData.updatedCakeFlavor === flavor
                         ? 'border-magical-400 bg-magical-400/20 text-white shadow-[0_0_15px_rgba(139,38,242,0.3)]'
                         : 'border-white/5 bg-white/5 text-white/30 hover:bg-white/10 hover:text-white/60'
                         }`}
@@ -344,7 +345,7 @@ export const Create: React.FC = () => {
                 </div>
               </div>
 
-              <div className="bg-slate-950/40 p-6 rounded-2xl border border-white/5">
+              {/* <div className="bg-slate-950/40 p-6 rounded-2xl border border-white/5">
                 <div className="flex justify-between items-center mb-4">
                   <label className="block text-[10px] font-black text-magical-300 uppercase tracking-[0.4em]">Candles of Light</label>
                   <span className="font-serif text-white text-2xl drop-shadow-glow">{formData.candleCount}</span>
@@ -357,7 +358,7 @@ export const Create: React.FC = () => {
                   onChange={(e) => handleChange('candleCount', parseInt(e.target.value))}
                   className="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-magical-400"
                 />
-              </div>
+              </div> */}
 
               <div className="flex flex-col md:flex-row gap-4 pt-2">
                 <button 
