@@ -19,21 +19,35 @@ const FLAVOR_SUFFIX: Record<UpdatedCakeFlavor, string> = {
 interface FlavorMeshGroup {
   flavor: UpdatedCakeFlavor;
   suffix: string;
-  children: THREE.Object3D[];
+  base: THREE.Object3D[];         // everything else in this flavor
+  decorations: THREE.Object3D[];  // name includes suffix + "decoration"
+  drips: THREE.Object3D[];        // name includes suffix + "drip"
 }
 
 interface UpdatedCakeProps {
   modelUrl?: string;
   flavor: UpdatedCakeFlavor;
+  cakeDecoration: boolean;
+  cakeDrip: boolean;
+}
+
+interface MeshToggleGroup {
+  decorations: THREE.Object3D[];
+  drips: THREE.Object3D[];
 }
 
 export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
   modelUrl = '/models/cake.glb',
   flavor,
+  cakeDecoration,
+  cakeDrip,
 }) => {
   const mountRef = useRef<HTMLDivElement>(null);
   const modelRef = useRef<THREE.Group | null>(null);
   const flavorGroupsRef = useRef<FlavorMeshGroup[]>([]);
+  const mixerRef = useRef<THREE.AnimationMixer | null>(null);
+  const animationsRef = useRef<Map<string, THREE.AnimationAction>>(new Map());
+  const toggleGroupRef = useRef<MeshToggleGroup>({ decorations: [], drips: [] });
 
   useEffect(() => {
     if (!mountRef.current) return;
@@ -48,7 +62,7 @@ export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.shadowMap.type = THREE.PCFShadowMap;
     mountRef.current.appendChild(renderer.domElement);
 
     // ─── Scene ────────────────────────────────────────────────────────────────
@@ -57,7 +71,7 @@ export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
 
     // ─── Camera ───────────────────────────────────────────────────────────────
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-    camera.position.set(0, 2, 5);
+    camera.position.set(4, 3, 4);
     camera.lookAt(0, 0, 0);
 
     // ─── Lights ───────────────────────────────────────────────────────────────
@@ -67,8 +81,10 @@ export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
     const keyLight = new THREE.DirectionalLight(0xfff5e0, 2);
     keyLight.position.set(3, 6, 4);
     keyLight.castShadow = true;
-    keyLight.shadow.mapSize.width  = 1024;
-    keyLight.shadow.mapSize.height = 1024;
+    keyLight.shadow.mapSize.width  = 512;
+    keyLight.shadow.mapSize.height = 512;
+    // keyLight.shadow.bias = 0.01;
+    keyLight.shadow.normalBias = 0.1;
     scene.add(keyLight);
 
     const fillLight = new THREE.DirectionalLight(0xd0e8ff, 0.8);
@@ -96,6 +112,18 @@ export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
         const model = gltf.scene;
         modelRef.current = model;
 
+        // Mixer setup
+        const mixer = new THREE.AnimationMixer(model);
+        mixerRef.current = mixer;
+
+        // Save each animation by name
+        gltf.animations.forEach((clip) => {
+          const action = mixer.clipAction(clip);
+          animationsRef.current.set(clip.name, action);
+          console.log('Found animation:', clip.name); // 👈 log names to see what's in the GLB
+        });
+
+        // Shadow setup
         model.traverse((child) => {
           if ((child as THREE.Mesh).isMesh) {
             child.castShadow    = true;
@@ -103,28 +131,37 @@ export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
           }
         });
 
-        // Build one group per flavor
+        // Build one group per flavor including decorations and drip
         const flavorGroups: FlavorMeshGroup[] = Object.values(UpdatedCakeFlavor).map((flavor) => {
           const suffix = FLAVOR_SUFFIX[flavor];
-          const children: THREE.Object3D[] = [];
+          const base: THREE.Object3D[] = [];
+          const decorations: THREE.Object3D[] = [];
+          const drips: THREE.Object3D[] = [];
 
           model.traverse((child) => {
-            if (child.name.includes(suffix)) {
-              children.push(child);
+            if (!child.name.includes(suffix)) return; // only objects belonging to this flavor
+
+            if (child.name.toLowerCase().includes('decoration')) {
+              decorations.push(child);
+            } else if (child.name.toLowerCase().includes('drip')) {
+              drips.push(child);
+            } else {
+              base.push(child);
             }
           });
 
-          return { flavor, suffix, children };
+          console.log(`[${flavor}] base: ${base.map(c => c.name)}`);
+          console.log(`[${flavor}] decorations: ${decorations.map(c => c.name)}`);
+          console.log(`[${flavor}] drips: ${drips.map(c => c.name)}`);
+
+          return { flavor, suffix, base, decorations, drips };
         });
 
         flavorGroupsRef.current = flavorGroups;
 
-        // Log to verify
-        flavorGroups.forEach(({ flavor, suffix, children }) => {
-          console.log(`${flavor} (${suffix}):`, children.map(c => c.name));
-        });
+        applyVisibility(flavor, cakeDecoration, cakeDrip);
+        showcaseAnimation();
 
-        showFlavor(flavor);
         scene.add(model);
       },
 
@@ -141,8 +178,11 @@ export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
 
     // ─── Animation Loop ───────────────────────────────────────────────────────
     let frameId: number;
+    const clock = new THREE.Clock();
     const animate = () => {
       frameId = requestAnimationFrame(animate);
+      const delta = clock.getDelta();
+      mixerRef.current?.update(delta);
       controls.update();
       renderer.render(scene, camera);
     };
@@ -172,8 +212,8 @@ export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
   }, [modelUrl]);
 
   useEffect(() => {
-    showFlavor(flavor);
-  }, [flavor]);
+    applyVisibility(flavor, cakeDecoration, cakeDrip);
+  }, [flavor, cakeDecoration, cakeDrip]);
 
   const findByName = (searchTerm: string): THREE.Object3D | undefined => {
     let found: THREE.Object3D | undefined;
@@ -185,16 +225,70 @@ export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
     return found;
   };
 
-  const showFlavor = (target: UpdatedCakeFlavor) => {
-    // Guard: do nothing if model isn't loaded yet
+  // ─── Toggle Groups ──────────────────────────────────────────────────────────
+  // Master function — call this whenever any of the three props change
+  const applyVisibility = (
+    targetFlavor: UpdatedCakeFlavor,
+    decoration: boolean,
+    drip: boolean
+  ) => {
     if (!modelRef.current || flavorGroupsRef.current.length === 0) return;
 
-    flavorGroupsRef.current.forEach(({ flavor, children }) => {
-      children.forEach((child) => {
-        child.visible = flavor === target;
+    flavorGroupsRef.current.forEach((group) => {
+      const isActiveFlavor = group.flavor === targetFlavor;
+
+      // Base meshes — visible only for active flavor
+      group.base.forEach((child) => {
+        child.visible = isActiveFlavor;
+      });
+
+      // Decorations — visible only if active flavor AND decoration enabled
+      group.decorations.forEach((child) => {
+        child.visible = isActiveFlavor && decoration;
+      });
+
+      // Drips — visible only if active flavor AND drip enabled
+      group.drips.forEach((child) => {
+        child.visible = isActiveFlavor && drip;
       });
     });
   };
+
+  // ─── Animations ────────────────────────────────────────────────────────────
+  const playAnimation = (name: string, loop: boolean = true) => {
+    const action = animationsRef.current.get(name);
+    if (!action) return;
+    action.setLoop(loop ? THREE.LoopRepeat : THREE.LoopOnce, Infinity);
+    action.clampWhenFinished = !loop; // freeze on last frame if not looping
+    action.reset().play();
+  };
+
+  const pauseAnimation = (name: string) => {
+    const action = animationsRef.current.get(name);
+    if (!action) return;
+    action.paused = true;
+  };
+
+  const resumeAnimation = (name: string) => {
+    const action = animationsRef.current.get(name);
+    if (!action) return;
+    action.paused = false;
+  };
+
+  const stopAnimation = (name: string) => {
+    const action = animationsRef.current.get(name);
+    if (!action) return;
+    action.stop();
+  };
+
+  const stopAllAnimations = () => {
+    animationsRef.current.forEach((action) => action.stop());
+  };
+
+  const showcaseAnimation = () => {
+    stopAllAnimations();
+    playAnimation("showcase", false);
+  }
 
   return (
     <div

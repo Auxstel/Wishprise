@@ -36,6 +36,8 @@ export const Create: React.FC = () => {
     personalNote: "I'm so grateful for you.",
     finalMessage: "Your gift is my friendship! (And dinner soon!)",
     updatedCakeFlavor: UpdatedCakeFlavor.VANILLA,
+    cakeDecoration: false,
+    cakeDrip: false,
     cakeFlavor: CakeFlavor.VANILLA,
     cakeStyle: CakeStyle.CLASSIC,
     candleCount: 1,
@@ -304,29 +306,13 @@ export const Create: React.FC = () => {
 
               <UpdatedCake 
                 flavor={formData.updatedCakeFlavor || UpdatedCakeFlavor.VANILLA}
+                cakeDecoration={formData.cakeDecoration ?? false}
+                cakeDrip={formData.cakeDrip ?? false} 
                 modelUrl="/cake.glb"
               />
             </div>
 
             <div className="backdrop-blur-2xl bg-white/5 p-8 rounded-3xl border border-white/10 space-y-8 shadow-2xl overflow-y-auto max-h-[45vh] magical-scrollbar px-4">
-              {/* <div>
-                <label className="block text-[10px] font-black text-magical-300 uppercase tracking-[0.4em] mb-4 ml-1">The Style</label>
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-                  {Object.values(CakeStyle).map(style => (
-                    <button
-                      key={style}
-                      onClick={() => handleChange('cakeStyle', style)}
-                      className={`p-3 rounded-xl border text-[10px] md:text-xs font-bold capitalize transition-all duration-300 ${formData.cakeStyle === style
-                        ? 'border-magical-400 bg-magical-400/20 text-white shadow-[0_0_15px_rgba(139,38,242,0.3)]'
-                        : 'border-white/5 bg-white/5 text-white/30 hover:bg-white/10 hover:text-white/60'
-                        }`}
-                    >
-                      {style.replace('_', ' ')}
-                    </button>
-                  ))}
-                </div>
-              </div> */}
-
               <div>
                 <label className="block text-[10px] font-black text-magical-300 uppercase tracking-[0.4em] mb-4 ml-1">The Flavor</label>
                 <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
@@ -342,6 +328,33 @@ export const Create: React.FC = () => {
                       {flavor.replace('_', ' ')}
                     </button>
                   ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-[10px] font-black text-magical-300 uppercase tracking-[0.4em] mb-4 ml-1">Extras</label>
+                <div className="grid grid-cols-2 gap-3">
+                  <button
+                    onClick={() => handleChange('cakeDecoration', !formData.cakeDecoration)}
+                    className={`p-3 rounded-xl border text-[10px] md:text-xs font-bold capitalize transition-all duration-300 ${
+                      formData.cakeDecoration
+                        ? 'border-magical-400 bg-magical-400/20 text-white shadow-[0_0_15px_rgba(139,38,242,0.3)]'
+                        : 'border-white/5 bg-white/5 text-white/30 hover:bg-white/10 hover:text-white/60'
+                    }`}
+                  >
+                    Decorations ✨
+                  </button>
+
+                  <button
+                    onClick={() => handleChange('cakeDrip', !formData.cakeDrip)}
+                    className={`p-3 rounded-xl border text-[10px] md:text-xs font-bold capitalize transition-all duration-300 ${
+                      formData.cakeDrip
+                        ? 'border-magical-400 bg-magical-400/20 text-white shadow-[0_0_15px_rgba(139,38,242,0.3)]'
+                        : 'border-white/5 bg-white/5 text-white/30 hover:bg-white/10 hover:text-white/60'
+                    }`}
+                  >
+                    Drip 🍫
+                  </button>
                 </div>
               </div>
 
