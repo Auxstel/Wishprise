@@ -12,6 +12,7 @@ import DynamicTestimonials from '../components/DynamicTestimonials';
 import HowItWorks from '../components/HowItWorks';
 import GiftThemBack from '../components/GiftThemBack';
 import { getFeedbackStats } from '../services/feedbackService';
+import { Navbar } from '../components/ui/mini-navbar';
 
 export const Landing: React.FC = () => {
     const navigate = useNavigate();
@@ -31,66 +32,25 @@ export const Landing: React.FC = () => {
     return (
         <div className="min-h-screen bg-slate-950 flex flex-col font-sans overflow-x-hidden">
             <Seo
-                title="Create 3D Personalized Birthday Wishes Online | Free Wish Maker"
-                description="Make their birthday magical with Wishprise. Create stunning, interactive 3D birthday surprises with custom cakes, music, and personalized messages. Send via a simple WhatsApp link. No login required!"
+                title="Create a 3D Birthday Wish - The #1 Interactive Birthday Surprise"
+                description="Birthday wish karne ka naya tarika! Create stunning, interactive 3D birthday surprises with custom cakes, music, and personalized messages. Send via WhatsApp. Free!"
                 path="/"
-            />
-
-            {/* Structured Data for SEO */}
-            <Schema data={{
-                "@context": "https://schema.org",
-                "@type": "Organization",
-                "name": "Wishprise",
-                "url": "https://wishprise.online",
-                "logo": "https://wishprise.online/logo.png",
-                "sameAs": [
-                    "https://twitter.com/wishprise",
-                    "https://facebook.com/wishprise"
-                ]
-            }} />
-
-            <Schema data={{
-                "@context": "https://schema.org",
-                "@type": "WebSite",
-                "name": "Wishprise",
-                "url": "https://wishprise.online",
-                "potentialAction": {
-                    "@type": "SearchAction",
-                    "target": "https://wishprise.online/create?q={search_term_string}",
-                    "query-input": "required name=search_term_string"
-                }
-            }} />
-
-            <Schema data={{
-                "@context": "https://schema.org",
-                "@type": "FAQPage",
-                "mainEntity": [
+                schemaType="FAQPage"
+                faqData={[
                     {
-                        "@type": "Question",
-                        "name": "Is Wishprise really free?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "Yes! Wishprise is completely free to use. We sustain the service through non-intrusive advertisements. No hidden fees, no premium tiers."
-                        }
+                        question: "Is Wishprise really free?",
+                        answer: "Yes! Wishprise is completely free to use. We sustain the service through non-intrusive advertisements. No hidden fees, no premium tiers."
                     },
                     {
-                        "@type": "Question",
-                        "name": "Do I need to create an account?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "No account required! Just create your surprise and share the link. It's that simple."
-                        }
+                        question: "Do I need to create an account?",
+                        answer: "No account required! Just create your surprise and share the link. It's that simple."
                     },
                     {
-                        "@type": "Question",
-                        "name": "What is the 'one-time view' feature?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "This special feature deletes your uploaded photos and audio after the recipient views them once. It's perfect for private, personal surprises."
-                        }
+                        question: "What is the 'one-time view' feature?",
+                        answer: "This special feature deletes your uploaded photos and audio after the recipient views them once. It's perfect for private, personal surprises."
                     }
-                ]
-            }} />
+                ]}
+            />
 
             <Schema data={{
                 "@context": "https://schema.org",
@@ -156,23 +116,21 @@ export const Landing: React.FC = () => {
                 <Landing3D />
             </div>
 
+            {/* Mini Navbar (Floating) */}
+            <Navbar />
+
             {/* SECTION 1: HERO (Full Screen Height, but natural flow) */}
             <div className="relative min-h-screen w-full flex flex-col">
-
-                {/* Logo Header (Absolute) */}
-                <div className="absolute top-0 left-0 w-full p-6 z-30 flex justify-between items-center">
-                    {/* Small logo for mobile/header if we wanted, but we center the big one. Keeping this area clean or for login later. */}
-                </div>
 
                 {/* Content */}
                 <div className="relative z-20 flex-1 flex flex-col items-center pt-24 md:pt-32 p-6 text-center pb-[200px] md:pb-6">
 
                     <div className="backdrop-blur-md bg-white/10 p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] border border-white/20 shadow-[0_0_80px_rgba(139,38,242,0.2)] animate-fade-in-up w-full max-w-3xl mx-auto flex flex-col items-center my-4 relative">
-                        <h1 className="inline-block py-1 px-3 rounded-full bg-amber-400/20 border border-amber-400/30 text-amber-300 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase mb-4 md:mb-8 shadow-glow">
+                        <div className="inline-block py-1 px-3 rounded-full bg-amber-400/20 border border-amber-400/30 text-amber-300 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase mb-4 md:mb-8 shadow-glow">
                             #1 Personalized 3D Birthday Wish Maker
-                        </h1>
+                        </div>
 
-                        <div className="mb-4 transform hover:scale-105 transition-transform duration-500">
+                        <div className="mb-4 transform hover:scale-105 transition-transform duration-500" aria-label="Wishprise Magical Logo">
                             <Logo size="xl" />
                         </div>
 
@@ -206,7 +164,7 @@ export const Landing: React.FC = () => {
                                             onKeyPress={(e) => e.key === 'Enter' && senderName.trim() && setPhase('scratch')}
                                             className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white placeholder-white/20 outline-none focus:border-magical-500/50 transition-all font-sans text-lg text-center"
                                         />
-                                        <ButtonWithIcon 
+                                        <ButtonWithIcon
                                             text="Next Magic Step"
                                             onClick={() => senderName.trim() && setPhase('scratch')}
                                             disabled={!senderName.trim()}
@@ -218,9 +176,9 @@ export const Landing: React.FC = () => {
 
                             {phase === 'scratch' && (
                                 <div className="flex flex-col items-center gap-6 animate-fade-in w-full">
-                                    <ScratchCard 
-                                        width={450} 
-                                        height={260} 
+                                    <ScratchCard
+                                        width={450}
+                                        height={260}
                                         onReveal={() => setScratchRevealed(true)}
                                     >
                                         <div className="flex flex-col items-center gap-4 px-4">
@@ -231,13 +189,13 @@ export const Landing: React.FC = () => {
                                             </p>
                                         </div>
                                     </ScratchCard>
-                                    
+
                                     {!scratchRevealed ? (
                                         <p className="text-sm text-amber-200/60 animate-pulse font-medium tracking-[0.2em] uppercase">
                                             Scratch the gold to see your impact...
                                         </p>
                                     ) : (
-                                        <ButtonWithIcon 
+                                        <ButtonWithIcon
                                             text="Got it! Let's build it"
                                             onClick={() => setPhase('complete')}
                                             className="animate-fade-in text-white text-xs md:text-sm"
@@ -400,7 +358,7 @@ export const Landing: React.FC = () => {
                         <section>
                             <h3 className="text-xl font-semibold text-white mb-3">Why Wishprise is the Best Birthday Online Wisher</h3>
                             <p>
-                                When searching for a <strong>birthday wish maker</strong> or a <strong>birthday online wisher</strong>, you'll find many static e-cards. Wishprise is different. 
+                                When searching for a <strong>birthday wish maker</strong> or a <strong>birthday online wisher</strong>, you'll find many static e-cards. Wishprise is different.
                                 We provide a fully immersive 3D environment that the recipient can interact with.
                             </p>
                         </section>
@@ -417,24 +375,67 @@ export const Landing: React.FC = () => {
                 </div>
             </div>
 
-            {/* SECTION: Popular Categories (Internal Linking for SEO) */}
-            <div className="relative z-20 bg-slate-900/20 py-16 px-6 border-t border-white/5">
-                <div className="max-w-6xl mx-auto">
-                    <h2 className="text-xl font-serif text-white/80 mb-8 tracking-widest uppercase text-center">Popular Surprises</h2>
-                    <div className="flex flex-wrap justify-center gap-4">
+
+            {/* SECTION: FAQ (For SEO and User Trust) */}
+            <div className="relative z-20 bg-slate-950/50 py-24 px-6 border-t border-white/5">
+                <div className="max-w-4xl mx-auto">
+                    <h2 className="text-3xl md:text-5xl font-serif text-white mb-16 text-center">Frequently Asked Questions</h2>
+                    <div className="grid gap-8 md:grid-cols-2">
+                        {[
+                            { 
+                                q: "What is Wishprise?", 
+                                a: "Wishprise is a free online tool to create interactive 3D birthday surprises. Instead of a simple text, you send a link that opens a magical 3D world with a cake, music, and your message." 
+                            },
+                            { 
+                                q: "Is it really free?", 
+                                a: "Yes, 100% free. No hidden charges, no credits, and no login required to create or view surprises." 
+                            },
+                            { 
+                                q: "How do I share the surprise?", 
+                                a: "Once you create a surprise, you get a unique link. You can copy and paste this link into WhatsApp, Instagram, or any messaging app." 
+                            },
+                            { 
+                                q: "Does it work on mobile?", 
+                                a: "Absolutely. Wishprise is fully optimized for all mobile devices and browsers. No app download is needed." 
+                            }
+                        ].map((faq, i) => (
+                            <div key={i} className="bg-white/5 p-8 rounded-3xl border border-white/10 hover:border-magical-500/30 transition-all">
+                                <h3 className="text-white font-bold text-lg mb-3">{faq.q}</h3>
+                                <p className="text-slate-400 leading-relaxed text-sm">{faq.a}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+            <GiftThemBack defaultExpanded={true} />
+
+            {/* SECTION: Global Navigation Link Cloud (SEO Booster) */}
+            <div className="relative z-20 bg-slate-900/40 py-16 px-6 border-t border-white/5">
+                <div className="max-w-6xl mx-auto text-center">
+                    <p className="text-[10px] text-magical-400 uppercase tracking-[0.3em] font-bold mb-8 opacity-60">Browse All Birthday Surprises</p>
+                    <div className="flex flex-wrap justify-center gap-x-6 gap-y-4">
                         {[
                             { name: 'Best Friend', slug: 'friend' },
                             { name: 'Sister', slug: 'sister' },
-                            { name: 'Boyfriend', slug: 'boyfriend' },
-                            { name: 'Mom', slug: 'mom' },
                             { name: 'Brother', slug: 'brother' },
-                            { name: 'Crush', slug: 'crush' },
-                            { name: 'Boss', slug: 'boss' }
+                            { name: 'Mom', slug: 'mom' },
+                            { name: 'Dad', slug: 'dad' },
+                            { name: 'Girlfriend', slug: 'girlfriend' },
+                            { name: 'Boyfriend', slug: 'boyfriend' },
+                            { name: 'Boss', slug: 'boss' },
+                            { name: 'Colleague', slug: 'colleague' },
+                            { name: 'Sister-in-law', slug: 'bhabhi' },
+                            { name: 'Daughter', slug: 'daughter' },
+                            { name: 'Son', slug: 'son' },
+                            { name: 'Nephew', slug: 'nephew' },
+                            { name: 'Niece', slug: 'niece' },
+                            { name: 'Crush', slug: 'crush' }
                         ].map(rel => (
-                            <Link 
+                            <Link
                                 key={rel.slug}
                                 to={`/birthday-wishes-for/my/${rel.slug}`}
-                                className="px-5 py-2 rounded-full border border-white/5 bg-white/5 text-slate-400 hover:text-magical-300 hover:border-magical-500/30 transition-all text-sm"
+                                className="text-sm text-slate-500 hover:text-white transition-colors underline decoration-slate-800 underline-offset-4"
                             >
                                 Wishes for {rel.name}
                             </Link>
@@ -443,22 +444,22 @@ export const Landing: React.FC = () => {
                 </div>
             </div>
 
-            <GiftThemBack defaultExpanded={true} />
-
             {/* SECTION 6: FOOTER */}
             <footer className="relative z-20 bg-slate-950/40 backdrop-blur-sm py-12 px-6 border-t border-white/5">
                 <div className="max-w-6xl mx-auto">
                     <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-                        <div className="text-center md:text-left">
+                        <div className="text-center md:text-left" aria-label="Wishprise Branding">
                             <Logo size="sm" />
                             <p className="text-gray-600 text-sm mt-2">Making birthdays magical, one surprise at a time.</p>
                         </div>
                         <div className="flex flex-wrap justify-center gap-6 text-sm">
                             <Link to="/about" className="text-gray-400 hover:text-magical-400 transition-colors">About Us</Link>
-                            <Link to="/resources" className="text-gray-400 hover:text-magical-400 transition-colors">Resources</Link>
-                            <Link to="/privacy" className="text-gray-400 hover:text-magical-400 transition-colors">Privacy Policy</Link>
-                            <Link to="/terms" className="text-gray-400 hover:text-magical-400 transition-colors">Terms of Service</Link>
-                            <Link to="/contact" className="text-gray-400 hover:text-magical-400 transition-colors">Contact Us</Link>
+                            <Link to="/ai-wishes" className="text-magical-400 hover:text-magical-300 transition-colors font-medium">AI Wishes ✨</Link>
+                            <Link to="/poster" className="text-magical-400 hover:text-magical-300 transition-colors font-medium">Poster Studio 🎨</Link>
+                            <Link to="/space-birthday" className="text-magical-400 hover:text-magical-300 transition-colors font-medium">NASA Birthday 🚀</Link>
+                            <Link to="/gifts" className="text-magical-400 hover:text-magical-300 transition-colors font-medium">Gift Shop 🎁</Link>
+                            <Link to="/resources" className="text-gray-400 hover:text-magical-400 transition-colors hidden md:inline">Resources</Link>
+                            <Link to="/privacy" className="text-gray-400 hover:text-magical-400 transition-colors hidden md:inline">Privacy</Link>
                         </div>
                     </div>
                     <div className="mt-8 text-center border-t border-slate-900 pt-6">

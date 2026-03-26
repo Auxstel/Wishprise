@@ -39,44 +39,100 @@
   <!-- Relationship-specific landing pages -->
   <url>
     <loc>https://wishprise.online/birthday-wishes-for/my/friend</loc>
-    <lastmod>2026-03-21</lastmod>
+    <lastmod>2026-03-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://wishprise.online/birthday-wishes-for/my/sister</loc>
-    <lastmod>2026-03-21</lastmod>
+    <loc>https://wishprise.online/</loc>
+    <lastmod>2026-03-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://wishprise.online/birthday-wishes-for/my/boyfriend</loc>
-    <lastmod>2026-03-21</lastmod>
+    <lastmod>2026-03-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://wishprise.online/birthday-wishes-for/my/mom</loc>
-    <lastmod>2026-03-21</lastmod>
+    <lastmod>2026-03-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://wishprise.online/birthday-wishes-for/my/brother</loc>
-    <lastmod>2026-03-21</lastmod>
+    <lastmod>2026-03-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://wishprise.online/birthday-wishes-for/my/crush</loc>
-    <lastmod>2026-03-21</lastmod>
+    <lastmod>2026-03-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://wishprise.online/birthday-wishes-for/my/boss</loc>
-    <lastmod>2026-03-21</lastmod>
+    <lastmod>2026-03-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://wishprise.online/birthday-wishes-for/my/colleague</loc>
+    <lastmod>2026-03-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://wishprise.online/birthday-wishes-for/my/bhabhi</loc>
+    <lastmod>2026-03-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://wishprise.online/birthday-wishes-for/my/daughter</loc>
+    <lastmod>2026-03-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://wishprise.online/birthday-wishes-for/my/son</loc>
+    <lastmod>2026-03-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://wishprise.online/birthday-wishes-for/my/nephew</loc>
+    <lastmod>2026-03-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Tools & Resources -->
+  <url>
+    <loc>https://wishprise.online/ai-wishes</loc>
+    <lastmod>2026-03-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://wishprise.online/poster</loc>
+    <lastmod>2026-03-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://wishprise.online/resources/virtual-birthday-ideas-2026</loc>
+    <lastmod>2026-03-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://wishprise.online/resources/whatsapp-birthday-surprise-ideas</loc>
+    <lastmod>2026-03-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 </urlset>

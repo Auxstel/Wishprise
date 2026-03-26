@@ -9,11 +9,13 @@ import { Logo } from '../components/Logo';
 import { Seo } from '../components/Seo';
 import { Landing3D } from '../components/Landing3D';
 import ButtonWithIcon from '@/components/ui/button-witn-icon';
-import { Edit2, Sparkles, Wand2 } from 'lucide-react';
+import { Edit2, Sparkles, Wand2, Gift } from 'lucide-react';
+import { GiftThemBack } from '../components/GiftThemBack';
 
 export const Create: React.FC = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
+  const [soundTab, setSoundTab] = useState<'voice' | 'music'>('voice');
   const [uploadError, setUploadError] = useState<string>('');
   const [isSaving, setIsSaving] = useState(false);
 
@@ -185,11 +187,12 @@ export const Create: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 font-sans text-slate-300 flex flex-col overflow-hidden">
+    <div className="min-h-screen bg-slate-950 font-sans text-slate-300 flex flex-col overflow-x-hidden scroll-smooth">
       <Seo 
-          title="Create Your Magical Birthday Surprise" 
-          description="Use our free birthday surprise giver tool to create a custom 3D birthday experience. Choose a cake, add music, and share the link."
+          title="Create a Magical 3D Birthday Surprise" 
+          description="Create your own 3D birthday wish! Personalized animations, custom cakes, and music in seconds. The #1 free birthday surprise online maker with no login required."
           path="/create"
+          schemaType="SoftwareApplication"
       />
 
       {/* 3D Background Layer */}
@@ -203,12 +206,12 @@ export const Create: React.FC = () => {
 
         {/* Header */}
         <div className="flex items-center justify-between mb-8 backdrop-blur-xl bg-white/5 p-4 rounded-3xl border border-white/10 shadow-[0_0_30px_rgba(139,38,242,0.15)] animate-fade-in">
-          <div onClick={() => navigate('/')} className="cursor-pointer hover:scale-105 transition-transform duration-300">
+          <div onClick={() => navigate('/')} className="cursor-pointer hover:scale-105 transition-transform duration-300" aria-label="Go to Home">
             <Logo size="sm" />
           </div>
           <div className="flex flex-col items-end">
             <div className="text-[10px] text-magical-300 uppercase tracking-[0.3em] font-bold mb-1">Creation Progress</div>
-            <div className="text-xs text-white/50 font-serif italic">Step {step} of 4</div>
+            <div className="text-xs text-white/50 font-serif italic">Step {step} of 6</div>
           </div>
         </div>
 
@@ -216,7 +219,7 @@ export const Create: React.FC = () => {
         <div className="w-full h-1.5 bg-white/5 mb-12 rounded-full overflow-hidden backdrop-blur-sm border border-white/5 relative">
           <div 
             className="h-full bg-gradient-to-r from-magical-600 via-magical-400 to-amber-300 transition-all duration-700 ease-out shadow-[0_0_15px_rgba(139,38,242,0.6)] relative" 
-            style={{ width: `${(step / 4) * 100}%` }}
+            style={{ width: `${(step / 6) * 100}%` }}
           >
             <div className="absolute top-0 right-0 w-8 h-full bg-white/40 blur-sm animate-pulse"></div>
           </div>
@@ -435,6 +438,7 @@ export const Create: React.FC = () => {
           </div>
         )}
 
+        {/* STEP 4: MESSAGES */}
         {step === 4 && (
           <div className="space-y-10 animate-fade-in backdrop-blur-3xl bg-white/[0.02] p-8 md:p-12 rounded-[3.5rem] border border-white/5 shadow-2xl relative overflow-hidden group/step4">
             <div className="absolute top-0 right-0 w-64 h-64 bg-magical-600/[0.05] blur-[120px] rounded-full pointer-events-none"></div>
@@ -445,7 +449,6 @@ export const Create: React.FC = () => {
             </div>
 
             <div className="space-y-10 relative z-10 overflow-y-auto max-h-[55vh] pr-2 magical-scrollbar px-1">
-              {/* Written Messages */}
               <div className="space-y-8">
                 <div className="group/field relative group/input">
                   <div className="flex items-center gap-3 mb-4">
@@ -483,82 +486,23 @@ export const Create: React.FC = () => {
                   </div>
                   <p className="mt-2 text-[10px] text-slate-500 italic font-serif text-right px-2">This note stays hidden until they find it.</p>
                 </div>
-              </div>
 
-              {/* Media Section */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Voice Message */}
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3">
-                    <span className="text-[10px] font-black text-magical-400/40 uppercase tracking-[0.4em]">The Gift of Your Voice</span>
+                <div className="group/field relative group/input">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="text-[10px] font-black text-magical-400/40 uppercase tracking-[0.4em]">One Final Secret</span>
+                    <div className="h-px flex-1 bg-white/5"></div>
                   </div>
-                  <div className="bg-slate-900/40 p-6 rounded-[2rem] border border-white/5 space-y-4 shadow-xl">
-                    <p className="text-[10px] text-slate-500 italic font-serif leading-tight">"They'll hear your voice as a toast to their special day."</p>
-                    {!formData.voiceMessageUrl ? (
-                      <button
-                        onClick={isRecording ? stopRecording : startRecording}
-                        className={`w-full py-6 rounded-2xl font-bold text-xs transition-all flex flex-col items-center justify-center gap-3 border ${isRecording
-                          ? 'bg-red-500/10 text-red-400 border-red-500/30 animate-pulse shadow-[0_0_20px_rgba(239,68,68,0.2)]'
-                          : 'bg-white/[0.02] text-white/50 border-white/5 hover:border-magical-500/30 hover:text-white hover:bg-white/5'
-                          }`}
-                      >
-                        <span className="text-3xl">{isRecording ? "🔴" : "🎙️"}</span>
-                        <span>{isRecording ? `Recording... (${recordingTime}s)` : "Record a Heartfelt Message"}</span>
-                      </button>
-                    ) : (
-                      <div className="space-y-4">
-                        <div className="flex items-center justify-between px-2">
-                          <span className="text-[10px] text-magical-300 uppercase tracking-widest font-black">Message Saved</span>
-                          <button onClick={deleteVoiceMessage} className="text-[10px] text-red-400/50 hover:text-red-400 flex items-center gap-1 transition-colors uppercase font-bold tracking-tighter italic">Delete</button>
-                        </div>
-                        <audio src={formData.voiceMessageUrl} controls className="w-full h-8 opacity-40 hover:opacity-100 transition-opacity" />
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {/* Soundtrack */}
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3">
-                    <span className="text-[10px] font-black text-magical-400/40 uppercase tracking-[0.4em]">Soundtrack of Memory</span>
-                  </div>
-                  <div className="bg-slate-900/40 p-6 rounded-[2rem] border border-white/5 space-y-4 shadow-xl">
-                    <p className="text-[10px] text-slate-500 italic font-serif leading-tight">"This melody will play as they cut their cake, making it truly magical."</p>
-                    <div className="space-y-3">
-                      <input
-                        type="text"
-                        value={formData.songUrl}
-                        onChange={(e) => handleChange('songUrl', e.target.value)}
-                        className="w-full bg-slate-950/40 p-4 rounded-xl border border-white/5 text-white placeholder-white/5 focus:border-magical-500/30 outline-none text-sm transition-all italic font-serif"
-                        placeholder="Paste MP3 Link..."
-                      />
-                      <div className="relative">
-                        <input type="file" accept="audio/*" onChange={handleFileUpload} className="hidden" id="song-upload" />
-                        <label htmlFor="song-upload" className="flex items-center justify-center w-full p-4 rounded-xl border border-dashed border-white/10 text-white/20 hover:border-magical-500/30 hover:text-magical-300 hover:bg-white/5 cursor-pointer transition-all duration-300 text-xs font-serif italic">
-                          {songFile ? `📁 ${songFile.name}` : "Or Upload Your Own MP3"}
-                        </label>
-                      </div>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      value={formData.finalMessage}
+                      onChange={(e) => handleChange('finalMessage', e.target.value)}
+                      className="w-full bg-slate-900/20 border-b border-white/10 p-4 pe-14 text-white placeholder-white/10 focus:border-amber-400/50 outline-none text-2xl transition-all font-serif italic focus:bg-white/[0.02]"
+                      placeholder="The very last thing they'll see..."
+                    />
+                    <div className="absolute right-5 top-1/2 -translate-y-1/2 text-magical-400/30 group-hover/input:text-magical-400/60 transition-colors pointer-events-none">
+                      <Edit2 size={24} />
                     </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Final Surprise */}
-              <div className="space-y-4 pt-4">
-                <div className="flex items-center gap-3 mb-2">
-                  <span className="text-[10px] font-black text-magical-400/40 uppercase tracking-[0.4em]">One Final secret</span>
-                  <div className="h-px flex-1 bg-white/5"></div>
-                </div>
-                <div className="group relative group/input">
-                  <input
-                    type="text"
-                    value={formData.finalMessage}
-                    onChange={(e) => handleChange('finalMessage', e.target.value)}
-                    className="w-full bg-slate-900/20 border-b border-white/10 p-4 pe-14 text-white placeholder-white/10 focus:border-amber-400/50 outline-none text-2xl transition-all font-serif italic focus:bg-white/[0.02]"
-                    placeholder="The very last thing they'll see..."
-                  />
-                  <div className="absolute right-5 top-1/2 -translate-y-1/2 text-magical-400/30 group-hover/input:text-magical-400/60 transition-colors pointer-events-none">
-                    <Edit2 size={24} />
                   </div>
                 </div>
               </div>
@@ -573,7 +517,203 @@ export const Create: React.FC = () => {
               </button>
               <div className="flex-1 flex justify-center">
                 <ButtonWithIcon 
-                  text={isSaving ? "Creating..." : "Create the Surprise ✨"} 
+                  text="Add Sound Magic ✨" 
+                  onClick={handleNext}
+                  className="w-full text-white shadow-magical-600/50"
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* STEP 5: SOUND & VOICE */}
+        {step === 5 && (
+          <div className="space-y-6 animate-fade-in backdrop-blur-3xl bg-white/[0.02] p-6 md:p-12 rounded-[2.5rem] md:rounded-[3.5rem] border border-white/5 shadow-2xl relative overflow-hidden flex flex-col min-h-[500px] md:min-h-0">
+            <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-magical-600/[0.05] blur-[120px] rounded-full pointer-events-none"></div>
+
+            <div className="text-center relative z-10 space-y-2">
+              <h2 className="text-2xl md:text-5xl font-serif text-white tracking-tight">The <span className="text-magical-300 font-hand text-4xl md:text-7xl">Sound of Magic</span></h2>
+              <p className="text-slate-400 font-serif italic text-sm md:text-lg leading-relaxed max-w-lg mx-auto opacity-70">"A melody for the mood, a voice for the heart."</p>
+            </div>
+
+            {/* Figma-Approved Segmented Control (Tabs) */}
+            <div className="relative z-10 flex p-1.5 bg-black/40 backdrop-blur-md rounded-2xl border border-white/5 max-w-sm mx-auto w-full mb-2">
+              <button
+                onClick={() => setSoundTab('voice')}
+                className={`flex-1 py-3 px-4 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-500 relative z-10 ${
+                  soundTab === 'voice' ? 'text-white' : 'text-slate-500 hover:text-slate-300'
+                }`}
+              >
+                Your Voice
+                {soundTab === 'voice' && (
+                  <div className="absolute inset-0 bg-magical-600 shadow-glow rounded-xl -z-10 animate-fade-in"></div>
+                )}
+              </button>
+              <button
+                onClick={() => setSoundTab('music')}
+                className={`flex-1 py-3 px-4 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-500 relative z-10 ${
+                  soundTab === 'music' ? 'text-white' : 'text-slate-500 hover:text-slate-300'
+                }`}
+              >
+                The Song
+                {soundTab === 'music' && (
+                  <div className="absolute inset-0 bg-amber-500 shadow-glow-amber rounded-xl -z-10 animate-fade-in"></div>
+                )}
+              </button>
+            </div>
+
+            <div className="relative z-10 flex-1 flex flex-col justify-center">
+              {/* Voice Message Tab */}
+              {soundTab === 'voice' && (
+                <div className="animate-fade-in-up space-y-6">
+                  <div className="group/voice relative p-1 rounded-[2.5rem] bg-gradient-to-br from-white/10 to-transparent shadow-xl transition-all">
+                    <div className="bg-slate-900/90 backdrop-blur-xl p-6 md:p-8 rounded-[2.4rem] space-y-6">
+                      <div className="flex items-center justify-between">
+                        <div className="space-y-1">
+                          <span className="text-[10px] font-black text-magical-400 uppercase tracking-[0.4em]">Voice Note</span>
+                          <p className="text-[10px] text-slate-500 italic font-serif">Record a toast for their special day</p>
+                        </div>
+                        {isRecording && (
+                          <div className="flex items-center gap-2">
+                            <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.8)]"></div>
+                            <span className="text-[10px] font-bold text-red-400 tracking-tighter">{recordingTime}s / 60s</span>
+                          </div>
+                        )}
+                      </div>
+
+                      {!formData.voiceMessageUrl ? (
+                        <div className="flex flex-col items-center gap-6">
+                          <button
+                            onClick={isRecording ? stopRecording : startRecording}
+                            className={`w-20 h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center transition-all duration-500 ${
+                              isRecording 
+                                ? 'bg-red-500/20 border-red-500/50 shadow-[0_0_40px_rgba(239,68,68,0.3)]' 
+                                : 'bg-white/5 border-white/10 hover:border-magical-400/50 shadow-inner'
+                            } border-2 relative`}
+                          >
+                            {isRecording ? (
+                              <div className="w-6 h-6 md:w-8 md:h-8 bg-red-500 rounded-sm animate-pulse"></div>
+                            ) : (
+                              <div className="text-3xl md:text-4xl text-magical-400">🎙️</div>
+                            )}
+                            {isRecording && (
+                              <>
+                                <div className="absolute -inset-2 border border-red-500/30 rounded-full animate-ping"></div>
+                              </>
+                            )}
+                          </button>
+                          <p className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em]">
+                            {isRecording ? "Tap to finish" : "Speak from the heart"}
+                          </p>
+                        </div>
+                      ) : (
+                        <div className="space-y-6 animate-fade-in">
+                          <div className="bg-black/40 rounded-2xl p-4 border border-white/5 flex items-center gap-4">
+                            <div className="w-10 h-10 bg-magical-500/20 rounded-full flex items-center justify-center text-xl">✨</div>
+                            <audio src={formData.voiceMessageUrl} controls className="flex-1 h-8 opacity-80" />
+                            <button 
+                              onClick={deleteVoiceMessage}
+                              className="w-10 h-10 rounded-full bg-red-500/10 flex items-center justify-center text-red-400 hover:bg-red-500/20 transition-all"
+                            >
+                              ✕
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Music Tab */}
+              {soundTab === 'music' && (
+                <div className="animate-fade-in-up space-y-6">
+                  <div className="group/song relative p-1 rounded-[2.5rem] bg-gradient-to-br from-white/10 to-transparent shadow-xl transition-all">
+                    <div className="bg-slate-900/90 backdrop-blur-xl p-6 md:p-8 rounded-[2.4rem] space-y-6">
+                      <div className="space-y-1">
+                        <span className="text-[10px] font-black text-amber-400 uppercase tracking-[0.4em]">Atmosphere</span>
+                        <p className="text-[10px] text-slate-500 italic font-serif">A melody to play as they cut the cake</p>
+                      </div>
+
+                      <div className="space-y-4">
+                        <div className="relative group/input">
+                          <input
+                            type="text"
+                            value={formData.songUrl}
+                            onChange={(e) => handleChange('songUrl', e.target.value)}
+                            className="w-full bg-black/40 border border-white/5 p-4 rounded-xl text-white focus:border-amber-400/50 outline-none text-xs transition-all italic font-serif placeholder-white/5"
+                            placeholder="Paste MP3 Link..."
+                          />
+                          <div className="absolute right-4 top-1/2 -translate-y-1/2 text-[8px] font-black text-white/10 uppercase tracking-widest">URL</div>
+                        </div>
+
+                        <div className="relative">
+                          <input type="file" accept="audio/*" onChange={handleFileUpload} className="hidden" id="song-upload" />
+                          <label 
+                            htmlFor="song-upload" 
+                            className={`flex items-center justify-center w-full p-6 md:p-8 rounded-2xl border-2 border-dashed transition-all duration-300 ${
+                              songFile 
+                                ? 'border-amber-400/50 bg-amber-400/5 text-amber-300' 
+                                : 'border-white/5 bg-white/[0.02] text-white/20 hover:border-amber-400/30 hover:text-white hover:bg-white/5'
+                            } cursor-pointer`}
+                          >
+                            <div className="text-center space-y-2">
+                              <div className="text-xl md:text-2xl opacity-50">{songFile ? "🎵" : "☁️"}</div>
+                              <div className="text-[10px] font-bold uppercase tracking-[0.2em] line-clamp-1 truncate px-2">
+                                {songFile ? songFile.name : "Upload Your Own Track"}
+                              </div>
+                            </div>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="flex flex-col md:flex-row gap-4 pt-4 relative z-10">
+              <button 
+                onClick={handleBack} 
+                className="flex-1 py-4 px-8 rounded-full text-white/30 hover:text-white hover:bg-white/5 transition-all font-serif italic text-lg border border-transparent hover:border-white/5"
+              >
+                Go Back
+              </button>
+              <div className="flex-1 flex justify-center">
+                <ButtonWithIcon 
+                  text="Next: Gift Ideas 💝" 
+                  onClick={handleNext}
+                  className="w-full text-white shadow-magical-600/50"
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* STEP 6: GIFT THEM BACK */}
+        {step === 6 && (
+          <div className="space-y-8 animate-fade-in backdrop-blur-3xl bg-white/[0.02] p-6 md:p-10 rounded-[2.5rem] md:rounded-[3.5rem] border border-white/5 shadow-2xl relative overflow-hidden flex flex-col">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/[0.05] blur-[120px] rounded-full pointer-events-none"></div>
+
+            <div className="text-center relative z-10 space-y-2">
+              <h2 className="text-2xl md:text-5xl font-serif text-white tracking-tight">One <span className="text-amber-400 font-hand text-4xl md:text-7xl">Final Touch</span></h2>
+              <p className="text-slate-400 font-serif italic text-sm md:text-lg leading-relaxed max-w-lg mx-auto opacity-70">"Complete the surprise with a thoughtful gift they'll love."</p>
+            </div>
+
+            <div className="relative z-10 overflow-y-auto max-h-[50vh] pr-2 magical-scrollbar">
+              <GiftThemBack defaultExpanded={true} />
+            </div>
+
+            <div className="flex flex-col md:flex-row gap-4 pt-4 relative z-10">
+              <button 
+                onClick={handleBack} 
+                className="flex-1 py-4 px-8 rounded-full text-white/30 hover:text-white hover:bg-white/5 transition-all font-serif italic text-lg border border-transparent hover:border-white/5"
+              >
+                Go Back
+              </button>
+              <div className="flex-1 flex justify-center">
+                <ButtonWithIcon 
+                  text={isSaving ? "Finalizing Magic..." : "Get My Surprise Link ✨"} 
                   onClick={handleSubmit}
                   disabled={isSaving}
                   className="w-full text-white shadow-magical-600/50"

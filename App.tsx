@@ -9,6 +9,10 @@ import { PrivacyPolicy } from './screens/PrivacyPolicy';
 import { TermsOfService } from './screens/TermsOfService';
 import { Contact } from './screens/Contact';
 import { About } from './screens/About';
+import { AiWishes } from './screens/AiWishes';
+import { PosterGenerator } from './screens/PosterGenerator';
+import { GiftSuggestions } from './screens/GiftSuggestions';
+import { SpaceBirthday } from './screens/SpaceBirthday';
 import { ResourceIndex } from './screens/Resources/ResourceIndex';
 import { VirtualBirthdayIdeas } from './screens/Resources/VirtualBirthdayIdeas';
 import { LongDistanceGuide } from './screens/Resources/LongDistanceGuide';
@@ -41,6 +45,12 @@ const App: React.FC = () => {
           <Route path="/long-distance-birthdays" element={<LongDistanceBirthday />} />
           <Route path="/birthday-wishes-for/my/:relationship" element={<RelationshipLanding />} />
           <Route path="/birthday-wishes-for/:name" element={<NameLanding />} />
+
+          {/* New Tools */}
+          <Route path="/ai-wishes" element={<AiWishes />} />
+          <Route path="/poster" element={<PosterGenerator />} />
+          <Route path="/gifts" element={<GiftSuggestions />} />
+          <Route path="/space-birthday" element={<SpaceBirthday />} />
 
           {/* Resources / Blog */}
           <Route path="/resources" element={<ResourceIndex />} />
