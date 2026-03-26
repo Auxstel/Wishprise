@@ -57,7 +57,7 @@ export function Navbar() {
   const navLinksData = [
     { label: 'AI Wish Generator', href: '/ai-wishes' },
     { label: 'NASA Feature', href: '/space-birthday' },
-    { label: 'Our Products', href: '/gifts' },
+    { label: 'Products', href: '/gifts' },
     { label: 'Poster Studio', href: '/poster' },
   ];
 

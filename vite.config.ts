@@ -12,5 +12,15 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom', 'react-router-dom', 'react-helmet-async'],
+          'vendor-three': ['three'],
+          'vendor-firebase': ['firebase/app', 'firebase/analytics'],
+          'vendor-supabase': ['@supabase/supabase-js'],
+        }
+      }
+    }
   }
 });
