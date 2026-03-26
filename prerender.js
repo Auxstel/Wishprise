@@ -300,6 +300,180 @@ const PAGES = {
       <p>Post a blurry photo with a countdown on your WhatsApp Status.</p>
       <p><a href="/resources/whatsapp-birthday-surprise-ideas">Read the full guide here →</a></p>
     `
+    },
+    '/ai-wishes': {
+        title: 'AI Birthday Wish Generator - Create Heartfelt Messages | Wishprise',
+        description: 'Generate personalized, heartfelt birthday wishes using AI. Choose the tone, relationship, and style — get the perfect birthday message instantly. Free, no login.',
+        content: `
+      <h1>AI Birthday Wish Generator</h1>
+      <p>Struggling to find the right words? Let our AI craft the perfect birthday message for your loved ones.</p>
+      <h2>How It Works</h2>
+      <ul>
+        <li>Select your relationship (friend, partner, parent, colleague)</li>
+        <li>Choose a tone (funny, heartfelt, professional, poetic)</li>
+        <li>Get multiple unique wish options instantly</li>
+        <li>Copy and use anywhere — WhatsApp, cards, or inside a Wishprise surprise</li>
+      </ul>
+      <h2>Why Use Our AI Wish Generator?</h2>
+      <p>Every birthday deserves more than a generic "HBD." Our AI understands context and emotion, creating wishes that feel genuinely personal and thoughtful.</p>
+      <p><a href="/ai-wishes">Try the AI Wish Generator →</a></p>
+    `
+    },
+    '/poster': {
+        title: 'Birthday Poster Maker - Create Stunning Posters Free | Wishprise',
+        description: 'Design beautiful birthday posters with our free online poster maker. Choose from premium templates, customize text and colors. Download instantly.',
+        content: `
+      <h1>Birthday Poster Maker</h1>
+      <p>Create eye-catching birthday posters in seconds. Choose from professionally designed templates and customize everything.</p>
+      <h2>Features</h2>
+      <ul>
+        <li>Multiple premium poster templates</li>
+        <li>Customizable text, colors, and fonts</li>
+        <li>High-resolution download</li>
+        <li>Perfect for social media, printing, or sharing</li>
+      </ul>
+      <p><a href="/poster">Create Your Birthday Poster →</a></p>
+    `
+    },
+    '/gifts': {
+        title: 'Birthday Gift Suggestions - Curated Ideas | Wishprise',
+        description: 'Find the perfect birthday gift with our curated suggestions. Browse ideas for friends, family, partners, and colleagues. Every budget covered.',
+        content: `
+      <h1>Birthday Gift Suggestions</h1>
+      <p>Finding the perfect gift can be stressful. We've curated thoughtful suggestions for every relationship and budget.</p>
+      <h2>Browse by Relationship</h2>
+      <ul>
+        <li>For Your Partner — Romantic and meaningful gifts</li>
+        <li>For Friends — Fun and memorable picks</li>
+        <li>For Parents — Thoughtful and heartfelt choices</li>
+        <li>For Colleagues — Professional yet personal options</li>
+      </ul>
+      <p><a href="/gifts">Explore Gift Ideas →</a></p>
+    `
+    },
+    '/space-birthday': {
+        title: 'NASA Space Birthday - What Happened in Space on Your Birthday | Wishprise',
+        description: 'Discover what NASA captured in space on your birthday. See the Astronomy Picture of the Day from your birth date. A unique, cosmic birthday experience.',
+        content: `
+      <h1>Your NASA Space Birthday</h1>
+      <p>Ever wondered what the universe looked like on the day you were born? Find out with NASA's Astronomy Picture of the Day.</p>
+      <h2>How It Works</h2>
+      <ul>
+        <li>Enter your birthday</li>
+        <li>See the official NASA astronomy image from that date</li>
+        <li>Learn about the cosmic event captured</li>
+        <li>Share your space birthday with friends</li>
+      </ul>
+      <p><a href="/space-birthday">Discover Your Space Birthday →</a></p>
+    `
+    },
+    '/birthday-wishes-for/my/friend': {
+        title: 'Birthday Wishes for Best Friend - 3D Interactive Surprise | Wishprise',
+        description: 'Create a magical 3D birthday surprise for your best friend. Interactive cakes, personal messages, and music — all in one shareable link. Free!',
+        content: `
+      <h1>Birthday Wishes for Your Best Friend</h1>
+      <p>Your best friend deserves more than a generic text. Create an interactive 3D birthday experience they'll never forget.</p>
+      <p><a href="/create">Create a Surprise for Your Friend →</a></p>
+    `
+    },
+    '/birthday-wishes-for/my/sister': {
+        title: 'Birthday Wishes for Sister - 3D Interactive Surprise | Wishprise',
+        description: 'Make your sister feel special with a magical 3D birthday surprise. Personalized cakes, heartfelt messages, and music. Free and instant!',
+        content: `
+      <h1>Birthday Wishes for Your Sister</h1>
+      <p>Sisters are the best friends life gives us. Show yours how much she means with a stunning 3D birthday surprise.</p>
+      <p><a href="/create">Create a Surprise for Your Sister →</a></p>
+    `
+    },
+    '/birthday-wishes-for/my/brother': {
+        title: 'Birthday Wishes for Brother - 3D Interactive Surprise | Wishprise',
+        description: 'Surprise your brother with an epic 3D birthday experience. Custom cakes, personal messages, and interactive elements. Free!',
+        content: `
+      <h1>Birthday Wishes for Your Brother</h1>
+      <p>Brothers deserve an epic celebration. Create an interactive 3D birthday surprise that will blow his mind.</p>
+      <p><a href="/create">Create a Surprise for Your Brother →</a></p>
+    `
+    },
+    '/birthday-wishes-for/my/mom': {
+        title: 'Birthday Wishes for Mom - 3D Interactive Surprise | Wishprise',
+        description: 'Make Mom cry happy tears with a heartfelt 3D birthday surprise. Personal voice notes, custom cakes, and loving messages. Free!',
+        content: `
+      <h1>Birthday Wishes for Your Mom</h1>
+      <p>She gave you everything. Give her a birthday experience that shows how much she means to you — a personalized 3D surprise with your voice and love.</p>
+      <p><a href="/create">Create a Surprise for Mom →</a></p>
+    `
+    },
+    '/birthday-wishes-for/my/boyfriend': {
+        title: 'Birthday Wishes for Boyfriend - 3D Interactive Surprise | Wishprise',
+        description: 'Surprise your boyfriend with a romantic 3D birthday experience. Music, personal messages, and interactive magic. Free and shareable!',
+        content: `
+      <h1>Birthday Wishes for Your Boyfriend</h1>
+      <p>Make his day unforgettable with a romantic, interactive 3D birthday surprise. Add your voice, a love song, and a heartfelt message.</p>
+      <p><a href="/create">Create a Surprise for Your Boyfriend →</a></p>
+    `
+    },
+    '/birthday-wishes-for/my/crush': {
+        title: 'Birthday Wishes for Crush - 3D Interactive Surprise | Wishprise',
+        description: 'Send your crush a stunning 3D birthday surprise. Make a memorable impression with interactive magic and heartfelt wishes. Free!',
+        content: `
+      <h1>Birthday Wishes for Your Crush</h1>
+      <p>Want to make an impression? A personalized 3D birthday surprise shows you care — without being over the top.</p>
+      <p><a href="/create">Create a Surprise for Your Crush →</a></p>
+    `
+    },
+    '/birthday-wishes-for/my/boss': {
+        title: 'Birthday Wishes for Boss - Professional 3D Surprise | Wishprise',
+        description: 'Send your boss a professional yet memorable 3D birthday surprise. Appropriate, impressive, and free!',
+        content: `
+      <h1>Birthday Wishes for Your Boss</h1>
+      <p>Show appreciation with a professional yet memorable 3D birthday surprise. It's the perfect balance of thoughtful and appropriate.</p>
+      <p><a href="/create">Create a Surprise for Your Boss →</a></p>
+    `
+    },
+    '/birthday-wishes-for/my/colleague': {
+        title: 'Birthday Wishes for Colleague - Fun 3D Surprise | Wishprise',
+        description: 'Make your colleague smile with a fun 3D birthday surprise. Perfect for work friendships. Free and easy to share!',
+        content: `
+      <h1>Birthday Wishes for Your Colleague</h1>
+      <p>Brighten your colleague's workday with a fun, interactive 3D birthday surprise. Share it in the team chat!</p>
+      <p><a href="/create">Create a Surprise for Your Colleague →</a></p>
+    `
+    },
+    '/birthday-wishes-for/my/bhabhi': {
+        title: 'Birthday Wishes for Bhabhi - 3D Interactive Surprise | Wishprise',
+        description: 'Surprise your bhabhi (sister-in-law) with a beautiful 3D birthday experience. Heartfelt wishes, music, and magic. Free!',
+        content: `
+      <h1>Birthday Wishes for Your Bhabhi</h1>
+      <p>Show your bhabhi how much she means to the family with a beautiful, personalized 3D birthday surprise.</p>
+      <p><a href="/create">Create a Surprise for Your Bhabhi →</a></p>
+    `
+    },
+    '/birthday-wishes-for/my/daughter': {
+        title: 'Birthday Wishes for Daughter - Magical 3D Surprise | Wishprise',
+        description: 'Create a magical 3D birthday surprise for your daughter. Interactive cakes, loving messages, and music. Free!',
+        content: `
+      <h1>Birthday Wishes for Your Daughter</h1>
+      <p>Make your daughter feel like a princess with a magical 3D birthday surprise filled with love and sparkle.</p>
+      <p><a href="/create">Create a Surprise for Your Daughter →</a></p>
+    `
+    },
+    '/birthday-wishes-for/my/son': {
+        title: 'Birthday Wishes for Son - Epic 3D Surprise | Wishprise',
+        description: 'Surprise your son with an epic 3D birthday experience. Interactive elements, cool music, and personal messages. Free!',
+        content: `
+      <h1>Birthday Wishes for Your Son</h1>
+      <p>Give your son an epic birthday moment with an interactive 3D surprise he can explore and enjoy.</p>
+      <p><a href="/create">Create a Surprise for Your Son →</a></p>
+    `
+    },
+    '/birthday-wishes-for/my/nephew': {
+        title: 'Birthday Wishes for Nephew - Fun 3D Surprise | Wishprise',
+        description: 'Make your nephew smile with a fun 3D birthday surprise. Interactive cakes, cool effects, and personal wishes. Free!',
+        content: `
+      <h1>Birthday Wishes for Your Nephew</h1>
+      <p>Be the coolest aunt or uncle — send your nephew a jaw-dropping 3D birthday surprise he can play with.</p>
+      <p><a href="/create">Create a Surprise for Your Nephew →</a></p>
+    `
     }
 };
 
@@ -337,7 +511,7 @@ function generatePageHtml(route, page) {
           <a href="/contact" style="color:#e879f9;margin:0 1rem;">Contact</a>
           <a href="/resources" style="color:#e879f9;margin:0 1rem;">Resources</a>
         </nav>
-        <p style="color:#64748b;">© 2025 Wishprise. All rights reserved.</p>
+        <p style="color:#64748b;">© 2026 Wishprise. All rights reserved.</p>
       </footer>
     </div>`;
 

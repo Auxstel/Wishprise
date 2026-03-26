@@ -13,6 +13,22 @@
             "destination": "/index.html"
         },
         {
+            "source": "/ai-wishes",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/poster",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/gifts",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/space-birthday",
+            "destination": "/index.html"
+        },
+        {
             "source": "/birthday-wishes-for/my/:relationship",
             "destination": "/index.html"
         },
