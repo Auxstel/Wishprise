@@ -35,6 +35,7 @@ export interface SurpriseData {
   cakeDecoration: boolean;
   cakeDrip: boolean;
   cakeMessage: string;
+  cakeMessageColor: string;
   cakeFlavor: CakeFlavor;
   cakeStyle: CakeStyle;
   candleCount: number;

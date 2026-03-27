@@ -39,6 +39,7 @@ export const Create: React.FC = () => {
     cakeDecoration: false,
     cakeDrip: false,
     cakeMessage: "Happy \nBirthday",
+    cakeMessageColor: '#FFD700',
     cakeFlavor: CakeFlavor.VANILLA,
     cakeStyle: CakeStyle.CLASSIC,
     candleCount: 1,
@@ -300,6 +301,7 @@ export const Create: React.FC = () => {
                 cakeDecoration={formData.cakeDecoration ?? false}
                 cakeDrip={formData.cakeDrip ?? false} 
                 text={formData.cakeMessage}
+                textColor={formData.cakeMessageColor ?? '#FFD700'}
                 modelUrl="/cake.glb"
               />
             </div>
@@ -350,20 +352,56 @@ export const Create: React.FC = () => {
                 </div>
               </div>
 
-              {/* <div className="bg-slate-950/40 p-6 rounded-2xl border border-white/5">
-                <div className="flex justify-between items-center mb-4">
-                  <label className="block text-[10px] font-black text-magical-300 uppercase tracking-[0.4em]">Candles of Light</label>
-                  <span className="font-serif text-white text-2xl drop-shadow-glow">{formData.candleCount}</span>
+              <div className="space-y-6">
+                {/* Text Input */}
+                <div>
+                  <label className="block text-[10px] font-black text-magical-300 uppercase tracking-[0.4em] mb-4 ml-1">Cake Text</label>
+                  <input
+                    type="text"
+                    value={formData.cakeMessage ?? ''}
+                    onChange={(e) => handleChange('cakeMessage', e.target.value)}
+                    placeholder="e.g. Happy Birthday!"
+                    maxLength={20}
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-magical-400 focus:shadow-[0_0_15px_rgba(139,38,242,0.3)] transition-all duration-300"
+                  />
+                  <p className="text-white/20 text-[10px] mt-2 ml-1">{(formData.cakeMessage ?? '').length}/20</p>
                 </div>
-                <input
-                  type="range"
-                  min="1"
-                  max="9"
-                  value={formData.candleCount}
-                  onChange={(e) => handleChange('candleCount', parseInt(e.target.value))}
-                  className="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-magical-400"
-                />
-              </div> */}
+
+                {/* Text Color */}
+                <div>
+                  <label className="block text-[10px] font-black text-magical-300 uppercase tracking-[0.4em] mb-4 ml-1">Text Color</label>
+                  <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+                    {[
+                      { label: 'Gold',        value: '#FFD700' },
+                      { label: 'White',       value: '#FFFFFF' },
+                      { label: 'Pink',        value: '#FF69B4' },
+                      { label: 'Red',         value: '#FF4444' },
+                      { label: 'Teal',        value: '#00CED1' },
+                      { label: 'Lavender',    value: '#B57BFF' },
+                      { label: 'Forest',      value: '#1A4731' },
+                      { label: 'Navy',        value: '#1B2A6B' },
+                      { label: 'Burgundy',    value: '#6D0F1F' },
+                      { label: 'Plum',        value: '#3D1049' },
+                    ].map(({ label, value }) => (
+                      <button
+                        key={value}
+                        onClick={() => handleChange('cakeMessageColor', value)}
+                        className={`p-3 rounded-xl border text-[10px] md:text-xs font-bold capitalize transition-all duration-300 flex items-center justify-center gap-2 ${
+                          formData.cakeMessageColor === value
+                            ? 'border-magical-400 bg-magical-400/20 text-white shadow-[0_0_15px_rgba(139,38,242,0.3)]'
+                            : 'border-white/5 bg-white/5 text-white/30 hover:bg-white/10 hover:text-white/60'
+                        }`}
+                      >
+                        <span
+                          className="w-3 h-3 rounded-full shrink-0"
+                          style={{ backgroundColor: value }}
+                        />
+                        {label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
 
               <div className="flex flex-col md:flex-row gap-4 pt-2">
                 <button 

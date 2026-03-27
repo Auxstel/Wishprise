@@ -31,7 +31,8 @@ interface UpdatedCakeProps {
   flavor: UpdatedCakeFlavor;
   cakeDecoration?: boolean;
   cakeDrip?: boolean;
-  text?: string; // 👈
+  text?: string;
+  textColor?: string;
 }
 
 export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
@@ -40,6 +41,7 @@ export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
   cakeDecoration = false,
   cakeDrip = false,
   text = '',
+  textColor = '#FFD700',
 }) => {
   const mountRef = useRef<HTMLDivElement>(null);
   const modelRef = useRef<THREE.Group | null>(null);
@@ -226,7 +228,7 @@ export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
     if (!isModelLoadedRef.current) return;
     if (!sceneRef.current) return;
     addTextToScene(sceneRef.current, text ?? '');
-  }, [text]);
+  }, [text, textColor]);
 
   const findByName = (searchTerm: string): THREE.Object3D | undefined => {
     let found: THREE.Object3D | undefined;
@@ -257,7 +259,7 @@ export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
       font,
       size: 0.125,
       height: textHeight,
-      curveSegments: 12,
+      curveSegments: 3,
       bevelEnabled: false,
     });
 
@@ -267,7 +269,7 @@ export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
       const textWidth = bbox.max.x - bbox.min.x;
 
       const material = new THREE.MeshStandardMaterial({
-        color: 0xe67022,    // gold
+        color: new THREE.Color(textColor),
         metalness: 0.4,
         roughness: 0.3,
       });
