@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { Cake } from '../components/Cake';
+import { CandleInstancer } from '../components/CandleInstancer';
 import { UpdatedCake } from '../components/UpdatedCake';
 import { SurpriseData, CakeFlavor, CakeStyle, UpdatedCakeFlavor } from '../types';
 import { saveSurprise, generateId, uploadFile } from '../services/storageService';
