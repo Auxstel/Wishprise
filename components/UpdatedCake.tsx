@@ -69,12 +69,18 @@ export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
   const [candlePositions, setCandlePositions] = useState<THREE.Vector3[]>([]);
 
   const buildCandlePositions = (count: number): THREE.Vector3[] => {
-    const anchor = candleAnchorRef.current ?? new THREE.Vector3(0, 2, 0);
+    const anchor = candleAnchorRef.current ?? new THREE.Vector3(0, 1.01, 0);
     const positions: THREE.Vector3[] = [];
     const radius = 0.6;
 
+    if (count == 0)
+      return positions;
+
     for (let i = 0; i < count; i++) {
-      const angle = (i / (count - 1)) * Math.PI + Math.PI;
+      // When count is 1, place it at the anchor directly (no arc needed)
+      const angle = count === 1
+        ? Math.PI * 1.5                            // 👈 single candle at front center
+        : (i / (count - 1)) * Math.PI + Math.PI;  // arc for multiple candles
 
       positions.push(new THREE.Vector3(
         anchor.x + Math.cos(angle) * radius,
@@ -189,7 +195,7 @@ export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
         gltf.animations.forEach((clip) => {
           const action = mixer.clipAction(clip);
           animationsRef.current.set(clip.name, action);
-          console.log('Found animation:', clip.name); // 👈 log names to see what's in the GLB
+          // console.log('Found animation:', clip.name); // 👈 log names to see what's in the GLB
         });
 
         // Shadow setup
@@ -217,9 +223,9 @@ export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
 
         cakeGroupRef.current = group;
 
-        console.log('Base:', group.base.map(c => c.name));
-        console.log('Decorations:', group.decorations.map(c => c.name));
-        console.log('Drips:', group.drips.map(c => c.name));
+        // console.log('Base:', group.base.map(c => c.name));
+        // console.log('Decorations:', group.decorations.map(c => c.name));
+        // console.log('Drips:', group.drips.map(c => c.name));
         
         candleRef.current = findByName("candle") ?? null;
         const worldPos = new THREE.Vector3();

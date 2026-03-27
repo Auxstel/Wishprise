@@ -117,6 +117,8 @@ export const useCandleInstancer = (
     if (!scene) return;
     if (positions.length === 0) return;
 
+    let cancelled = false; // 👈 stale callback guard
+
     // ── Cleanup previous instances ───────────────────────────────────────────
     if (rootGroupRef.current) {
       scene.remove(rootGroupRef.current);
@@ -132,6 +134,7 @@ export const useCandleInstancer = (
     const loader = new GLTFLoader();
 
     loader.load('/models/candle.glb', (gltf) => {
+      if (cancelled) return;
 
       // GLB structure:
       //   Scene
@@ -148,10 +151,10 @@ export const useCandleInstancer = (
       let flamePosition = 0;
 
       // Log structure for debugging
-      console.log('--- Candle GLB structure ---');
-      gltf.scene.traverse((child) => {
-        console.log(child.type, '|', child.name);
-      });
+      // console.log('--- Candle GLB structure ---');
+      // gltf.scene.traverse((child) => {
+      //   console.log(child.type, '|', child.name);
+      // });
 
       // Find the inner group first, then pull the two meshes from it
       gltf.scene.traverse((child) => {
@@ -172,7 +175,7 @@ export const useCandleInstancer = (
             // Preserve world transform of the mesh relative to the group
             mesh.updateWorldMatrix(true, false);
             candleMat = mat;
-            console.log('Found candle mesh:', mesh.name, '| mat:', mat?.name);
+            // console.log('Found candle mesh:', mesh.name, '| mat:', mat?.name);
 
           } else if (matName.includes('flame')) {
             flameGeo = mesh.geometry.clone();
@@ -181,7 +184,7 @@ export const useCandleInstancer = (
             flameAlphaMap    = stdMat.alphaMap       ?? stdMat.emissiveMap ?? null;
             flameEmissiveMap = stdMat.emissiveMap    ?? null;
             flamePosition    = mesh.position.y;
-            console.log('Found flame mesh:', mesh.name, '| mat:', mat?.name);
+            // console.log('Found flame mesh:', mesh.name, '| mat:', mat?.name);
           }
         });
       });
@@ -242,9 +245,8 @@ export const useCandleInstancer = (
 
       scene.add(rootGroup);
 
-      // ── Animate uTime ────────────────────────────────────────────────────
       const clock = new THREE.Clock();
-      const tick  = () => {
+      const tick = () => {
         frameIdRef.current = requestAnimationFrame(tick);
         const t = clock.getElapsedTime();
         flameMatsRef.current.forEach((mat) => {
@@ -254,8 +256,8 @@ export const useCandleInstancer = (
       tick();
     });
 
-    // ── Cleanup ──────────────────────────────────────────────────────────────
     return () => {
+      cancelled = true; // 👈 mark stale before next effect runs
       cancelAnimationFrame(frameIdRef.current);
       if (rootGroupRef.current) {
         scene.remove(rootGroupRef.current);

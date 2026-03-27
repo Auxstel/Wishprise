@@ -42,7 +42,7 @@ export const Create: React.FC = () => {
     cakeMessageColor: '#FFD700',
     cakeFlavor: CakeFlavor.VANILLA,
     cakeStyle: CakeStyle.CLASSIC,
-    candleCount: 5,
+    candleCount: 4,
     songUrl: '',
     voiceMessageUrl: '',
     wheelOptions: [
@@ -400,6 +400,21 @@ export const Create: React.FC = () => {
                       </button>
                     ))}
                   </div>
+                </div>
+
+                <div className="bg-slate-950/40 p-6 rounded-2xl border border-white/5">
+                  <div className="flex justify-between items-center mb-4">
+                    <label className="block text-[10px] font-black text-magical-300 uppercase tracking-[0.4em]">Candles of Light</label>
+                    <span className="font-black text-magical-300 text-white text-2xl drop-shadow-glow">{formData.candleCount}</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="0"
+                    max="6"
+                    value={formData.candleCount}
+                    onChange={(e) => handleChange('candleCount', parseInt(e.target.value))}
+                    className="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-magical-400"
+                  />
                 </div>
               </div>
 
