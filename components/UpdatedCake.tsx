@@ -1,9 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+import { useCandleInstancer } from './CandleInstancer';
 import { CakeFlavor, CakeStyle, UpdatedCakeFlavor, UpdatedCakeShape } from '../types';
 
 const FLAVOR_TEXTURE_URL: Record<UpdatedCakeFlavor, string> = {
@@ -38,6 +39,7 @@ interface UpdatedCakeProps {
   cakeDrip?: boolean;
   text?: string;
   textColor?: string;
+  candleCount?: number;
   enableRotate?: boolean;
 }
 
@@ -48,6 +50,7 @@ export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
   cakeDrip = false,
   text = '',
   textColor = '#FFD700',
+  candleCount = 1,
 }) => {
   const isModelLoadedRef = useRef(false);
   const modelUrl = SHAPE_MODEL_URL[shape];
@@ -60,7 +63,30 @@ export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
   const texturesRef = useRef<Map<UpdatedCakeFlavor, THREE.Texture>>(new Map());
   const roughnessTextureRef = useRef<THREE.Texture | null>(null);
   const candleRef = useRef<THREE.Object3D | null>(null);
+  const candleAnchorRef = useRef<THREE.Vector3 | null>(null);
   const textMeshRef = useRef<THREE.Mesh | null>(null);
+  const [scene, setScene] = useState<THREE.Scene | null>(null);
+  const [candlePositions, setCandlePositions] = useState<THREE.Vector3[]>([]);
+
+  const buildCandlePositions = (count: number): THREE.Vector3[] => {
+    const anchor = candleAnchorRef.current ?? new THREE.Vector3(0, 2, 0);
+    const positions: THREE.Vector3[] = [];
+    const radius = 0.6;
+
+    for (let i = 0; i < count; i++) {
+      const angle = (i / (count - 1)) * Math.PI + Math.PI;
+
+      positions.push(new THREE.Vector3(
+        anchor.x + Math.cos(angle) * radius,
+        anchor.y,
+        anchor.z + Math.sin(angle) * radius
+      ));
+    }
+
+    return positions;
+  };
+
+  useCandleInstancer(scene, candleCount, candlePositions);
 
   // Separate useEffect — runs once on mount
   useEffect(() => {
@@ -106,8 +132,11 @@ export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
 
     // ─── Scene ────────────────────────────────────────────────────────────────
     const scene = new THREE.Scene();
-    scene.background = null; // transparent so parent CSS shows through
+
     sceneRef.current = scene;
+    setScene(scene);
+
+    scene.background = null; // transparent so parent CSS shows through
 
     // ─── Camera ───────────────────────────────────────────────────────────────
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
@@ -140,7 +169,7 @@ export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
     controls.maxPolarAngle = Math.PI / 2;  // 90° — stops exactly at the equator (horizon level)
     controls.minDistance   = 4;
     controls.maxDistance   = 8;
-    controls.target.set(0, 0, 0);
+    controls.target.set(0, 0.5, 0);
 
     // ─── Load GLB ─────────────────────────────────────────────────────────────
     const loader = new GLTFLoader();
@@ -193,6 +222,11 @@ export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
         console.log('Drips:', group.drips.map(c => c.name));
         
         candleRef.current = findByName("candle") ?? null;
+        const worldPos = new THREE.Vector3();
+        candleRef.current?.getWorldPosition(worldPos);
+        candleAnchorRef.current = worldPos;
+
+        setCandlePositions(buildCandlePositions(candleCount));
 
         applyFlavor(flavor);
         applyVisibility(cakeDecoration, cakeDrip);
@@ -263,6 +297,11 @@ export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
     addTextToScene(sceneRef.current, text ?? '');
   }, [text, textColor]);
 
+  useEffect(() => {
+    if (!candleAnchorRef.current) return; // anchor not loaded yet
+    setCandlePositions(buildCandlePositions(candleCount));
+  }, [candleCount]);
+
   const findByName = (searchTerm: string): THREE.Object3D | undefined => {
     let found: THREE.Object3D | undefined;
     modelRef.current?.traverse((child) => {
@@ -311,8 +350,8 @@ export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
       
       if (candleRef.current) {
         mesh.position.x = candleRef.current.position.x - (textWidth / 2);
-        mesh.position.y = candleRef.current.position.y + (textHeight / 2);
-        mesh.position.z = candleRef.current.position.z - 0.3;
+        mesh.position.y = candleRef.current.position.y;
+        mesh.position.z = candleRef.current.position.z;
       } else {
         mesh.position.set(-textWidth / 2, 2, 0);
       }

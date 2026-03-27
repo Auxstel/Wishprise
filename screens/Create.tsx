@@ -2,7 +2,6 @@ import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { Cake } from '../components/Cake';
-import { CandleInstancer } from '../components/CandleInstancer';
 import { UpdatedCake } from '../components/UpdatedCake';
 import { SurpriseData, CakeFlavor, CakeStyle, UpdatedCakeFlavor } from '../types';
 import { saveSurprise, generateId, uploadFile } from '../services/storageService';
@@ -43,7 +42,7 @@ export const Create: React.FC = () => {
     cakeMessageColor: '#FFD700',
     cakeFlavor: CakeFlavor.VANILLA,
     cakeStyle: CakeStyle.CLASSIC,
-    candleCount: 1,
+    candleCount: 5,
     songUrl: '',
     voiceMessageUrl: '',
     wheelOptions: [
@@ -303,7 +302,7 @@ export const Create: React.FC = () => {
                 cakeDrip={formData.cakeDrip ?? false} 
                 text={formData.cakeMessage}
                 textColor={formData.cakeMessageColor ?? '#FFD700'}
-                modelUrl="/cake.glb"
+                candleCount={formData.candleCount ?? 1}
               />
             </div>
 
