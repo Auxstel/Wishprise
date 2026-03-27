@@ -4,54 +4,89 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
-import { CakeFlavor, CakeStyle, UpdatedCakeFlavor } from '../types';
+import { CakeFlavor, CakeStyle, UpdatedCakeFlavor, UpdatedCakeShape } from '../types';
 
-const FLAVOR_SUFFIX: Record<UpdatedCakeFlavor, string> = {
-  [UpdatedCakeFlavor.VANILLA]:    '001',
-  [UpdatedCakeFlavor.CHOCOLATE]:  '002',
-  [UpdatedCakeFlavor.STRAWBERRY]: '003',
-  [UpdatedCakeFlavor.RED_VELVET]: '004',
-  [UpdatedCakeFlavor.CARAMEL]:    '005',
-  [UpdatedCakeFlavor.COFFEE]:     '006',
-  [UpdatedCakeFlavor.BLUEBERRY]:  '007',
-  [UpdatedCakeFlavor.PISTACHIO]:  '008',
+const FLAVOR_TEXTURE_URL: Record<UpdatedCakeFlavor, string> = {
+  [UpdatedCakeFlavor.VANILLA]:    '/textures/cake/vanilla.png',
+  [UpdatedCakeFlavor.CHOCOLATE]:  '/textures/cake/chocolate.png',
+  [UpdatedCakeFlavor.STRAWBERRY]: '/textures/cake/strawberry.png',
+  [UpdatedCakeFlavor.RED_VELVET]: '/textures/cake/red_velvet.png',
+  [UpdatedCakeFlavor.CARAMEL]:    '/textures/cake/caramel.png',
+  [UpdatedCakeFlavor.COFFEE]:     '/textures/cake/coffee.png',
+  [UpdatedCakeFlavor.BLUEBERRY]:  '/textures/cake/blueberry.png',
+  [UpdatedCakeFlavor.PISTACHIO]:  '/textures/cake/pistachio.png',
 };
 
-// Each entry holds a flavor and all its matching children from the GLB
-interface FlavorMeshGroup {
-  flavor: UpdatedCakeFlavor;
-  suffix: string;
-  base: THREE.Object3D[];         // everything else in this flavor
-  decorations: THREE.Object3D[];  // name includes suffix + "decoration"
-  drips: THREE.Object3D[];        // name includes suffix + "drip"
+const SHAPE_MODEL_URL: Record<UpdatedCakeShape, string> = {
+  [UpdatedCakeShape.ROUND]:  '/models/cake_round.glb',
+  [UpdatedCakeShape.SQUARE]: '/models/cake_square.glb',
+  [UpdatedCakeShape.HEART]:  '/models/cake_heart.glb',
+  [UpdatedCakeShape.TIER]:   '/models/cake_tier.glb',
+};
+
+interface CakeMeshGroup {
+  base: THREE.Object3D[];        // "001" but not decoration or drip
+  decorations: THREE.Object3D[]; // "001" + "decoration"
+  drips: THREE.Object3D[];       // "001" + "drip"
 }
 
 interface UpdatedCakeProps {
-  modelUrl?: string;
+  modelUrl?: string;         // optional override
+  shape?: UpdatedCakeShape;  // drives which GLB loads
   flavor: UpdatedCakeFlavor;
   cakeDecoration?: boolean;
   cakeDrip?: boolean;
   text?: string;
   textColor?: string;
+  enableRotate?: boolean;
 }
 
 export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
-  modelUrl = '/models/cake.glb',
+  shape = UpdatedCakeShape.ROUND,
   flavor,
   cakeDecoration = false,
   cakeDrip = false,
   text = '',
   textColor = '#FFD700',
 }) => {
+  const isModelLoadedRef = useRef(false);
+  const modelUrl = SHAPE_MODEL_URL[shape];
   const mountRef = useRef<HTMLDivElement>(null);
   const modelRef = useRef<THREE.Group | null>(null);
-  const flavorGroupsRef = useRef<FlavorMeshGroup[]>([]);
+  const sceneRef = useRef<THREE.Scene | null>(null);
   const mixerRef = useRef<THREE.AnimationMixer | null>(null);
   const animationsRef = useRef<Map<string, THREE.AnimationAction>>(new Map());
-  const textMeshRef = useRef<THREE.Mesh | null>(null);
-  const sceneRef = useRef<THREE.Scene | null>(null);
+  const cakeGroupRef = useRef<CakeMeshGroup>({ base: [], decorations: [], drips: [] });
+  const texturesRef = useRef<Map<UpdatedCakeFlavor, THREE.Texture>>(new Map());
+  const roughnessTextureRef = useRef<THREE.Texture | null>(null);
   const candleRef = useRef<THREE.Object3D | null>(null);
-  const isModelLoadedRef = useRef(false);
+  const textMeshRef = useRef<THREE.Mesh | null>(null);
+
+  // Separate useEffect — runs once on mount
+  useEffect(() => {
+    const loader = new THREE.TextureLoader();
+
+    // Color textures per flavor
+    Object.values(UpdatedCakeFlavor).forEach((flavor) => {
+      const texture = loader.load(FLAVOR_TEXTURE_URL[flavor]);
+      texture.minFilter = THREE.NearestFilter;
+      texture.magFilter = THREE.NearestFilter;
+      texture.colorSpace = THREE.SRGBColorSpace;
+      texturesRef.current.set(flavor, texture);
+    });
+
+    // Single shared roughness map
+    const roughness = loader.load('/textures/cake/roughness.png');
+    roughness.minFilter = THREE.NearestFilter;
+    roughness.magFilter = THREE.NearestFilter;
+    roughnessTextureRef.current = roughness;
+
+    return () => {
+      texturesRef.current.forEach((tex) => tex.dispose());
+      texturesRef.current.clear();
+      roughnessTextureRef.current?.dispose();
+    };
+  }, []);
 
   useEffect(() => {
     if (!mountRef.current) return;
@@ -136,40 +171,35 @@ export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
           }
         });
 
-        // Build one group per flavor including decorations and drip
-        const flavorGroups: FlavorMeshGroup[] = Object.values(UpdatedCakeFlavor).map((flavor) => {
-          const suffix = FLAVOR_SUFFIX[flavor];
-          const base: THREE.Object3D[] = [];
-          const decorations: THREE.Object3D[] = [];
-          const drips: THREE.Object3D[] = [];
+        const group: CakeMeshGroup = { base: [], decorations: [], drips: [] };
 
-          model.traverse((child) => {
-            if (!child.name.includes(suffix)) return; // only objects belonging to this flavor
+        model.traverse((child) => {
+          if (!child.name.includes('001')) return;
 
-            if (child.name.toLowerCase().includes('decoration')) {
-              decorations.push(child);
-            } else if (child.name.toLowerCase().includes('drip')) {
-              drips.push(child);
-            } else {
-              base.push(child);
-            }
-          });
-
-          // console.log(`[${flavor}] base: ${base.map(c => c.name)}`);
-          // console.log(`[${flavor}] decorations: ${decorations.map(c => c.name)}`);
-          // console.log(`[${flavor}] drips: ${drips.map(c => c.name)}`);
-
-          return { flavor, suffix, base, decorations, drips };
+          const nameLower = child.name.toLowerCase();
+          if (nameLower.includes('decoration')) {
+            group.decorations.push(child);
+          } else if (nameLower.includes('drip')) {
+            group.drips.push(child);
+          } else {
+            group.base.push(child);
+          }
         });
 
-        flavorGroupsRef.current = flavorGroups;
+        cakeGroupRef.current = group;
+
+        console.log('Base:', group.base.map(c => c.name));
+        console.log('Decorations:', group.decorations.map(c => c.name));
+        console.log('Drips:', group.drips.map(c => c.name));
+        
         candleRef.current = findByName("candle") ?? null;
 
-        addTextToScene(scene, text);
-        applyVisibility(flavor, cakeDecoration, cakeDrip);
-        showcaseAnimation();
-
+        applyFlavor(flavor);
+        applyVisibility(cakeDecoration, cakeDrip);
         isModelLoadedRef.current = true;
+        
+        addTextToScene(scene, text ?? '');
+        showcaseAnimation();
         scene.add(model);
       },
 
@@ -217,12 +247,15 @@ export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
         mountRef.current.innerHTML = '';
       }
     };
-  }, [modelUrl]);
+  }, [shape]);
 
   useEffect(() => {
-    applyVisibility(flavor, cakeDecoration, cakeDrip);
-    showcaseAnimation();
-  }, [flavor, cakeDecoration, cakeDrip]);
+    applyFlavor(flavor);
+  }, [flavor]);
+
+  useEffect(() => {
+    applyVisibility(cakeDecoration, cakeDrip);
+  }, [cakeDecoration, cakeDrip]);
 
   useEffect(() => {
     if (!isModelLoadedRef.current) return;
@@ -294,30 +327,35 @@ export const UpdatedCake: React.FC<UpdatedCakeProps> = ({
 
   // ─── Toggle Groups ──────────────────────────────────────────────────────────
   // Master function — call this whenever any of the three props change
-  const applyVisibility = (
-    targetFlavor: UpdatedCakeFlavor,
-    decoration: boolean,
-    drip: boolean
-  ) => {
-    if (!modelRef.current || flavorGroupsRef.current.length === 0) return;
+  const applyVisibility = (decoration: boolean, drip: boolean) => {
+    if (!modelRef.current) return;
+    cakeGroupRef.current.decorations.forEach(c => c.visible = decoration);
+    cakeGroupRef.current.drips.forEach(c => c.visible = drip);
+  };
 
-    flavorGroupsRef.current.forEach((group) => {
-      const isActiveFlavor = group.flavor === targetFlavor;
+  const applyFlavor = (targetFlavor: UpdatedCakeFlavor) => {
+    if (!modelRef.current) return;
 
-      // Base meshes — visible only for active flavor
-      group.base.forEach((child) => {
-        child.visible = isActiveFlavor;
-      });
+    const texture = texturesRef.current.get(targetFlavor);
+    if (!texture) return;
 
-      // Decorations — visible only if active flavor AND decoration enabled
-      group.decorations.forEach((child) => {
-        child.visible = isActiveFlavor && decoration;
-      });
+    const material = new THREE.MeshStandardMaterial({
+      map:          texture,
+      roughnessMap: roughnessTextureRef.current ?? undefined, // 👈 shared
+      roughness:    1.0,
+      metalness:    0.0,
+    });
 
-      // Drips — visible only if active flavor AND drip enabled
-      group.drips.forEach((child) => {
-        child.visible = isActiveFlavor && drip;
-      });
+    const allMeshes = [
+      ...cakeGroupRef.current.base,
+      ...cakeGroupRef.current.decorations,
+      ...cakeGroupRef.current.drips,
+    ];
+
+    allMeshes.forEach((child) => {
+      if ((child as THREE.Mesh).isMesh) {
+        (child as THREE.Mesh).material = material;
+      }
     });
   };
 

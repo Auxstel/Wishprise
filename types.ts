@@ -56,6 +56,13 @@ export enum ExperienceStep {
   ENDING = 'ENDING'
 }
 
+export enum UpdatedCakeShape {
+  ROUND  = 'round',
+  SQUARE = 'square',
+  HEART  = 'heart',
+  TIER   = 'tier',
+}
+
 export enum UpdatedCakeFlavor {
   VANILLA = "vanilla", 
   CHOCOLATE = "chocolate", 
