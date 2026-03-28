@@ -24,12 +24,27 @@ export const WHEEL_MESSAGES = [
   "Keep shining, beautiful soul 🌟",
 ];
 
-export const DEMO_MUSIC_URL = "https://cdn.pixabay.com/download/audio/2022/10/16/audio_9c03b03c86.mp3"; 
-export const POPPER_SOUND_URL = "https://cdn.pixabay.com/download/audio/2022/03/10/audio_c8c8a73467.mp3"; 
+// ============================================================================
+// HOW TO FIX SOUNDS IN PRODUCTION:
+// Pixabay blocks direct links from production servers. You MUST download these 
+// sounds manually and place them inside the `public/sounds/` folder of your project:
+// 
+// 1. Download: https://cdn.pixabay.com/download/audio/2022/10/16/audio_9c03b03c86.mp3 
+//    -> Save as: public/sounds/demo-music.mp3
+// 2. Download: https://cdn.pixabay.com/download/audio/2022/03/10/audio_c8c8a73467.mp3 
+//    -> Save as: public/sounds/pop.mp3
+// 3. Download: https://cdn.pixabay.com/download/audio/2022/03/15/audio_7306236b2d.mp3 
+//    -> Save as: public/sounds/spin.mp3
+// 4. Download: https://cdn.pixabay.com/download/audio/2022/01/18/audio_820a9a7a6c.mp3 
+//    -> Save as: public/sounds/chime.mp3
+// ============================================================================
+
+export const DEMO_MUSIC_URL = "/sounds/demo-music.mp3"; 
+export const POPPER_SOUND_URL = "/sounds/pop.mp3"; 
 
 // Magical Interaction SFX
-export const BALLOON_POP_URL = "https://cdn.pixabay.com/download/audio/2022/03/10/audio_c8c8a73467.mp3";
-export const WHEEL_SPIN_URL = "https://cdn.pixabay.com/download/audio/2022/03/15/audio_7306236b2d.mp3";
-export const MAGIC_CHIME_URL = "https://cdn.pixabay.com/download/audio/2022/01/18/audio_820a9a7a6c.mp3";
+export const BALLOON_POP_URL = "/sounds/pop.mp3";
+export const WHEEL_SPIN_URL = "/sounds/spin.mp3";
+export const MAGIC_CHIME_URL = "/sounds/chime.mp3";
 
 export const PLACEHOLDER_ID = 'demo-123';

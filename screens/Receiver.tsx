@@ -11,7 +11,7 @@ import { ImmersiveScene } from '../components/ImmersiveScene';
 import { ScratchCard } from '../components/ScratchCard';
 import { Logo } from '../components/Logo';
 import { Seo } from '../components/Seo';
-import RateUs from '../components/RateUs';
+import RateUsModal from '../components/RateUsModal';
 import ButtonWithIcon from '@/components/ui/button-witn-icon';
 import GiftThemBack from '../components/GiftThemBack';
 
@@ -40,6 +40,7 @@ export const Receiver: React.FC = () => {
   const [showGift, setShowGift] = useState(false);
   const [bgMusicPlaying, setBgMusicPlaying] = useState(false);
   const [introFinished, setIntroFinished] = useState(false);
+  const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
 
 
   // Balloon Logic
@@ -139,6 +140,33 @@ export const Receiver: React.FC = () => {
       };
     }
   }, [step, data]);
+
+  // -- LOGIC: TRIGGER MODAL ON SCROLL TO BOTTOM --
+  useEffect(() => {
+    if (step !== ExperienceStep.REVEAL || isPreview) return;
+
+    const handleScroll = () => {
+      // Trigger when within 250px of the bottom
+      const isBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 250;
+      if (isBottom) {
+        if (!localStorage.getItem('wishprise_rating_seen')) {
+          setIsRatingModalOpen(true);
+        }
+        window.removeEventListener('scroll', handleScroll);
+      }
+    };
+
+    // Delay attaching the scroll listener to allow initial animations to complete
+    const timer = setTimeout(() => {
+      window.addEventListener('scroll', handleScroll);
+      handleScroll(); // Check if already at bottom (e.g., on large screens)
+    }, 2000);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [step, isPreview]);
 
   // -- LOGIC: WHEEL --
   const wheelOptions = (data?.wheelOptions && data.wheelOptions.filter(o => o.trim()).length > 0)
@@ -242,6 +270,12 @@ export const Receiver: React.FC = () => {
         description={`Open your magical 3D birthday surprise from someone special.`}
         path={`/view/${id}`}
         noindex={true}
+      />
+
+      <RateUsModal 
+        isOpen={isRatingModalOpen} 
+        onClose={() => setIsRatingModalOpen(false)} 
+        surpriseId={id || 'demo'} 
       />
 
       <div className="fixed inset-0 z-0 pointer-events-none">
@@ -675,10 +709,7 @@ export const Receiver: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Rate Us Section */}
-                <div className="pt-12 pb-8 border-t border-white/5 mt-12 animate-fade-in delay-700">
-                  <RateUs surpriseId={id || 'demo'} />
-                </div>
+                {/* Rate Us Section has been moved to RateUsModal */}
 
                 <GiftThemBack />
 

@@ -6,7 +6,7 @@ import { Seo } from '../components/Seo';
 import { SurpriseData } from '../types';
 import { Landing3D } from '../components/Landing3D';
 import ButtonWithIcon from '@/components/ui/button-witn-icon';
-import RateUs from '../components/RateUs';
+import RateUsModal from '../components/RateUsModal';
 import ShareCarousel from '../components/ShareCarousel';
 import GiftThemBack from '../components/GiftThemBack';
 import CakeLoader from '../components/CakeLoader';
@@ -17,6 +17,7 @@ export const Share: React.FC = () => {
   const [surprise, setSurprise] = useState<SurpriseData | null>(null);
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
+  const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -53,6 +54,9 @@ export const Share: React.FC = () => {
   const handleCopy = () => {
     navigator.clipboard.writeText(shareUrl);
     setCopied(true);
+    if (!localStorage.getItem('wishprise_rating_seen')) {
+      setIsRatingModalOpen(true);
+    }
     setTimeout(() => setCopied(false), 2000);
   };
 
@@ -63,6 +67,11 @@ export const Share: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-950 flex flex-col font-sans text-slate-300 relative">
+      <RateUsModal 
+        isOpen={isRatingModalOpen} 
+        onClose={() => setIsRatingModalOpen(false)} 
+        surpriseId={id || ''} 
+      />
       <ShareCarousel />
       <div className="flex-1 flex flex-col items-center justify-center p-6 md:p-12 relative z-10">
         <Seo title="Your Surprise is Ready!" path={`/share/${id}`} />
@@ -126,10 +135,7 @@ export const Share: React.FC = () => {
               </div>
             </div>
 
-            {/* FEEDBACK SECTION */}
-            <div className="pt-12 border-t border-white/5">
-                <RateUs surpriseId={id || ''} />
-            </div>
+            {/* FEEDBACK SECTION REMOVED (Now a Modal) */}
 
             <GiftThemBack />
         </div>
