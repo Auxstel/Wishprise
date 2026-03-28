@@ -2,56 +2,74 @@ import React, { useRef, useEffect, useState } from 'react';
 
 interface ScratchCardProps {
   width: number;
-  height: number;
+  height?: number;
   onReveal?: () => void;
   children: React.ReactNode;
 }
 
-export const ScratchCard: React.FC<ScratchCardProps> = ({ width, height, onReveal, children }) => {
+export const ScratchCard: React.FC<ScratchCardProps> = ({ width, onReveal, children }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isRevealed, setIsRevealed] = useState(false);
   const isDrawing = useRef(false);
 
+  // Initialize and handle resizing
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas || !containerRef.current) return;
+    const container = containerRef.current;
+    if (!canvas || !container) return;
 
-    const { width: containerWidth, height: containerHeight } = containerRef.current.getBoundingClientRect();
-    canvas.width = containerWidth;
-    canvas.height = containerHeight;
+    const updateCanvas = () => {
+      const { width: containerWidth, height: containerHeight } = container.getBoundingClientRect();
+      
+      // Only reset/redraw if size actually changed and not already revealed
+      if (canvas.width === containerWidth && canvas.height === containerHeight) return;
+      if (isRevealed) return;
 
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+      canvas.width = containerWidth;
+      canvas.height = containerHeight;
 
-    // Fill with Gold Foil effect
-    const gradient = ctx.createLinearGradient(0, 0, containerWidth, containerHeight);
-    gradient.addColorStop(0, '#BF953F');
-    gradient.addColorStop(0.25, '#FCF6BA');
-    gradient.addColorStop(0.5, '#B38728');
-    gradient.addColorStop(0.75, '#FBF5B7');
-    gradient.addColorStop(1, '#AA771C');
-    
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, containerWidth, containerHeight);
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
 
-    // Add Text overlay
-    ctx.font = 'bold 24px Inter';
-    ctx.fillStyle = 'rgba(0,0,0,0.6)';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText("✨ Scratch Me ✨", containerWidth / 2, containerHeight / 2);
+      // Fill with Gold Foil effect
+      const gradient = ctx.createLinearGradient(0, 0, containerWidth, containerHeight);
+      gradient.addColorStop(0, '#BF953F');
+      gradient.addColorStop(0.25, '#FCF6BA');
+      gradient.addColorStop(0.5, '#B38728');
+      gradient.addColorStop(0.75, '#FBF5B7');
+      gradient.addColorStop(1, '#AA771C');
+      
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, containerWidth, containerHeight);
 
-    // Sparkles
-    for(let i=0; i<30; i++) {
-        ctx.fillStyle = 'white';
-        ctx.beginPath();
-        const x = Math.random() * containerWidth;
-        const y = Math.random() * containerHeight;
-        ctx.arc(x, y, Math.random() * 2.5, 0, Math.PI*2);
-        ctx.fill();
-    }
-  }, [width, height]); // Re-run if props change, though we're using container size now
+      // Add Text overlay
+      ctx.font = 'bold 24px Inter';
+      ctx.fillStyle = 'rgba(0,0,0,0.6)';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText("✨ Scratch Me ✨", containerWidth / 2, containerHeight / 2);
+
+      // Sparkles
+      for(let i=0; i<30; i++) {
+          ctx.fillStyle = 'white';
+          ctx.beginPath();
+          const x = Math.random() * containerWidth;
+          const y = Math.random() * containerHeight;
+          ctx.arc(x, y, Math.random() * 2.5, 0, Math.PI*2);
+          ctx.fill();
+      }
+    };
+
+    const resizeObserver = new ResizeObserver(() => {
+      updateCanvas();
+    });
+
+    resizeObserver.observe(container);
+    updateCanvas(); // Initial call
+
+    return () => resizeObserver.disconnect();
+  }, [width, isRevealed]);
 
   const handleMouseMove = (e: React.MouseEvent | React.TouchEvent) => {
     if (!isDrawing.current || isRevealed) return;
@@ -92,7 +110,7 @@ export const ScratchCard: React.FC<ScratchCardProps> = ({ width, height, onRevea
       }
       
       const percentage = (transparent / (w * h)) * 100;
-      if (percentage > 45) {
+      if (percentage > 5) {
           setIsRevealed(true);
           if (onReveal) onReveal();
       }
@@ -101,18 +119,18 @@ export const ScratchCard: React.FC<ScratchCardProps> = ({ width, height, onRevea
   return (
     <div 
         ref={containerRef} 
-        className="relative rounded-2xl overflow-hidden shadow-2xl transform transition-all hover:scale-[1.02] border-4 border-magical-400/30"
-        style={{ width: '100%', maxWidth: width, height }}
+        className="relative rounded-2xl shadow-2xl transform transition-all hover:scale-[1.02] border-4 border-magical-400/30 overflow-hidden"
+        style={{ width: '100%', maxWidth: width }}
     >
-      {/* Content Behind */}
-      <div className="absolute inset-0 bg-slate-50 text-slate-900 p-6 flex flex-col items-center justify-center text-center border-4 border-magical-200/50 rounded-2xl overflow-hidden">
+      {/* Content Behind (Determines the height now) */}
+      <div className="relative bg-slate-50 text-slate-900 p-10 flex flex-col items-center text-center">
         {children}
       </div>
 
       {/* Canvas Overlay */}
       <canvas
         ref={canvasRef}
-        className={`absolute inset-0 touch-none cursor-crosshair transition-opacity duration-1000 ${isRevealed ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+        className={`absolute inset-0 touch-none cursor-crosshair transition-opacity duration-1000 z-10 ${isRevealed ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
         onMouseDown={() => isDrawing.current = true}
         onMouseUp={() => isDrawing.current = false}
         onMouseLeave={() => isDrawing.current = false}

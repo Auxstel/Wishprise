@@ -9,6 +9,7 @@ import ButtonWithIcon from '@/components/ui/button-witn-icon';
 import RateUs from '../components/RateUs';
 import ShareCarousel from '../components/ShareCarousel';
 import GiftThemBack from '../components/GiftThemBack';
+import CakeLoader from '../components/CakeLoader';
 
 export const Share: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -34,9 +35,8 @@ export const Share: React.FC = () => {
   }, [id]);
 
   if (loading) return (
-    <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-6 space-y-4">
-      <div className="w-12 h-12 border-4 border-magical-500/20 border-t-magical-500 rounded-full animate-spin"></div>
-      <p className="font-serif italic text-magical-300">Awakening the magic...</p>
+    <div className="min-h-screen bg-slate-950 flex items-center justify-center p-6">
+      <CakeLoader />
     </div>
   );
   

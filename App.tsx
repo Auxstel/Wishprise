@@ -27,10 +27,11 @@ const LongDistanceBirthday = lazy(() => import('./screens/LandingPages/LongDista
 const NameLanding = lazy(() => import('./screens/NameLanding').then(m => ({ default: m.NameLanding })));
 const RelationshipLanding = lazy(() => import('./screens/RelationshipLanding').then(m => ({ default: m.RelationshipLanding })));
 
+import CakeLoader from './components/CakeLoader';
+
 const LoadingFallback = () => (
-  <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-6 space-y-4">
-    <div className="w-12 h-12 border-4 border-magical-500/20 border-t-magical-500 rounded-full animate-spin"></div>
-    <p className="font-serif italic text-magical-300">Loading the magic...</p>
+  <div className="min-h-screen bg-slate-950 flex items-center justify-center p-6">
+    <CakeLoader />
   </div>
 );
 

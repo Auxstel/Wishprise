@@ -11,6 +11,7 @@ import { Landing3D } from '../components/Landing3D';
 import ButtonWithIcon from '@/components/ui/button-witn-icon';
 import { Edit2, Sparkles, Wand2, Gift } from 'lucide-react';
 import { GiftThemBack } from '../components/GiftThemBack';
+import CakeLoader from '../components/CakeLoader';
 
 export const Create: React.FC = () => {
   const navigate = useNavigate();
@@ -33,9 +34,9 @@ export const Create: React.FC = () => {
   const [formData, setFormData] = useState<Partial<SurpriseData>>({
     senderName: '',
     receiverName: '',
-    introMessage: "Someone took a moment to make this just for you...",
+    introMessage: "Take a deep breath and open your gift...",
     personalNote: "I'm so grateful for you.",
-    finalMessage: "Your gift is my friendship! (And dinner soon!)",
+    finalMessage: "Friendship is the best gift!",
     cakeFlavor: CakeFlavor.VANILLA,
     cakeStyle: CakeStyle.CLASSIC,
     candleCount: 1,
@@ -188,6 +189,11 @@ export const Create: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-950 font-sans text-slate-300 flex flex-col overflow-x-hidden scroll-smooth">
+      {isSaving && (
+        <div className="fixed inset-0 z-[100] bg-slate-950/90 backdrop-blur-xl flex items-center justify-center">
+          <CakeLoader />
+        </div>
+      )}
       <Seo 
           title="Create a Magical 3D Birthday Surprise" 
           description="Create your own 3D birthday wish! Personalized animations, custom cakes, and music in seconds. The #1 free birthday surprise online maker with no login required."
@@ -465,6 +471,9 @@ export const Create: React.FC = () => {
                     <div className="absolute right-5 top-6 text-magical-400/30 group-hover/input:text-magical-400/60 transition-colors pointer-events-none">
                       <Edit2 size={24} />
                     </div>
+                    <div className="absolute bottom-4 right-6 text-[10px] font-bold tracking-widest text-white/20">
+                      {formData.introMessage?.length || 0} characters
+                    </div>
                   </div>
                 </div>
 
@@ -483,6 +492,9 @@ export const Create: React.FC = () => {
                     <div className="absolute right-5 top-6 text-magical-400/30 group-hover/input:text-magical-400/60 transition-colors pointer-events-none">
                       <Edit2 size={24} />
                     </div>
+                    <div className="absolute bottom-4 right-6 text-[10px] font-bold tracking-widest text-white/20">
+                      {formData.personalNote?.length || 0} characters
+                    </div>
                   </div>
                   <p className="mt-2 text-[10px] text-slate-500 italic font-serif text-right px-2">This note stays hidden until they find it.</p>
                 </div>
@@ -497,11 +509,14 @@ export const Create: React.FC = () => {
                       type="text"
                       value={formData.finalMessage}
                       onChange={(e) => handleChange('finalMessage', e.target.value)}
-                      className="w-full bg-slate-900/20 border-b border-white/10 p-4 pe-14 text-white placeholder-white/10 focus:border-amber-400/50 outline-none text-2xl transition-all font-serif italic focus:bg-white/[0.02]"
+                      className="w-full bg-slate-900/20 border-b border-white/10 p-4 pe-24 text-white placeholder-white/10 focus:border-amber-400/50 outline-none text-2xl transition-all font-serif italic focus:bg-white/[0.02]"
                       placeholder="The very last thing they'll see..."
                     />
-                    <div className="absolute right-5 top-1/2 -translate-y-1/2 text-magical-400/30 group-hover/input:text-magical-400/60 transition-colors pointer-events-none">
-                      <Edit2 size={24} />
+                    <div className="absolute right-5 top-1/2 -translate-y-1/2 flex items-center gap-3 pointer-events-none">
+                      <div className="text-[10px] font-bold tracking-widest text-white/20">
+                        {formData.finalMessage?.length || 0} chars
+                      </div>
+                      <Edit2 size={24} className="text-magical-400/30 group-hover/input:text-magical-400/60 transition-colors" />
                     </div>
                   </div>
                 </div>

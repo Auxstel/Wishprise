@@ -382,21 +382,21 @@ export const Landing: React.FC = () => {
                     <h2 className="text-3xl md:text-5xl font-serif text-white mb-16 text-center">Frequently Asked Questions</h2>
                     <div className="grid gap-8 md:grid-cols-2">
                         {[
-                            { 
-                                q: "What is Wishprise?", 
-                                a: "Wishprise is a free online tool to create interactive 3D birthday surprises. Instead of a simple text, you send a link that opens a magical 3D world with a cake, music, and your message." 
+                            {
+                                q: "What is Wishprise?",
+                                a: "Wishprise is a free online tool to create interactive 3D birthday surprises. Instead of a simple text, you send a link that opens a magical 3D world with a cake, music, and your message."
                             },
-                            { 
-                                q: "Is it really free?", 
-                                a: "Yes, 100% free. No hidden charges, no credits, and no login required to create or view surprises." 
+                            {
+                                q: "Is it really free?",
+                                a: "Yes, 100% free. No hidden charges, no credits, and no login required to create or view surprises."
                             },
-                            { 
-                                q: "How do I share the surprise?", 
-                                a: "Once you create a surprise, you get a unique link. You can copy and paste this link into WhatsApp, Instagram, or any messaging app." 
+                            {
+                                q: "How do I share the surprise?",
+                                a: "Once you create a surprise, you get a unique link. You can copy and paste this link into WhatsApp, Instagram, or any messaging app."
                             },
-                            { 
-                                q: "Does it work on mobile?", 
-                                a: "Absolutely. Wishprise is fully optimized for all mobile devices and browsers. No app download is needed." 
+                            {
+                                q: "Does it work on mobile?",
+                                a: "Absolutely. Wishprise is fully optimized for all mobile devices and browsers. No app download is needed."
                             }
                         ].map((faq, i) => (
                             <div key={i} className="bg-white/5 p-8 rounded-3xl border border-white/10 hover:border-magical-500/30 transition-all">

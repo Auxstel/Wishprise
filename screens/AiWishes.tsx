@@ -9,6 +9,7 @@ import {
 } from 'react-icons/ri';
 import ButtonWithIcon from '../components/ui/button-witn-icon';
 import { Landing3D } from '../components/Landing3D';
+import CakeLoader from '../components/CakeLoader';
 
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
@@ -299,13 +300,8 @@ export const AiWishes: React.FC = () => {
                                 <h3 className="text-sm uppercase tracking-[0.2em] text-magical-400 font-black text-center">Your Magic Result</h3>
 
                                 {isGenerating ? (
-                                    <div className="bg-slate-950/60 rounded-[2.5rem] p-12 border border-white/5 flex flex-col items-center gap-6">
-                                        <div className="flex gap-2">
-                                            <div className="w-3 h-3 bg-magical-500 rounded-full animate-bounce"></div>
-                                            <div className="w-3 h-3 bg-pink-500 rounded-full animate-bounce [animation-delay:0.2s]"></div>
-                                            <div className="w-3 h-3 bg-orange-500 rounded-full animate-bounce [animation-delay:0.4s]"></div>
-                                        </div>
-                                        <p className="text-slate-400 italic text-lg font-serif">Consulting the AI muses...</p>
+                                    <div className="bg-slate-950/60 rounded-[2.5rem] p-12 border border-white/5 flex flex-col items-center">
+                                        <CakeLoader />
                                     </div>
                                 ) : (
                                     <div className="relative group/output">

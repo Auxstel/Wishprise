@@ -25,6 +25,11 @@ export const WHEEL_MESSAGES = [
 ];
 
 export const DEMO_MUSIC_URL = "https://cdn.pixabay.com/download/audio/2022/10/16/audio_9c03b03c86.mp3"; 
-export const POPPER_SOUND_URL = "https://cdn.pixabay.com/download/audio/2022/03/10/audio_c8c8a73467.mp3"; // Simple pop sound
+export const POPPER_SOUND_URL = "https://cdn.pixabay.com/download/audio/2022/03/10/audio_c8c8a73467.mp3"; 
+
+// Magical Interaction SFX
+export const BALLOON_POP_URL = "https://cdn.pixabay.com/download/audio/2022/03/10/audio_c8c8a73467.mp3";
+export const WHEEL_SPIN_URL = "https://cdn.pixabay.com/download/audio/2022/03/15/audio_7306236b2d.mp3";
+export const MAGIC_CHIME_URL = "https://cdn.pixabay.com/download/audio/2022/01/18/audio_820a9a7a6c.mp3";
 
 export const PLACEHOLDER_ID = 'demo-123';
