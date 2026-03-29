@@ -316,7 +316,7 @@ export const Create: React.FC = () => {
                     { shape: UpdatedCakeShape.ROUND,  label: 'Round',  emoji: '⭕' },
                     { shape: UpdatedCakeShape.SQUARE, label: 'Square', emoji: '⬜' },
                     { shape: UpdatedCakeShape.HEART,  label: 'Heart',  emoji: '❤️' },
-                    // { shape: UpdatedCakeShape.TIER,   label: 'Tiered', emoji: '🎂' },
+                    { shape: UpdatedCakeShape.TIER,   label: 'Tiered', emoji: '🎂' },
                   ].map(({ shape, label, emoji }) => (
                     <button
                       key={shape}
