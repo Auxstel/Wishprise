@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { Cake } from '../components/Cake';
 import { UpdatedCake } from '../components/UpdatedCake';
-import { SurpriseData, CakeFlavor, CakeStyle, UpdatedCakeFlavor } from '../types';
+import { SurpriseData, CakeFlavor, CakeStyle, UpdatedCakeFlavor, UpdatedCakeShape } from '../types';
 import { saveSurprise, generateId, uploadFile } from '../services/storageService';
 
 import { Logo } from '../components/Logo';
@@ -36,6 +36,7 @@ export const Create: React.FC = () => {
     personalNote: "I'm so grateful for you.",
     finalMessage: "Your gift is my friendship! (And dinner soon!)",
     updatedCakeFlavor: UpdatedCakeFlavor.VANILLA,
+    cakeShape: UpdatedCakeShape.ROUND,
     cakeDecoration: false,
     cakeDrip: false,
     cakeMessage: "Happy \nBirthday",
@@ -297,6 +298,7 @@ export const Create: React.FC = () => {
               {/* <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-magical-400/10 blur-3xl rounded-full pointer-events-none"></div> */}
 
               <UpdatedCake 
+                shape={formData.cakeShape ?? UpdatedCakeShape.ROUND}
                 flavor={formData.updatedCakeFlavor || UpdatedCakeFlavor.VANILLA}
                 cakeDecoration={formData.cakeDecoration ?? false}
                 cakeDrip={formData.cakeDrip ?? false} 
@@ -307,6 +309,30 @@ export const Create: React.FC = () => {
             </div>
 
             <div className="backdrop-blur-2xl bg-white/5 p-8 rounded-3xl border border-white/10 space-y-8 shadow-2xl overflow-y-auto max-h-[45vh] magical-scrollbar px-4">
+              <div>
+                <label className="block text-[10px] font-black text-magical-300 uppercase tracking-[0.4em] mb-4 ml-1">Cake Shape</label>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  {[
+                    { shape: UpdatedCakeShape.ROUND,  label: 'Round',  emoji: '⭕' },
+                    { shape: UpdatedCakeShape.SQUARE, label: 'Square', emoji: '⬜' },
+                    { shape: UpdatedCakeShape.HEART,  label: 'Heart',  emoji: '❤️' },
+                    // { shape: UpdatedCakeShape.TIER,   label: 'Tiered', emoji: '🎂' },
+                  ].map(({ shape, label, emoji }) => (
+                    <button
+                      key={shape}
+                      onClick={() => handleChange('cakeShape', shape)}
+                      className={`p-3 rounded-xl border text-[10px] md:text-xs font-bold capitalize transition-all duration-300 ${
+                        formData.cakeShape === shape
+                          ? 'border-magical-400 bg-magical-400/20 text-white shadow-[0_0_15px_rgba(139,38,242,0.3)]'
+                          : 'border-white/5 bg-white/5 text-white/30 hover:bg-white/10 hover:text-white/60'
+                      }`}
+                    >
+                      {emoji} {label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              
               <div>
                 <label className="block text-[10px] font-black text-magical-300 uppercase tracking-[0.4em] mb-4 ml-1">The Flavor</label>
                 <div className="grid grid-cols-2 md:grid-cols-5 gap-3">

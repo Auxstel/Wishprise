@@ -31,6 +31,7 @@ export interface SurpriseData {
   introMessage: string;
   personalNote: string;
   finalMessage: string;
+  cakeShape: UpdatedCakeShape;
   updatedCakeFlavor: UpdatedCakeFlavor;
   cakeDecoration: boolean;
   cakeDrip: boolean;
