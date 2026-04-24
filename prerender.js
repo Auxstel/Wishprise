@@ -506,6 +506,108 @@ const PAGES = {
       <p>Be the coolest aunt or uncle — send your nephew a jaw-dropping 3D birthday surprise he can play with.</p>
       <p><a href="/create">Create a Surprise for Your Nephew →</a></p>
     `
+    },
+    '/create': {
+        title: 'Create Your 3D Birthday Surprise - Free Wish Maker | Wishprise',
+        description: 'Build a fully personalized 3D birthday surprise in minutes. Pick a cake, write a message, add a voice note, and share a magical link. No login, 100% free.',
+        content: `
+      <h1>Create a 3D Birthday Surprise</h1>
+      <p>Design a fully interactive 3D birthday experience in under three minutes. No account, no credit card, no downloads — just a shareable link that opens in any browser.</p>
+
+      <h2>What you can personalize</h2>
+      <ul>
+        <li><strong>The cake</strong> — choose a flavor (chocolate, vanilla, strawberry, red velvet), a style (classic, minimalist, playful, elegant), and the number of candles. The cake renders in real 3D with physics-based candle flames.</li>
+        <li><strong>The recipient's name</strong> — appears on the cake plate and in the surprise greeting.</li>
+        <li><strong>A personal message</strong> — a short note that animates in after the candles are blown out.</li>
+        <li><strong>A voice note</strong> — record up to 30 seconds directly in the browser. Perfect for long-distance birthdays where tone matters more than text.</li>
+        <li><strong>Background music</strong> — pick from a curated library of royalty-free tracks, or skip if you prefer silence.</li>
+        <li><strong>One-time view</strong> (optional) — when enabled, the audio and images auto-delete after the recipient opens the surprise once. Ideal for truly private messages.</li>
+      </ul>
+
+      <h2>How creation works</h2>
+      <p>The interactive creator loads below this section. Move through four short steps:</p>
+      <ol>
+        <li><strong>Recipient</strong> — enter their name and optionally a photo.</li>
+        <li><strong>Cake & scene</strong> — tap through the 3D cake options and preview how it will look.</li>
+        <li><strong>Message & audio</strong> — type your note and record voice if you want to include it.</li>
+        <li><strong>Share</strong> — generate your unique link and send it via WhatsApp, SMS, email, or anywhere else.</li>
+      </ol>
+
+      <h2>Where does the surprise live?</h2>
+      <p>Each surprise is stored on a private server with a unique, unguessable URL. Only people you share the link with can view it. Unviewed surprises are automatically deleted after 30 days, and surprises with "one-time view" enabled are deleted immediately after first view. There is no public gallery and no account linking — the link is the key.</p>
+
+      <h2>Other tools you might want</h2>
+      <ul>
+        <li><a href="/ai-wishes">AI Birthday Wish Generator</a> — if you're stuck on what to write, let AI draft a heartfelt message in seconds.</li>
+        <li><a href="/poster">Birthday Poster Maker</a> — design a printable or shareable poster with your own text and colors.</li>
+        <li><a href="/gifts">Gift Suggestions</a> — curated gift ideas by relationship and budget.</li>
+        <li><a href="/space-birthday">NASA Space Birthday</a> — see what NASA photographed on the recipient's birthday.</li>
+      </ul>
+
+      <p><a href="/">← Back to Home</a></p>
+    `
+    },
+    '/': {
+        title: 'Wishprise - Create Free 3D Birthday Surprises Online',
+        description: 'Wishprise is a free online birthday wish maker. Design interactive 3D surprises with custom cakes, music, voice notes, and shareable links. No login, no downloads.',
+        content: `
+      <h1>Create a Magical 3D Birthday Surprise</h1>
+      <p><strong>Wishprise</strong> is the free, browser-based birthday surprise creator used by thousands of people every month. Instead of sending a flat "Happy Birthday" text, you can send a link that opens into a fully interactive 3D scene: a custom cake, lit candles your recipient actually blows out, your recorded voice note, and a heartfelt message.</p>
+
+      <h2>How it works</h2>
+      <ol>
+        <li><strong>Personalize</strong> — pick a cake style, candle count, and flavor. Type in the recipient's name and a short message. Optionally record a voice note or upload a photo.</li>
+        <li><strong>Share</strong> — Wishprise generates a unique, private link. Send it via WhatsApp, SMS, email, Instagram DM — wherever you and the recipient talk.</li>
+        <li><strong>Watch the magic</strong> — they open the link on any phone or laptop and step into a 3D birthday scene. They tap to blow out candles, read your message, and hear your voice.</li>
+      </ol>
+      <p><a href="/create">Start creating — it takes under three minutes →</a></p>
+
+      <h2>Why people use Wishprise</h2>
+      <ul>
+        <li><strong>Real 3D, not a video.</strong> Every cake is rendered live with interactive physics. No two views are the same.</li>
+        <li><strong>Long-distance friendly.</strong> A link crosses time zones instantly. No shipping delays, no "did you get it?" texts.</li>
+        <li><strong>Free forever.</strong> The full creator is free and always will be. We fund hosting through non-intrusive ads on guide pages, not on the surprise itself.</li>
+        <li><strong>No accounts.</strong> You don't sign up. Your recipient doesn't sign up. No tracking across sessions.</li>
+        <li><strong>Private by default.</strong> Surprises live on unguessable URLs. Enable "one-time view" and the content deletes itself after first open.</li>
+        <li><strong>Works everywhere.</strong> Any modern browser on phone, tablet, or desktop. No app download.</li>
+      </ul>
+
+      <h2>Explore the rest of Wishprise</h2>
+      <ul>
+        <li><a href="/ai-wishes">AI Birthday Wish Generator</a> — tone-matched messages (heartfelt, funny, formal) drafted by AI when words are hard to find.</li>
+        <li><a href="/poster">Birthday Poster Maker</a> — design a printable poster with your own copy and colors.</li>
+        <li><a href="/gifts">Gift Suggestions</a> — curated ideas broken down by relationship and budget.</li>
+        <li><a href="/space-birthday">NASA Space Birthday</a> — discover the NASA Astronomy Picture of the Day from the recipient's birth date.</li>
+        <li><a href="/resources">Birthday Guides & Resources</a> — original articles on virtual celebrations, long-distance birthdays, message etiquette, and more.</li>
+      </ul>
+
+      <h2>Popular guides</h2>
+      <ul>
+        <li><a href="/resources/virtual-birthday-ideas-2026">10 Creative Virtual Birthday Ideas for 2026</a></li>
+        <li><a href="/resources/long-distance-birthday-guide">The Complete Long-Distance Birthday Celebration Guide</a></li>
+        <li><a href="/resources/digital-vs-physical-cards">Digital vs Physical Birthday Cards: The Honest Comparison</a></li>
+        <li><a href="/resources/birthday-message-etiquette">Birthday Message Etiquette: The Unwritten Rules</a></li>
+        <li><a href="/resources/whatsapp-birthday-surprise-ideas">5 Creative WhatsApp Birthday Surprise Ideas</a></li>
+      </ul>
+
+      <h2>Frequently asked questions</h2>
+      <h3>Is Wishprise really free?</h3>
+      <p>Yes. The creator, the 3D experience, and the sharing link are all free. We cover our hosting costs through contextual ads placed on guide and resource pages — never inside a surprise.</p>
+
+      <h3>Do I need an account?</h3>
+      <p>No. Neither you nor the recipient needs to sign up. You keep your surprise link; the recipient clicks and watches. That's the whole flow.</p>
+
+      <h3>What is the "one-time view" option?</h3>
+      <p>An optional mode that auto-deletes the uploaded audio, photos, and message from our servers as soon as the recipient opens the link once. Useful if the message is deeply personal and you don't want it lingering in storage.</p>
+
+      <h3>How is Wishprise different from an e-card?</h3>
+      <p>An e-card is a static image or short video. A Wishprise surprise is a live 3D experience the recipient interacts with — they blow out candles, pop balloons, hear your voice, and discover your message as they go. It's closer to a short game than a card.</p>
+
+      <h3>Which browsers are supported?</h3>
+      <p>Any recent version of Chrome, Safari, Firefox, Edge, or Samsung Internet. We use WebGL for 3D, which has been supported everywhere since 2018.</p>
+
+      <p><strong>Ready?</strong> <a href="/create">Create a free 3D birthday surprise →</a></p>
+    `
     }
 };
 
