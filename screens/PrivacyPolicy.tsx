@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Logo } from '../components/Logo';
 import { Seo } from '../components/Seo';
+import { Footer } from '../components/Footer';
 
 export const PrivacyPolicy: React.FC = () => {
     return (
@@ -130,14 +131,7 @@ export const PrivacyPolicy: React.FC = () => {
                 </section>
             </main>
 
-            {/* Footer */}
-            <footer className="border-t border-white/10 p-6 text-center text-gray-600 text-sm">
-                <p>Wishprise © 2026. All rights reserved.</p>
-                <div className="mt-2 space-x-4">
-                    <Link to="/terms" className="text-magical-400 hover:underline">Terms of Service</Link>
-                    <Link to="/privacy" className="text-magical-400 hover:underline">Privacy Policy</Link>
-                </div>
-            </footer>
+            <Footer />
         </div>
     );
 };

@@ -6,6 +6,7 @@ import { Landing3D } from '../../components/Landing3D';
 import { Logo } from '../../components/Logo';
 import ButtonWithIcon from '@/components/ui/button-witn-icon';
 import HowItWorks from '../../components/HowItWorks';
+import { Footer } from '../../components/Footer';
 
 export const LongDistanceBirthday: React.FC = () => {
     const navigate = useNavigate();
@@ -92,10 +93,11 @@ export const LongDistanceBirthday: React.FC = () => {
             </div>
 
             {/* Footer */}
-            <footer className="relative z-20 bg-slate-950 py-12 px-6 border-t border-white/5 text-center">
+            <div className="relative z-20 bg-slate-950 pt-12 pb-4 px-6 text-center">
                 <Logo size="sm" />
                 <p className="text-gray-600 text-sm mt-4">Wishprise — Connecting hearts across any distance.</p>
-            </footer>
+            </div>
+            <Footer />
         </div>
     );
 };

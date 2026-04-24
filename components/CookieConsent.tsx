@@ -30,7 +30,8 @@ export const CookieConsent: React.FC = () => {
                     <p className="text-gray-400 text-sm leading-relaxed">
                         We use cookies to enhance your experience, serve personalized ads, and analyze our traffic.
                         By clicking "Accept", you consent to our use of cookies.
-                        Read our <Link to="/privacy" className="text-magical-400 hover:underline">Privacy Policy</Link>.
+                        Read our <Link to="/cookies" className="text-magical-400 hover:underline">Cookie Policy</Link>
+                        {' '}and <Link to="/privacy" className="text-magical-400 hover:underline">Privacy Policy</Link>.
                     </p>
                 </div>
                 <div className="flex gap-3 w-full md:w-auto">

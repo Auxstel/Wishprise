@@ -31,10 +31,6 @@
         {
             "source": "/birthday-wishes-for/my/:relationship",
             "destination": "/index.html"
-        },
-        {
-            "source": "/birthday-wishes-for/:name",
-            "destination": "/index.html"
         }
     ],
     "redirects": [
@@ -45,7 +41,12 @@
         },
         {
             "source": "/birthday-wishes-for-:name",
-            "destination": "/birthday-wishes-for/:name",
+            "destination": "/",
+            "permanent": true
+        },
+        {
+            "source": "/birthday-wishes-for/:name",
+            "destination": "/",
             "permanent": true
         }
     ],

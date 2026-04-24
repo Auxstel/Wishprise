@@ -124,6 +124,38 @@ const PAGES = {
       <p>Questions? Contact us at: <a href="mailto:octaacebusiness@gmail.com">octaacebusiness@gmail.com</a></p>
     `
     },
+    '/cookies': {
+        title: 'Cookie Policy | Wishprise',
+        description: 'How Wishprise uses cookies and similar technologies, what Google AdSense and Google Analytics place on your device, and how you can control them.',
+        content: `
+      <h1>Cookie Policy</h1>
+      <p>Last updated: April 24, 2026</p>
+      <h2>1. What Are Cookies?</h2>
+      <p>Cookies are small text files stored on your device when you visit a website. They let the site remember your preferences and help third-party services measure traffic or serve advertising. This page explains which cookies and similar technologies Wishprise uses, why, and how you can control them.</p>
+      <h2>2. Cookies We Set Directly</h2>
+      <ul>
+        <li><strong>wishprise_cookie_consent</strong> — stored in localStorage when you dismiss or accept the banner, so we don't show it again. Contains no personal information.</li>
+        <li><strong>Session state</strong> — short-lived identifiers used by the /create, /share and /view flows to reference the same draft. Cleared when you close the tab.</li>
+      </ul>
+      <h2>3. Third-Party Cookies</h2>
+      <ul>
+        <li><strong>Google AdSense</strong> (publisher <code>ca-pub-4046935924897443</code>) — ad serving, frequency capping and measurement. Ads may be personalised based on your interests.</li>
+        <li><strong>Google Analytics (GA4 — G-5NWLEH3DRG)</strong> — aggregated usage analytics. IP addresses are anonymised by Google before storage.</li>
+        <li><strong>Supabase</strong> — a session token identifies your draft while creating a surprise. Not used for advertising or analytics.</li>
+        <li><strong>Vercel</strong> — operational cookies required to route traffic and protect the site from abuse.</li>
+      </ul>
+      <h2>4. How to Control Cookies</h2>
+      <ul>
+        <li>Adjust ad preferences in Google's <a href="https://adssettings.google.com/">Ads Settings</a>, or opt out via the <a href="https://optout.aboutads.info/">Digital Advertising Alliance</a> and <a href="https://www.youronlinechoices.com/">Your Online Choices</a>.</li>
+        <li>Block or delete cookies in your browser settings. Doing so may affect site functionality.</li>
+        <li>Clear the <code>wishprise_cookie_consent</code> entry in site storage to see our banner again.</li>
+      </ul>
+      <h2>5. Do Not Track</h2>
+      <p>Wishprise does not respond to browser Do Not Track signals — there is no common industry standard for how DNT should behave. Use the controls above instead.</p>
+      <h2>6. Contact</h2>
+      <p>Questions? Email <a href="mailto:octaacebusiness@gmail.com">octaacebusiness@gmail.com</a>. See also our <a href="/privacy">Privacy Policy</a> and <a href="/terms">Terms of Service</a>.</p>
+    `
+    },
     '/contact': {
         title: 'Contact Us | Wishprise',
         description: 'Get in touch with the Wishprise team.',
@@ -508,6 +540,7 @@ function generatePageHtml(route, page) {
           <a href="/about" style="color:#e879f9;margin:0 1rem;">About</a>
           <a href="/privacy" style="color:#e879f9;margin:0 1rem;">Privacy</a>
           <a href="/terms" style="color:#e879f9;margin:0 1rem;">Terms</a>
+          <a href="/cookies" style="color:#e879f9;margin:0 1rem;">Cookies</a>
           <a href="/contact" style="color:#e879f9;margin:0 1rem;">Contact</a>
           <a href="/resources" style="color:#e879f9;margin:0 1rem;">Resources</a>
         </nav>

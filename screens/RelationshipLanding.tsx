@@ -6,6 +6,7 @@ import { Landing3D } from '../components/Landing3D';
 import { Logo } from '../components/Logo';
 import { Link } from 'react-router-dom';
 import ButtonWithIcon from '@/components/ui/button-witn-icon';
+import { Footer } from '../components/Footer';
 
 export const RelationshipLanding: React.FC = () => {
     const { relationship } = useParams<{ relationship: string }>();
@@ -131,9 +132,7 @@ export const RelationshipLanding: React.FC = () => {
                 </div>
             </div>
 
-            <footer className="relative z-20 py-8 text-center text-slate-600 text-sm">
-                <p>© 2026 Wishprise. Making connections magical.</p>
-            </footer>
+            <Footer variant="transparent" />
         </div>
     );
 };

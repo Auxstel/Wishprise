@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
+Allow: /birthday-wishes-for/my/
+Disallow: /birthday-wishes-for/
 Disallow: /view/*
 
 Sitemap: https://wishprise.online/sitemap.xml

@@ -452,14 +452,17 @@ export const Landing: React.FC = () => {
                             <Logo size="sm" />
                             <p className="text-gray-600 text-sm mt-2">Making birthdays magical, one surprise at a time.</p>
                         </div>
-                        <div className="flex flex-wrap justify-center gap-6 text-sm">
+                        <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 text-sm">
                             <Link to="/about" className="text-gray-400 hover:text-magical-400 transition-colors">About Us</Link>
                             <Link to="/ai-wishes" className="text-magical-400 hover:text-magical-300 transition-colors font-medium">AI Wishes ✨</Link>
                             <Link to="/poster" className="text-magical-400 hover:text-magical-300 transition-colors font-medium">Poster Studio 🎨</Link>
                             <Link to="/space-birthday" className="text-magical-400 hover:text-magical-300 transition-colors font-medium">NASA Birthday 🚀</Link>
                             <Link to="/gifts" className="text-magical-400 hover:text-magical-300 transition-colors font-medium">Gift Shop 🎁</Link>
-                            <Link to="/resources" className="text-gray-400 hover:text-magical-400 transition-colors hidden md:inline">Resources</Link>
-                            <Link to="/privacy" className="text-gray-400 hover:text-magical-400 transition-colors hidden md:inline">Privacy</Link>
+                            <Link to="/resources" className="text-gray-400 hover:text-magical-400 transition-colors">Resources</Link>
+                            <Link to="/contact" className="text-gray-400 hover:text-magical-400 transition-colors">Contact</Link>
+                            <Link to="/privacy" className="text-gray-400 hover:text-magical-400 transition-colors">Privacy</Link>
+                            <Link to="/terms" className="text-gray-400 hover:text-magical-400 transition-colors">Terms</Link>
+                            <Link to="/cookies" className="text-gray-400 hover:text-magical-400 transition-colors">Cookies</Link>
                         </div>
                     </div>
                     <div className="mt-8 text-center border-t border-slate-900 pt-6">

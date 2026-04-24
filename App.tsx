@@ -24,8 +24,9 @@ const MessageEtiquette = lazy(() => import('./screens/Resources/MessageEtiquette
 const WhatsappSurpriseIdeas = lazy(() => import('./screens/Resources/WhatsappSurpriseIdeas').then(m => ({ default: m.WhatsappSurpriseIdeas })));
 const WhatsappSurprise = lazy(() => import('./screens/LandingPages/WhatsappSurprise').then(m => ({ default: m.WhatsappSurprise })));
 const LongDistanceBirthday = lazy(() => import('./screens/LandingPages/LongDistanceBirthday').then(m => ({ default: m.LongDistanceBirthday })));
-const NameLanding = lazy(() => import('./screens/NameLanding').then(m => ({ default: m.NameLanding })));
 const RelationshipLanding = lazy(() => import('./screens/RelationshipLanding').then(m => ({ default: m.RelationshipLanding })));
+const CookiePolicy = lazy(() => import('./screens/CookiePolicy').then(m => ({ default: m.CookiePolicy })));
+const NotFound = lazy(() => import('./screens/NotFound').then(m => ({ default: m.NotFound })));
 
 import CakeLoader from './components/CakeLoader';
 
@@ -48,6 +49,7 @@ const App: React.FC = () => {
             <Route path="/view/:id" element={<Receiver />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<TermsOfService />} />
+            <Route path="/cookies" element={<CookiePolicy />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/about" element={<About />} />
 
@@ -55,7 +57,6 @@ const App: React.FC = () => {
             <Route path="/whatsapp-birthday-surprise" element={<WhatsappSurprise />} />
             <Route path="/long-distance-birthdays" element={<LongDistanceBirthday />} />
             <Route path="/birthday-wishes-for/my/:relationship" element={<RelationshipLanding />} />
-            <Route path="/birthday-wishes-for/:name" element={<NameLanding />} />
 
             {/* New Tools */}
             <Route path="/ai-wishes" element={<AiWishes />} />
@@ -71,8 +72,8 @@ const App: React.FC = () => {
             <Route path="/resources/birthday-message-etiquette" element={<MessageEtiquette />} />
             <Route path="/resources/whatsapp-birthday-surprise-ideas" element={<WhatsappSurpriseIdeas />} />
             
-            {/* Catch-all for debugging */}
-            <Route path="*" element={<div className="min-h-screen bg-slate-950 text-white flex items-center justify-center">404 - Page Not Found</div>} />
+            {/* Catch-all 404 — noindex + real navigation to keep AdSense reviewers happy */}
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
       </BrowserRouter>
